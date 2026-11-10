@@ -7,7 +7,7 @@ path: /api/voice-config/
 updated: 2026-11-10
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:24:54.240Z"
+  generated_at: "2026-11-10T13:29:31.923Z"
 ---
 ---
 title: "VoiceConfig Reference"
