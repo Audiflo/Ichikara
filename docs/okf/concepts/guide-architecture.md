@@ -7,7 +7,7 @@ path: /guide/architecture/
 updated: 2026-11-10
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:29:31.925Z"
+  generated_at: "2026-11-10T13:40:42.167Z"
 ---
 ---
 title: "Architecture"
