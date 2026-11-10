@@ -18,8 +18,9 @@ Bits UI regenerates those declarations against the newer CSS definitions.
 - `npm run check` runs the checks above and builds the production editor.
 - `npm run lint:fix -w Build` or `-w Demo` applies ESLint's automatic fixes.
 
-CI uses Node 22 and 24; the dependency audit uses Node 24. The editor's pure
-TypeScript tests use Node's native type stripping; use Node 22.18 or newer locally.
+CI uses Node 22 and 24. Pages, npm releases, Updato, and the dependency audit use
+Node 24. Use Node 22.18+ or 24.11+ locally to satisfy tsdown's runtime requirements
+and support native type stripping for the editor's pure TypeScript tests.
 
 The library's tsdown options live in the build command in `Build/package.json`.
 Using its CLI avoids importing declarations for unused plugin integrations and
