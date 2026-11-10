@@ -5,7 +5,7 @@ description: "Install Ichikara via npm or use it directly in the browser"
 
 ## npm
 
-The [browser editor](https://nellowtcs.me/Ichikara) needs no installation. To use
+The [browser editor](https://audiflo.github.io/Ichikara) needs no installation. To use
 the synthesis library in another project:
 
 ```bash
@@ -16,14 +16,14 @@ npm install ichikara
 
 ```html
 <script type="module">
-import { renderScore, chitoseChika } from "https://unpkg.com/ichikara/dist/index.mjs";
+  import { renderScore, chitoseChika } from "https://unpkg.com/ichikara/dist/index.mjs";
 </script>
 ```
 
 ## Build from Source
 
 ```bash
-git clone https://github.com/NellowTCS/Ichikara.git --recurse-submodules
+git clone https://github.com/Audiflo/Ichikara.git --recurse-submodules
 cd Ichikara
 npm ci
 npm run build -w Build

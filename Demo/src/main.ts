@@ -12,7 +12,7 @@ mount(App, { target });
 
 const updater = Updato.init(
   {
-    repo: "NellowTCS/Ichikara",
+    repo: "Audiflo/Ichikara",
     mode: "commit",
     current: __BUILD_HASH__,
   },

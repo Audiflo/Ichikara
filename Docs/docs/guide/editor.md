@@ -5,7 +5,7 @@ description: "Arrange vocal tracks, edit notes and expression, and save or rende
 
 # Song editor
 
-[Open the editor](https://nellowtcs.me/Ichikara). The starter phrase is ready to
+[Open the editor](https://audiflo.github.io/Ichikara). The starter phrase is ready to
 play. Use **New** for an empty song or **Open** to load an existing file.
 
 ![The arrangement above the piano roll, with the track inspector on the left](/assets/images/editor.png)

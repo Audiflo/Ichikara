@@ -68,6 +68,12 @@
   }
 </script>
 
+<!--
+  A focusable separator is an interactive window splitter with arrow-key resizing.
+  Svelte classifies the role as noninteractive without checking focusability.
+  See https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/
+-->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
 <div
   class="resize-handle"
   class:vertical={axis === "x"}

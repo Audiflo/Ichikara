@@ -1,6 +1,6 @@
 export default {
   title: "Ichikara",
-  url: "https://nellowtcs.me/Ichikara/docs",
+  url: "https://audiflo.github.io/Ichikara/docs",
   logo: { alt: "Ichikara", href: "./" },
   favicon: "",
   theme: {
@@ -33,9 +33,9 @@ export default {
         {
           title: "Community",
           links: [
-            { text: "GitHub", url: "https://github.com/NellowTCS/Ichikara" },
-            { text: "Issues", url: "https://github.com/NellowTCS/Ichikara/issues" },
-            { text: "Discussions", url: "https://github.com/NellowTCS/Ichikara/discussions" },
+            { text: "GitHub", url: "https://github.com/Audiflo/Ichikara" },
+            { text: "Issues", url: "https://github.com/Audiflo/Ichikara/issues" },
+            { text: "Discussions", url: "https://github.com/Audiflo/Ichikara/discussions" },
           ],
         },
       ],
@@ -104,15 +104,15 @@ export default {
     },
     {
       title: "GitHub",
-      path: "https://github.com/NellowTCS/Ichikara",
+      path: "https://github.com/Audiflo/Ichikara",
       icon: "github",
       external: true,
     },
   ],
-  footer: "Built with [docmd](https://docmd.io). [View on GitHub](https://github.com/NellowTCS/Ichikara).",
+  footer: "Built with [docmd](https://docmd.io). [View on GitHub](https://github.com/Audiflo/Ichikara).",
   editLink: {
     enabled: true,
-    baseUrl: "https://github.com/NellowTCS/Ichikara/edit/main/",
+    baseUrl: "https://github.com/Audiflo/Ichikara/edit/main/",
     text: "Edit this page",
   },
 };

@@ -1,14 +1,14 @@
 # Ichikara
 
 [![npm version](https://img.shields.io/npm/v/ichikara.svg)](https://www.npmjs.com/package/ichikara)
-[![CI](https://github.com/NellowTCS/Ichikara/actions/workflows/ci.yml/badge.svg)](https://github.com/NellowTCS/Ichikara/actions/workflows/ci.yml)
+[![CI](https://github.com/Audiflo/Ichikara/actions/workflows/ci.yml/badge.svg)](https://github.com/Audiflo/Ichikara/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Ichikara is a song editor powered by OneVoice and a TypeScript singing-synthesis library.
 Write a melody, add lyrics, and shape the voice without recording a voicebank.
 The engine generates sound with an LF glottal source and a formant filter.
 
-[Open the editor](https://nellowtcs.me/Ichikara) | [Documentation](https://nellowtcs.me/Ichikara/docs)
+[Open the editor](https://audiflo.github.io/Ichikara) | [Documentation](https://audiflo.github.io/Ichikara/docs)
 
 ![Ichikara with vocal tracks, a piano roll, and note expression](Docs/assets/images/editor.png)
 
@@ -88,7 +88,7 @@ Use Node 22.18+ or Node 24 and npm. CI checks Node 22 and 24. The CMUDict build
 data is a Git submodule.
 
 ```sh
-git clone https://github.com/NellowTCS/Ichikara.git --recurse-submodules
+git clone https://github.com/Audiflo/Ichikara.git --recurse-submodules
 cd Ichikara
 npm ci
 npm run build -w Build

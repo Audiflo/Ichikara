@@ -6,6 +6,7 @@ description: "A OneVoice song editor and TypeScript singing-synthesis library."
 ::: hero layout:split glow:true
 
 <!-- markdownlint-disable MD025 -->
+
 # Ichikara
 
 Write and arrange songs in the browser, or synthesize singing from your own
@@ -15,11 +16,15 @@ voicebanks.
 ::: tag "OneVoice Editor"
 ::: tag "LF Glottal"
 ::: tag "Cross-Language"
+
 <!--markdownlint-disable MD034-->
-::: button "Open Editor" external:https://nellowtcs.me/Ichikara icon:play
+
+::: button "Open Editor" external:https://audiflo.github.io/Ichikara icon:play
 ::: button "Quick Start" ./getting-started/quickstart.md icon:code
+
 <!--markdownlint-disable MD034-->
-::: button "GitHub" external:https://github.com/NellowTCS/Ichikara icon:github
+
+::: button "GitHub" external:https://github.com/Audiflo/Ichikara icon:github
 
 == side
 
@@ -136,14 +141,17 @@ Pass this voice to `renderScore` or `streamScore` with your score and language:
 ```typescript
 import { buildVoice, scaleVoice } from "ichikara";
 
-const brightAlto = scaleVoice(buildVoice({
-  name: "Bright Alto",
-  formant: { scale: 1.25, shift: 2, bandwidth: 1.0 },
-}), {
-  gender: 0.3,
-  breathiness: 0.2,
-  vibratoAmount: 0.8,
-});
+const brightAlto = scaleVoice(
+  buildVoice({
+    name: "Bright Alto",
+    formant: { scale: 1.25, shift: 2, bandwidth: 1.0 },
+  }),
+  {
+    gender: 0.3,
+    breathiness: 0.2,
+    vibratoAmount: 0.8,
+  },
+);
 ```
 
 :::
