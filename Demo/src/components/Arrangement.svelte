@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MeterMap, type Project, type VocalPart, type VocalTrack } from "ichikara";
+  import { MeterMap, type Project, type VocalPart, type VocalTrack } from "@audiflo/ichikara";
   import { Plus, Copy, Trash2, AudioLines } from "@lucide/svelte";
   import ResizeHandle from "./ui/ResizeHandle.svelte";
   import { layoutBounds } from "../lib/editor/preferences";

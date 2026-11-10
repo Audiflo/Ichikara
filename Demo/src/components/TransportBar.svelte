@@ -2,7 +2,7 @@
   import { Play, Pause, Square, FileDown, FileOutput, Metronome } from "@lucide/svelte";
   import Button from "./ui/Button.svelte";
   import Slider from "./ui/Slider.svelte";
-  import type { TempoMap } from "ichikara";
+  import type { TempoMap } from "@audiflo/ichikara";
 
   let {
     onPlay = () => {},

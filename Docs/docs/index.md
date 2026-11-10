@@ -102,7 +102,7 @@ Start with Chitose Chika, Sho, or Ren. Use the editor's voice controls or
 
 ```typescript
 import { writeFileSync } from "node:fs";
-import { renderScore, chitoseChika, encodeWav, type Score } from "ichikara";
+import { renderScore, chitoseChika, encodeWav, type Score } from "@audiflo/ichikara";
 
 const score: Score = {
   tempos: [{ tick: 0, tempo: 120 }],
@@ -125,7 +125,7 @@ writeFileSync("hello.wav", Buffer.from(encodeWav(chunks)));
 Call playback from a user action, using the score from the Node.js tab:
 
 ```typescript
-import { streamScore, chitoseChika, StreamPlayer, type Score } from "ichikara";
+import { streamScore, chitoseChika, StreamPlayer, type Score } from "@audiflo/ichikara";
 
 const player = new StreamPlayer();
 
@@ -139,7 +139,7 @@ async function playPhrase(score: Score): Promise<void> {
 Pass this voice to `renderScore` or `streamScore` with your score and language:
 
 ```typescript
-import { buildVoice, scaleVoice } from "ichikara";
+import { buildVoice, scaleVoice } from "@audiflo/ichikara";
 
 const brightAlto = scaleVoice(
   buildVoice({
@@ -159,7 +159,7 @@ const brightAlto = scaleVoice(
 ## Installation
 
 ```sh
-npm install ichikara
+npm install @audiflo/ichikara
 ```
 
 ## Next Steps

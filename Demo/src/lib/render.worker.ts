@@ -1,4 +1,4 @@
-import { streamScore, streamProject } from "ichikara";
+import { streamScore, streamProject } from "@audiflo/ichikara";
 import { RENDER_QUEUE_CAPACITY, type RenderJob, type RenderRequest, type RenderResponse } from "./render-protocol";
 
 let outstanding = 0;

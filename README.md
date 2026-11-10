@@ -1,6 +1,6 @@
 # Ichikara
 
-[![npm version](https://img.shields.io/npm/v/ichikara.svg)](https://www.npmjs.com/package/ichikara)
+[![npm version](https://img.shields.io/npm/v/@audiflo/ichikara.svg)](https://www.npmjs.com/package/@audiflo/ichikara)
 [![CI](https://github.com/Audiflo/Ichikara/actions/workflows/ci.yml/badge.svg)](https://github.com/Audiflo/Ichikara/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -42,7 +42,7 @@ See the [editor guide](Docs/docs/guide/editor.md) for controls and shortcuts.
 ## Library
 
 ```sh
-npm install ichikara
+npm install @audiflo/ichikara
 ```
 
 The library supports Japanese, English, and Mandarin lyrics, three Chitose voice
@@ -54,7 +54,7 @@ Render a phrase to WAV in Node:
 
 ```typescript
 import { writeFileSync } from "node:fs";
-import { renderScore, chitoseChika, encodeWav, type Score } from "ichikara";
+import { renderScore, chitoseChika, encodeWav, type Score } from "@audiflo/ichikara";
 
 const score: Score = {
   tempos: [{ tick: 0, tempo: 120 }],

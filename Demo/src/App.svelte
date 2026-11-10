@@ -21,7 +21,7 @@
     type ProjectNote,
     type VocalTrack,
     type AudioChunk,
-  } from "ichikara";
+  } from "@audiflo/ichikara";
   import Arrangement from "./components/Arrangement.svelte";
   import PianoRoll from "./components/PianoRoll.svelte";
   import NoteInspector from "./components/NoteInspector.svelte";

@@ -1,5 +1,5 @@
-import type { Note, Score } from "ichikara";
-import { chitoseChika } from "ichikara";
+import type { Note, Score } from "@audiflo/ichikara";
+import { chitoseChika } from "@audiflo/ichikara";
 
 export type EditorLanguage = "jp" | "en" | "zh";
 

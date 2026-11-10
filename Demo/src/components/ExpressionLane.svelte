@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { SvelteMap } from "svelte/reactivity";
-  import type { ProjectNote } from "ichikara";
+  import type { ProjectNote } from "@audiflo/ichikara";
   import { expressions, expressionValueAt, type Expression } from "../lib/editor/expression";
   import { createNoteIndex, visibleNotes } from "../lib/editor/note-index";
 

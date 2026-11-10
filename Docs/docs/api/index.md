@@ -3,7 +3,7 @@ title: "API Reference"
 description: "Public types and functions for synthesis, projects, playback, and score conversion."
 ---
 
-Import these types and functions from `ichikara`.
+Import these types and functions from `@audiflo/ichikara`.
 
 ## Native projects
 

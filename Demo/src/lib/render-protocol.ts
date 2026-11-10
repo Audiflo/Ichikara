@@ -1,4 +1,4 @@
-import type { Project, Score, VoiceConfig } from "ichikara";
+import type { Project, Score, VoiceConfig } from "@audiflo/ichikara";
 
 /** Immutable job snapshot sent over this application's dedicated worker channel. */
 export type RenderJob =

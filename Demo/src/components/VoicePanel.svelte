@@ -3,7 +3,7 @@
   import { Sparkles } from "@lucide/svelte";
   import Field from "./ui/Field.svelte";
   import Button from "./ui/Button.svelte";
-  import { chitoseChika, chitoseVoices, type VoiceConfig, type scaleVoice } from "ichikara";
+  import { chitoseChika, chitoseVoices, type VoiceConfig, type scaleVoice } from "@audiflo/ichikara";
 
   type VoiceParameters = Parameters<typeof scaleVoice>[1];
 

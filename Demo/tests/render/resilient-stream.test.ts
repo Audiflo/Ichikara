@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { it } from "node:test";
-import type { AudioChunk } from "ichikara";
+import type { AudioChunk } from "@audiflo/ichikara";
 import { createResilientStream } from "../../src/lib/render/resilient-stream.ts";
 
 const chunk: AudioChunk = { data: [new Float32Array([0.5])], channels: 1, sampleRate: 44100, startSample: 0 };

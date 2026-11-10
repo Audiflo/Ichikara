@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Dialog } from "bits-ui";
   import { Plus, Trash2, X } from "@lucide/svelte";
-  import { parseProject, serializeProject, type Project } from "ichikara";
+  import { parseProject, serializeProject, type Project } from "@audiflo/ichikara";
 
   const { project, onApply, onClose }: { project: Project; onApply: (project: Project) => void; onClose: () => void } = $props();
   let draft = $state<Project | null>(null);

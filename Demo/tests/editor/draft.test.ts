@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { it } from "node:test";
-import { createProject, serializeProject } from "ichikara";
+import { createProject, serializeProject } from "@audiflo/ichikara";
 import { readDraft, writeDraft } from "../../src/lib/editor/draft.ts";
 
 function storage(): Pick<Storage, "getItem" | "setItem"> {

@@ -18,7 +18,7 @@ See [Installation](./installation).
    A Score is the input to the renderer: tempo map, timing resolution, and a list of notes. Each note has a lyric, MIDI note number, and duration.
 
    ```typescript
-   import { renderScore, chitoseChika, encodeWav, type Score } from "ichikara";
+   import { renderScore, chitoseChika, encodeWav, type Score } from "@audiflo/ichikara";
 
    const score: Score = {
      tempos: [{ tick: 0, tempo: 120 }],
@@ -75,7 +75,7 @@ See [Installation](./installation).
    For real-time playback without waiting for the full render:
 
    ```typescript
-   import { streamScore, StreamPlayer } from "ichikara";
+   import { streamScore, StreamPlayer } from "@audiflo/ichikara";
 
    const player = new StreamPlayer();
    await player.play(streamScore(score, chitoseChika, "jp"));
@@ -88,7 +88,7 @@ See [Installation](./installation).
    Ichikara ships with three named voices, plus a builder for custom ones:
 
    ```typescript
-   import { chitoseChika, chitoseSho, buildVoice, scaleVoice } from "ichikara";
+   import { chitoseChika, chitoseSho, buildVoice, scaleVoice } from "@audiflo/ichikara";
 
    // Use a built-in voice
    const chunks1 = await renderScore(score, chitoseSho, "jp");

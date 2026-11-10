@@ -47,7 +47,7 @@ File or bytes  -->  utaformatix-3 parser  -->  UfData  -->  Score
 ### Import from File
 
 ```typescript
-import { importScoreFromFile } from "ichikara";
+import { importScoreFromFile } from "@audiflo/ichikara";
 
 // Browser file input
 const input = document.querySelector('input[type="file"]');
@@ -64,7 +64,7 @@ input.addEventListener("change", () => {
 ### Import from Bytes
 
 ```typescript
-import { importScoreFromBytes } from "ichikara";
+import { importScoreFromBytes } from "@audiflo/ichikara";
 
 const response = await fetch("song.ustx");
 if (!response.ok) throw new Error(`Score download failed: ${response.status}`);
@@ -88,7 +88,7 @@ Export a Score to any supported format:
 ### Export as Bytes
 
 ```typescript
-import { exportScoreToBytes } from "ichikara";
+import { exportScoreToBytes } from "@audiflo/ichikara";
 
 const bytes = await exportScoreToBytes(score, {
   format: "ustx",
@@ -105,7 +105,7 @@ const blob = await exportScoreToBlob(score, { format: "mid" });
 ### Download in Browser
 
 ```typescript
-import { downloadScore } from "ichikara";
+import { downloadScore } from "@audiflo/ichikara";
 
 await downloadScore(score, {
   format: "ustx",
@@ -116,7 +116,7 @@ await downloadScore(score, {
 ### Low-Level: Direct UfData Conversion
 
 ```typescript
-import { scoreToUfData, ufDataToScore } from "ichikara";
+import { scoreToUfData, ufDataToScore } from "@audiflo/ichikara";
 
 const ufData = scoreToUfData(score);
 const scoreBack = ufDataToScore(ufData);

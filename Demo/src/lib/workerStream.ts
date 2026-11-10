@@ -1,4 +1,4 @@
-import type { AudioChunk } from "ichikara";
+import type { AudioChunk } from "@audiflo/ichikara";
 import type { RenderJob, RenderRequest, RenderResponse } from "./render-protocol";
 
 /** A cancellable audio producer; cancellation terminates the worker and wakes pending reads. */

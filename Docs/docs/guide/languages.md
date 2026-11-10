@@ -33,15 +33,19 @@ that lyric to the `sil` phoneme, which is defined with `type: "silence"` and
 `voiced: false`, so the note renders as true digital silence:
 
 ```typescript
-renderScore({
-  tempos: [{ tick: 0, tempo: 120 }],
-  resolution: 480,
-  notes: [
-    { tick: 0,   lyric: "か", noteNum: 60, length: 480 },
-    { tick: 480, lyric: "R",  noteNum: 60, length: 480 }, // silence
-    { tick: 960, lyric: "な", noteNum: 62, length: 480 },
-  ],
-}, voice, "jp");
+renderScore(
+  {
+    tempos: [{ tick: 0, tempo: 120 }],
+    resolution: 480,
+    notes: [
+      { tick: 0, lyric: "か", noteNum: 60, length: 480 },
+      { tick: 480, lyric: "R", noteNum: 60, length: 480 }, // silence
+      { tick: 960, lyric: "な", noteNum: 62, length: 480 },
+    ],
+  },
+  voice,
+  "jp",
+);
 ```
 
 The check is case-sensitive. Lowercase `r` stays singable, because it is a real
@@ -53,13 +57,13 @@ map the rest marker to it, or rests in imported scores will be sung.
 ## Using Language Modules
 
 ```typescript
-import { japanese, english, mandarin, getLanguage } from "ichikara";
+import { japanese, english, mandarin, getLanguage } from "@audiflo/ichikara";
 
 // Direct reference
-renderScore(score, voice, japanese);  // or "jp"
+renderScore(score, voice, japanese); // or "jp"
 
 // String lookup
-const lang = getLanguage("eng");  // returns english module
+const lang = getLanguage("eng"); // returns english module
 renderScore(score, voice, lang);
 ```
 
@@ -68,22 +72,33 @@ renderScore(score, voice, lang);
 Implement the `LanguageModule` interface and register it:
 
 ```typescript
-import { registerLanguage } from "ichikara";
-import type { LanguageModule, PhonemeDef } from "ichikara";
+import { registerLanguage } from "@audiflo/ichikara";
+import type { LanguageModule, PhonemeDef } from "@audiflo/ichikara";
 
 const myLang: LanguageModule = {
   id: "custom",
   name: "My Language",
   phonemes: new Map([
-    ["a", { symbol: "a", type: "vowel", voiced: true,
-            formants: [{ f: 800, bw: 100 }, { f: 1200, bw: 150 },
-                       { f: 2500, bw: 200 }, { f: 3500, bw: 250 },
-                       { f: 4500, bw: 300 }] }],
+    [
+      "a",
+      {
+        symbol: "a",
+        type: "vowel",
+        voiced: true,
+        formants: [
+          { f: 800, bw: 100 },
+          { f: 1200, bw: 150 },
+          { f: 2500, bw: 200 },
+          { f: 3500, bw: 250 },
+          { f: 4500, bw: 300 },
+        ],
+      },
+    ],
     // ... more phonemes
   ]),
   lyricToPhonemes(lyric: string): string[] {
     // Your G2P logic here
-    return [...lyric].filter(ch => this.phonemes.has(ch));
+    return [...lyric].filter((ch) => this.phonemes.has(ch));
   },
 };
 
@@ -98,11 +113,11 @@ const chunks = await renderScore(score, voice, "custom");
 The alias system maps language-specific phoneme symbols to a canonical IPA-like set. This is useful when a voicebank recorded for one language sings lyrics in another:
 
 ```typescript
-import { toCanonical, sequenceToCanonical } from "ichikara";
+import { toCanonical, sequenceToCanonical } from "@audiflo/ichikara";
 
 // Map a single phoneme
-toCanonical("en", "IY");   // -> "i"
-toCanonical("jp", "sh");   // -> "S"
+toCanonical("en", "IY"); // -> "i"
+toCanonical("jp", "sh"); // -> "S"
 
 // Map a sequence
 sequenceToCanonical("zh", ["zh", "ir"]);

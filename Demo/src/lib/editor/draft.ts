@@ -1,4 +1,4 @@
-import { parseProject, serializeProject, type Project } from "ichikara";
+import { parseProject, serializeProject, type Project } from "@audiflo/ichikara";
 
 const DRAFT_KEY = "ichikara.draft.v1";
 

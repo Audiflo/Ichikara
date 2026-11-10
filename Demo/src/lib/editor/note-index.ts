@@ -1,4 +1,4 @@
-import type { ProjectNote } from "ichikara";
+import type { ProjectNote } from "@audiflo/ichikara";
 
 /** A note's source position and time interval in an immutable render snapshot. */
 export interface IndexedNote {

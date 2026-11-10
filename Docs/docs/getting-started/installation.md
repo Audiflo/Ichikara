@@ -9,14 +9,14 @@ The [browser editor](https://audiflo.github.io/Ichikara) needs no installation. 
 the synthesis library in another project:
 
 ```bash
-npm install ichikara
+npm install @audiflo/ichikara
 ```
 
 ## Browser (CDN)
 
 ```html
 <script type="module">
-  import { renderScore, chitoseChika } from "https://unpkg.com/ichikara/dist/index.mjs";
+  import { renderScore, chitoseChika } from "https://unpkg.com/@audiflo/ichikara/dist/index.mjs";
 </script>
 ```
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, untrack } from "svelte";
-  import { MeterMap, type MeterEvent, type Note, type ProjectNote } from "ichikara";
+  import { MeterMap, type MeterEvent, type Note, type ProjectNote } from "@audiflo/ichikara";
   import { ZoomIn, ZoomOut, Piano, Magnet } from "@lucide/svelte";
   import IconButton from "./ui/IconButton.svelte";
   import Segmented from "./ui/Segmented.svelte";

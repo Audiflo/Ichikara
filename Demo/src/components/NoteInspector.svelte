@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getLanguage, type ProjectNote } from "ichikara";
+  import { getLanguage, type ProjectNote } from "@audiflo/ichikara";
 
   const {
     note,

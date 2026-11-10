@@ -1,4 +1,4 @@
-import type { AudioChunk } from "ichikara";
+import type { AudioChunk } from "@audiflo/ichikara";
 
 /** An audio producer whose cancellation releases its owned resources. */
 export interface CancellableAudio {
