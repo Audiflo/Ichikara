@@ -1,7 +1,7 @@
 export default {
-  title: "UTAU.js",
-  url: "https://nellowtcs.me/UTAU.js/docs",
-  logo: { alt: "UTAU.js", href: "./" },
+  title: "Ichikara",
+  url: "https://audiflo.github.io/Ichikara/docs",
+  logo: { alt: "Ichikara", href: "./" },
   favicon: "",
   theme: {
     name: "ruby",
@@ -19,23 +19,23 @@ export default {
   layout: {
     footer: {
       style: "complete",
-      description: "A speech-synthesis library for singing voice synthesis in the browser.",
+      description: "A OneVoice song editor and TypeScript singing-synthesis library.",
       branding: true,
       columns: [
         {
           title: "Resources",
           links: [
-            { text: "Getting Started", url: "./getting-started/quickstart" },
-            { text: "API Reference", url: "./api/" },
-            { text: "Voice Config", url: "./api/voice-config" },
+            { text: "Song Editor", url: "/guide/editor" },
+            { text: "API Reference", url: "/api/" },
+            { text: "Voice Config", url: "/api/voice-config" },
           ],
         },
         {
           title: "Community",
           links: [
-            { text: "GitHub", url: "https://github.com/NellowTCS/UTAU.js" },
-            { text: "Issues", url: "https://github.com/NellowTCS/UTAU.js/issues" },
-            { text: "Discussions", url: "https://github.com/NellowTCS/UTAU.js/discussions" },
+            { text: "GitHub", url: "https://github.com/Audiflo/Ichikara" },
+            { text: "Issues", url: "https://github.com/Audiflo/Ichikara/issues" },
+            { text: "Discussions", url: "https://github.com/Audiflo/Ichikara/discussions" },
           ],
         },
       ],
@@ -48,8 +48,8 @@ export default {
     },
     seo: {
       defaultDescription:
-        "UTAU.js is a speech-synthesis library for singing voice synthesis in the browser. Cross-language phoneme support with an LF-glottal source-formant filter engine.",
-      openGraph: { defaultImage: "" },
+        "Write songs in Ichikara's OneVoice editor or use its TypeScript library to synthesize singing from notes and lyrics.",
+      openGraph: { defaultImage: "/assets/images/editor.png" },
       twitter: { cardType: "summary_large_image" },
     },
     sitemap: {
@@ -84,6 +84,7 @@ export default {
       icon: "book-open",
       collapsible: false,
       children: [
+        { title: "Song Editor", path: "/guide/editor", icon: "music" },
         { title: "Architecture", path: "/guide/architecture", icon: "box" },
         { title: "Renderer", path: "/guide/renderer", icon: "cpu" },
         { title: "Languages", path: "/guide/languages", icon: "globe" },
@@ -95,6 +96,7 @@ export default {
       path: "/api/",
       collapsible: false,
       children: [
+        { title: "Native Projects", path: "/api/projects", icon: "folder" },
         { title: "VoiceConfig", path: "/api/voice-config", icon: "sliders" },
         { title: "DSP Primitives", path: "/api/dsp", icon: "audio-waveform" },
         { title: "Import / Export", path: "/api/import-export", icon: "file-up" },
@@ -102,15 +104,15 @@ export default {
     },
     {
       title: "GitHub",
-      path: "https://github.com/NellowTCS/UTAU.js",
+      path: "https://github.com/Audiflo/Ichikara",
       icon: "github",
       external: true,
     },
   ],
-  footer: "Built with [docmd](https://docmd.io). [View on GitHub](https://github.com/NellowTCS/UTAU.js).",
+  footer: "Built with [docmd](https://docmd.io). [View on GitHub](https://github.com/Audiflo/Ichikara).",
   editLink: {
     enabled: true,
-    baseUrl: "https://github.com/NellowTCS/UTAU.js/edit/main/",
+    baseUrl: "https://github.com/Audiflo/Ichikara/edit/main/",
     text: "Edit this page",
   },
 };

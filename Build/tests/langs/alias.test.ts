@@ -43,8 +43,8 @@ describe("alias", () => {
     });
 
     it("returns undefined for unknown language", () => {
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-      expect(toCanonical("fr" as any, "a")).toBeUndefined();
+      // @ts-expect-error JavaScript callers can pass an unregistered language.
+      expect(toCanonical("fr", "a")).toBeUndefined();
     });
   });
 

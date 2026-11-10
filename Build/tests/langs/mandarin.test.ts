@@ -97,6 +97,19 @@ describe("mandarin", () => {
     expect(result).toEqual([]);
   });
 
+  it.each([
+    ["you", ["i", "o", "u"]],
+    ["wei", ["u", "e", "i"]],
+    ["wen", ["u", "e", "n"]],
+    ["ying", ["i", "ng"]],
+    ["yu", ["v"]],
+  ])("uses the distinct zero-onset spelling %s in reclists", (alias, phonemes) => {
+    const cv = mandarin.reclist?.("cv") ?? [];
+    expect(cv.filter((entry) => entry.alias === alias)).toEqual([{ alias, phonemes }]);
+    const vcv = mandarin.reclist?.("vcv") ?? [];
+    expect(vcv.filter((entry) => entry.alias === `- ${alias}`)).toEqual([{ alias: `- ${alias}`, phonemes }]);
+  });
+
   it("all output phonemes exist in the phoneme map", () => {
     const testSyllables = [
       "ba",
@@ -134,5 +147,22 @@ describe("mandarin", () => {
         expect(mandarin.phonemes.has(p)).toBe(true);
       }
     }
+  });
+});
+
+describe("mandarin rests", () => {
+  it("maps the UTAU rest marker to the silence phoneme", () => {
+    expect(mandarin.lyricToPhonemes("R")).toEqual(["sil"]);
+  });
+
+  it("defines the rest phoneme as unvoiced silence", () => {
+    const def = mandarin.phonemes.get("sil");
+    expect(def?.type).toBe("silence");
+    expect(def?.voiced).toBe(false);
+  });
+
+  it("does not parse the rest marker as the pinyin syllable r", () => {
+    const symbols = mandarin.lyricToPhonemes("R");
+    expect(symbols).toEqual(["sil"]);
   });
 });

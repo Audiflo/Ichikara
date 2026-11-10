@@ -1,17 +1,21 @@
 import type { Score } from "../core/types";
+import type { generateUstx, GenerateParams } from "@sevenc-nanashi/utaformatix-ts/base";
+import { elementAt, integerInRange } from "../core/validation";
 
-/** Options for exporting a score to a file format. */
+/** Output format, project title, and pitch-export preferences. */
 export interface ExportOptions {
-  /** Target format extension (e.g. "ustx", "vsqx", "mid", "ufdata").
-   *  Default "ustx". */
   format?: string;
-  /** Project name used in the exported file metadata. Default "Untitled". */
   projectName?: string;
-  /** Whether to include pitch-bend data in the export. Default true. */
   pitch?: boolean;
 }
 
-const FORMAT_GENERATORS: Record<string, string> = {
+type FormatModule = typeof import("@sevenc-nanashi/utaformatix-ts/base");
+type ExportData = Parameters<typeof generateUstx>[0];
+type GenerateFn = (data: ExportData, params?: Partial<GenerateParams>) => Promise<Uint8Array | Uint8Array[]>;
+type GeneratorName = { [K in keyof FormatModule]: FormatModule[K] extends GenerateFn ? K : never }[keyof FormatModule];
+const FORMAT_RESOLUTION = 480;
+
+const FORMAT_GENERATORS: Readonly<Record<string, GeneratorName>> = {
   ustx: "generateUstx",
   vsqx: "generateVsqx",
   vsq: "generateVsq",
@@ -28,23 +32,24 @@ const FORMAT_GENERATORS: Record<string, string> = {
   ust: "generateUst",
 };
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-function buildTrackPitch(notes: Score["notes"], resolution: number): { ticks: number[]; values: number[] } | undefined {
+function buildTrackPitch(notes: Score["notes"], scale: number): { ticks: number[]; values: number[] } | undefined {
   const totalTicks: number[] = [];
   const totalValues: number[] = [];
 
   for (const note of notes) {
     if (!note.pitchBend) continue;
+    if (note.pitchBend.ticks.length !== note.pitchBend.values.length)
+      throw new RangeError("Pitch ticks and values must have equal lengths");
     const noteStart = note.tick ?? 0;
-    for (let i = 0; i < note.pitchBend.ticks.length; i++) {
-      totalTicks.push(noteStart + note.pitchBend.ticks[i]);
-      totalValues.push(note.pitchBend.values[i] + note.noteNum);
+    for (const [i, tick] of note.pitchBend.ticks.entries()) {
+      totalTicks.push(Math.round((noteStart + tick) * scale));
+      totalValues.push(elementAt(note.pitchBend.values, i) + note.noteNum);
     }
   }
 
   if (!totalTicks.length) return undefined;
 
-  const combined = totalTicks.map((t, i) => ({ tick: t, value: totalValues[i] }));
+  const combined = totalTicks.map((t, i) => ({ tick: t, value: elementAt(totalValues, i) }));
   combined.sort((a, b) => a.tick - b.tick);
 
   const mergedTicks: number[] = [];
@@ -59,22 +64,32 @@ function buildTrackPitch(notes: Score["notes"], resolution: number): { ticks: nu
   return { ticks: mergedTicks, values: mergedValues };
 }
 
-/** Convert a Score into a UfData intermediate representation, suitable for
- *  serialisation to any utaformatix-ts supported format. */
-export function scoreToUfData(score: Score, options: ExportOptions = {}) {
+/** Convert a score to UtaFormatix's 480-tick timeline; reject invalid resolution or pitch arrays.
+ * See https://github.com/sdercolin/utaformatix-data
+ */
+export function scoreToUfData(score: Score, options: ExportOptions = {}): ExportData {
   const { projectName = "Untitled" } = options;
+  integerInRange(score.resolution, "resolution", 1);
+  const scale = FORMAT_RESOLUTION / score.resolution;
+  let nextTick = 0;
+  const notes = score.notes.map((note) => {
+    const tick = note.tick ?? nextTick;
+    nextTick = tick + note.length;
+    return { ...note, tick };
+  });
 
-  const trackNotes = score.notes.map((n) => ({
+  const trackNotes = notes.map((n) => ({
     key: n.noteNum,
-    tickOn: n.tick ?? 0,
-    tickOff: (n.tick ?? 0) + n.length,
+    tickOn: Math.round(n.tick * scale),
+    tickOff: Math.round((n.tick + n.length) * scale),
     lyric: n.lyric,
+    ...(n.phonemes ? { phoneme: n.phonemes.join(" ") } : {}),
   }));
 
-  const pitch = options.pitch !== false ? buildTrackPitch(score.notes, score.resolution) : undefined;
+  const pitch = options.pitch !== false ? buildTrackPitch(notes, scale) : undefined;
 
   const tempos = score.tempos.map((t) => ({
-    tickPosition: t.tick,
+    tickPosition: Math.round(t.tick * scale),
     bpm: t.tempo,
   }));
 
@@ -101,26 +116,22 @@ function serializeUfData(data: unknown): Uint8Array {
   return new TextEncoder().encode(json);
 }
 
-let _generators: Record<string, (data: unknown, params?: { pitch?: boolean }) => Promise<Uint8Array | Uint8Array[]>> | null = null;
+let _generators: Readonly<Record<string, GenerateFn>> | null = null;
 
 async function lazyInit(): Promise<void> {
   if (_generators) return;
   const m = await import("@sevenc-nanashi/utaformatix-ts/base");
-  const gens: Record<string, (data: unknown, params?: { pitch?: boolean }) => Promise<Uint8Array | Uint8Array[]>> = {};
-  for (const [ext, fnName] of Object.entries(FORMAT_GENERATORS)) {
-    const fn = (m as Record<string, unknown>)[fnName];
-    if (typeof fn === "function") {
-      gens[ext] = fn as (data: unknown, params?: { pitch?: boolean }) => Promise<Uint8Array | Uint8Array[]>;
-    }
-  }
-  _generators = gens;
+  _generators = Object.fromEntries(Object.entries(FORMAT_GENERATORS).map(([ext, name]) => [ext, m[name]]));
 }
 
-/** Export a Score to a Uint8Array in the requested format. Lazily loads the
- *  utaformatix-ts generator for the target format. */
+/** Generate one track's project bytes; reject unsupported formats and converter failures. */
 export async function exportScoreToBytes(score: Score, options: ExportOptions = {}): Promise<Uint8Array> {
+  return exportUfDataToBytes(scoreToUfData(score, options), options);
+}
+
+/** Generate a complete interchange document. Multi-file formats must be exported as individual tracks. */
+export async function exportUfDataToBytes(ufData: ExportData, options: ExportOptions = {}): Promise<Uint8Array> {
   const fmt = (options.format ?? "ustx").toLowerCase();
-  const ufData = scoreToUfData(score, options);
 
   if (fmt === "ufdata") {
     return serializeUfData(ufData);
@@ -135,23 +146,23 @@ export async function exportScoreToBytes(score: Score, options: ExportOptions = 
   if (!gen) throw new Error(`Unsupported export format: ${fmt}`);
   const result = await gen(ufData, { pitch: options.pitch ?? true });
   if (Array.isArray(result)) {
+    if (result.length !== 1) throw new Error("This format produces multiple files. Choose USTX for a complete song.");
     return result[0] ?? new Uint8Array(0);
   }
   return result;
 }
 
-/** Export a Score to a Blob in the requested format. */
+/** Generate a project Blob; propagate conversion errors. */
 export function exportScoreToBlob(score: Score, options: ExportOptions = {}): Promise<Blob> {
   return exportScoreToBytes(score, options).then((bytes) => new Blob([new Uint8Array(bytes)]));
 }
 
-/** Export a Score to a blob URL (object URL) for in-page use or download. */
+/** Generate an object URL; the caller owns URL.revokeObjectURL after use. */
 export function exportScoreToUrl(score: Score, options: ExportOptions = {}): Promise<string> {
   return exportScoreToBlob(score, options).then((blob) => URL.createObjectURL(blob));
 }
 
-/** Export and trigger a browser download of the score file.
- *  Works only in browser environments (creates a download link and clicks it). */
+/** Download the generated project in a browser; propagate conversion errors. */
 export function downloadScore(score: Score, options: ExportOptions = {}): Promise<void> {
   const fmt = options.format ?? "ustx";
   const filename = `${options.projectName ?? "Untitled"}.${fmt}`;

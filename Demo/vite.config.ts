@@ -6,7 +6,7 @@ import { execSync } from "child_process";
 const buildHash = execSync("git rev-parse HEAD", { encoding: "utf-8" }).trim();
 
 export default defineConfig(() => {
-  const isSingleFile = process.env.SINGLE_FILE === "true";
+  const isSingleFile = process.env["SINGLE_FILE"] === "true";
 
   return {
     base: "./",

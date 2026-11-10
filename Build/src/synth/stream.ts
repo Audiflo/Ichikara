@@ -1,111 +1,87 @@
 import type { AudioChunk, Score, VoiceConfig, FormantTarget, Note, LanguageModule } from "../core/types";
 import { getLanguage } from "../langs/index";
-import { getVoice } from "../voices/index";
+import { getVoice, chitoseChika } from "../voices/index";
+import { mixAudioChunks } from "../core/audio";
+import { elementAt, integerInRange } from "../core/validation";
+import { TempoMap } from "../core/timing";
 import { renderNote } from "./renderer";
 
-function ticksToDuration(tickLen: number, tempo: number, resolution: number, sampleRate: number): number {
-  return tickLen * (60 / (tempo * resolution)) * sampleRate;
-}
-
-/** Stream a Score as an async generator of AudioChunks, one note at a time.
- *  Audio is rendered lazily as each chunk is produced just-in-time, allowing
- *  interleaved playback via StreamPlayer.
- *
- *  `voiceInput` can be a registered voice name (string) or an inline
- *  VoiceConfig object. `langId` selects the language module ("jp", "en",
- *  "zh", or a custom registered language). */
+/** Render notes in absolute tick order, integrating tempo changes through notes and gaps.
+ * Input notes and tempos are not mutated. Unknown voices/languages and invalid timing throw.
+ */
 export async function* streamScore(score: Score, voiceInput?: string | VoiceConfig, langId?: string): AsyncGenerator<AudioChunk> {
   const lang = getLanguage(langId ?? "jp");
-  const voice = typeof voiceInput === "object" ? voiceInput : getVoice(voiceInput ?? "female");
+  const voice = typeof voiceInput === "object" ? voiceInput : getVoice(voiceInput ?? score.voice ?? chitoseChika.name);
   if (!lang) throw new Error(`Language not found: ${langId ?? "jp"}`);
-  if (!voice) throw new Error(`Voice not found: ${String(voiceInput)}`);
+  if (!voice) throw new Error(`Voice not found: ${typeof voiceInput === "string" ? voiceInput : chitoseChika.name}`);
 
   const sr = voice.sampleRate;
-  const { tempos, resolution, notes } = score;
-  let currentTick = 0;
-  let currentSample = 0;
-  let currentTempo = tempos[0]?.tempo ?? 120;
-  let tempoIdx = 0;
-
-  function tempoAt(tick: number): number {
-    let t = tempos[0]?.tempo ?? 120;
-    for (const ev of tempos) {
-      if (ev.tick <= tick) t = ev.tempo;
-      else break;
-    }
-    return t;
-  }
-
-  function noteSampleDuration(noteTick: number, noteLen: number): number {
-    const end = noteTick + noteLen;
-    let total = 0;
-    let seg = noteTick;
-    let t = tempos[0]?.tempo ?? 120;
-    for (const ev of tempos) {
-      if (ev.tick > seg && ev.tick < end) {
-        total += ticksToDuration(ev.tick - seg, t, resolution, sr);
-        seg = ev.tick;
-      }
-      if (ev.tick <= seg) t = ev.tempo;
-      if (seg >= end) break;
-    }
-    if (seg < end) total += ticksToDuration(end - seg, t, resolution, sr);
-    return total;
-  }
+  const { resolution } = score;
+  const timing = new TempoMap(score.tempos, resolution);
+  let implicitTick = 0;
+  const notes = score.notes
+    .map((note) => {
+      const tick = note.tick ?? implicitTick;
+      integerInRange(tick, "note tick", 0);
+      integerInRange(note.length, "note length", 1);
+      implicitTick = integerInRange(tick + note.length, "note end", 1);
+      return { ...note, tick };
+    })
+    .sort((a, b) => a.tick - b.tick);
 
   const accentOffsets = computeAccentOffsets(notes, lang);
 
+  const OVERLAP_MS = 5;
+  const overlapSamples = Math.round((OVERLAP_MS / 1000) * sr);
+
   let prevFormants: FormantTarget[] | undefined;
-  for (let ni = 0; ni < notes.length; ni++) {
-    const note = notes[ni];
-    const noteTick = note.tick ?? currentTick;
-    const gap = Math.max(0, noteTick - currentTick);
-    if (gap > 0) prevFormants = undefined;
-    currentSample += Math.round(ticksToDuration(gap, currentTempo, resolution, sr));
-
-    const noteTempo = tempoAt(noteTick);
-
-    while (tempoIdx < tempos.length && tempos[tempoIdx].tick <= currentTick + note.length + gap) {
-      currentTempo = tempos[tempoIdx].tempo;
-      tempoIdx++;
+  let previousEndTick = -1;
+  for (const [ni, originalNote] of notes.entries()) {
+    let note = originalNote;
+    const noteTick = note.tick;
+    const startSample = Math.round(timing.secondsAt(noteTick) * sr);
+    const endSample = Math.round(timing.secondsAt(noteTick + note.length) * sr);
+    integerInRange(endSample, "note end sample", 0);
+    const legato = previousEndTick === noteTick;
+    if (!legato) {
+      prevFormants = undefined;
     }
+    const extraSamples = legato ? Math.min(overlapSamples, startSample) : 0;
 
-    const noteSamples = Math.round(noteSampleDuration(noteTick, note.length));
-    const adjustedLength = Math.max(1, Math.round((noteSamples * noteTempo * resolution) / (60 * sr)));
-    const adjustedNote = { ...note, length: adjustedLength };
-    if (accentOffsets[ni] !== undefined) {
-      adjustedNote.pitchAccent = accentOffsets[ni];
+    const accent = accentOffsets[ni];
+    if (accent !== undefined) {
+      note = { ...note, pitchAccent: accent };
     }
-    const { chunk, finalFormants } = renderNote(adjustedNote, voice, lang, noteTempo, resolution, prevFormants);
+    const { chunk, finalFormants } = renderNote(note, voice, lang, timing.tempoAt(noteTick), resolution, prevFormants, extraSamples, {
+      sampleLength: Math.max(1, endSample - startSample),
+      tickAtSample: (sample) => timing.tickAt((startSample + sample) / sr) - noteTick,
+    });
     prevFormants = finalFormants;
-    chunk.startSample = currentSample;
+    chunk.startSample = startSample - extraSamples;
+    const firstChannel = elementAt(chunk.data, 0);
     if (voice.channels === 2 && chunk.data.length === 1) {
-      chunk.data = [new Float32Array(chunk.data[0]), new Float32Array(chunk.data[0])];
+      chunk.data = [new Float32Array(firstChannel), new Float32Array(firstChannel)];
       chunk.channels = 2;
     }
     yield chunk;
     await new Promise((r) => setTimeout(r, 0));
-    currentSample += chunk.data[0].length;
-    currentTick = noteTick + note.length;
+    previousEndTick = noteTick + note.length;
   }
 }
 
 function computeAccentOffsets(notes: Note[], lang: LanguageModule): (number | undefined)[] {
   if (!lang.resolveAccents) return [];
-  const offsets: (number | undefined)[] = new Array(notes.length).fill(undefined);
+  const offsets = new Array<number | undefined>(notes.length).fill(undefined);
   const phraseLyrics: string[] = [];
   const phraseIndices: number[] = [];
   let prevTick = 0;
-  for (let ni = 0; ni < notes.length; ni++) {
-    const n = notes[ni];
+  for (const [ni, n] of notes.entries()) {
     const noteTick = n.tick ?? prevTick;
     const gap = Math.max(0, noteTick - prevTick);
     if (gap > 0 && phraseLyrics.length > 0) {
       const result = lang.resolveAccents(phraseLyrics);
-      if (result) {
-        for (let oi = 0; oi < result.length; oi++) {
-          if (result[oi] !== undefined) offsets[phraseIndices[oi]] = result[oi];
-        }
+      for (let oi = 0; oi < result.length; oi++) {
+        if (result[oi] !== undefined) offsets[elementAt(phraseIndices, oi)] = result[oi];
       }
       phraseLyrics.length = 0;
       phraseIndices.length = 0;
@@ -116,42 +92,19 @@ function computeAccentOffsets(notes: Note[], lang: LanguageModule): (number | un
   }
   if (phraseLyrics.length > 0) {
     const result = lang.resolveAccents(phraseLyrics);
-    if (result) {
-      for (let oi = 0; oi < result.length; oi++) {
-        if (result[oi] !== undefined) offsets[phraseIndices[oi]] = result[oi];
-      }
+    for (let oi = 0; oi < result.length; oi++) {
+      if (result[oi] !== undefined) offsets[elementAt(phraseIndices, oi)] = result[oi];
     }
   }
   return offsets;
 }
 
-/** Render an entire Score into an array of AudioChunks (one per note).
- *  Convenience wrapper around streamScore that collects all chunks into
- *  memory. */
 export async function renderScore(score: Score, voiceInput?: string | VoiceConfig, langId?: string): Promise<AudioChunk[]> {
   const chunks: AudioChunk[] = [];
   for await (const chunk of streamScore(score, voiceInput, langId)) chunks.push(chunk);
   return chunks;
 }
 
-/** Mix multiple AudioChunks into a single continuous AudioChunk by summing
- *  overlapping samples. Chunk start positions are preserved. Returns a new
- *  chunk that spans the full extent of all inputs. */
 export function mixChunks(chunks: AudioChunk[]): AudioChunk {
-  if (!chunks.length) return { data: [new Float32Array(0), new Float32Array(0)], sampleRate: 44100, startSample: 0, channels: 2 };
-  const sr = chunks[0].sampleRate,
-    ch = chunks[0].channels;
-  const totalLen = chunks.reduce((m, c) => Math.max(m, c.startSample + c.data[0].length), 0);
-  const mix: Float32Array[] = Array.from({ length: ch }, () => new Float32Array(totalLen));
-  for (const chunk of chunks) {
-    for (let c = 0; c < Math.min(ch, chunk.data.length); c++) {
-      const src = chunk.data[c],
-        dst = mix[c];
-      for (let i = 0; i < src.length; i++) {
-        const idx = chunk.startSample + i;
-        if (idx < totalLen) dst[idx] += src[i];
-      }
-    }
-  }
-  return { data: mix, sampleRate: sr, startSample: 0, channels: ch };
+  return mixAudioChunks(chunks);
 }

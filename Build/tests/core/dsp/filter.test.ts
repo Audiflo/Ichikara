@@ -1,4 +1,6 @@
 import { FormantFilter, FormantCascade, interpolateFormants } from "../../../src/core/dsp/filter";
+import { elementAt } from "../../../src/core/validation";
+import { mulberry32 } from "../../../src/core/rng";
 
 describe("FormantFilter", () => {
   it("processes a sample and returns a finite value", () => {
@@ -12,7 +14,8 @@ describe("FormantFilter", () => {
   it("processes a buffer and returns same length", () => {
     const f = new FormantFilter();
     f.setResonator(500, 100, 44100);
-    const input = new Float32Array(100).map(() => Math.random() * 2 - 1);
+    const random = mulberry32(42);
+    const input = new Float32Array(100).map(() => random() * 2 - 1);
     const out = f.process(input);
     expect(out.length).toBe(100);
     for (const s of out) expect(isFinite(s)).toBe(true);
@@ -24,7 +27,7 @@ describe("FormantFilter", () => {
     const input = new Float32Array([0.5, -0.3, 0.1, 0.0]);
     const out = f.process(input);
     for (let i = 0; i < input.length; i++) {
-      const diff = Math.abs(out[i] - input[i]);
+      const diff = Math.abs(elementAt(out, i) - elementAt(input, i));
       expect(diff).toBeLessThan(1e-4);
     }
   });
@@ -34,14 +37,15 @@ describe("FormantFilter", () => {
     f.setResonator(500, 100, 44100);
     f.processSample(1.0);
     f.reset();
-    const input = new Float32Array(100).map(() => Math.random() * 2 - 1);
+    const random = mulberry32(42);
+    const input = new Float32Array(100).map(() => random() * 2 - 1);
     const out1 = f.process(new Float32Array(input));
     f.reset();
     f.setResonator(500, 100, 44100);
     const out2 = f.process(new Float32Array(input));
     expect(out1.length).toBe(out2.length);
     for (let i = 0; i < out1.length; i++) {
-      expect(out1[i]).toBeCloseTo(out2[i], 4);
+      expect(out1[i]).toBeCloseTo(elementAt(out2, i), 4);
     }
   });
 });
@@ -65,8 +69,9 @@ describe("FormantCascade", () => {
     const c = new FormantCascade();
     c.setFormants([{ f: 500, bw: 100 }], 44100);
     const out: number[] = [];
+    const random = mulberry32(42);
     for (let i = 0; i < 1000; i++) {
-      out.push(c.processSample(Math.random() * 2 - 1));
+      out.push(c.processSample(random() * 2 - 1));
     }
     expect(out.length).toBe(1000);
     for (const s of out) expect(isFinite(s)).toBe(true);
@@ -83,8 +88,9 @@ describe("FormantCascade", () => {
       [{ f: 450, bw: 120 }],
     );
     const out: number[] = [];
+    const random = mulberry32(42);
     for (let i = 0; i < 100; i++) {
-      out.push(c.processSample(Math.random() * 2 - 1));
+      out.push(c.processSample(random() * 2 - 1));
     }
     expect(out.length).toBe(100);
     for (const s of out) expect(isFinite(s)).toBe(true);
@@ -105,15 +111,15 @@ describe("interpolateFormants", () => {
     const t = 0.5;
     const result = interpolateFormants(a, b, t);
     expect(result.length).toBe(5);
-    expect(result[0].f).toBe(750);
-    expect(result[0].bw).toBe(150);
+    expect(elementAt(result, 0).f).toBe(750);
+    expect(elementAt(result, 0).bw).toBe(150);
   });
 
   it("returns 'a' at t=0 and 'b' at t=1 for first pair", () => {
     const a = [{ f: 500, bw: 100 }];
     const b = [{ f: 1000, bw: 200 }];
-    expect(interpolateFormants(a, b, 0)[0].f).toBe(500);
-    expect(interpolateFormants(a, b, 1)[0].f).toBe(1000);
+    expect(elementAt(interpolateFormants(a, b, 0), 0).f).toBe(500);
+    expect(elementAt(interpolateFormants(a, b, 1), 0).f).toBe(1000);
   });
 
   it("always returns 5 elements with fallback for missing pairs", () => {
@@ -124,9 +130,9 @@ describe("interpolateFormants", () => {
     ];
     const result = interpolateFormants(a, b, 0.5);
     expect(result.length).toBe(5);
-    expect(result[0].f).toBe(750);
-    expect(result[3].f).toBeDefined();
-    expect(result[3].bw).toBeDefined();
+    expect(elementAt(result, 0).f).toBe(750);
+    expect(elementAt(result, 3).f).toBeDefined();
+    expect(elementAt(result, 3).bw).toBeDefined();
   });
 
   it("returns 5 fallback elements when both inputs are empty", () => {
