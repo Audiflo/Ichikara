@@ -1,16 +1,18 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "strict": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "outDir": "dist",
     "rootDir": "src",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["svelte"]
+    "types": ["svelte", "vite/client", "node"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/**/*.worker.ts"]
 }

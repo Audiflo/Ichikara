@@ -1,9 +1,25 @@
 ---
 title: "API Reference"
-description: "Complete API reference for UTAU.js"
+description: "Public types and functions for synthesis, projects, playback, and score conversion."
 ---
 
-UTAU.js exposes a flat module surface through its main entry point. All public types and functions are exported from `utaujs`.
+Import these types and functions from `ichikara`.
+
+## Native projects
+
+See [Native projects](projects.md) for document structure and examples.
+
+| Export | Description |
+| --- | --- |
+| `Project`, `VocalTrack`, `VocalPart`, `ProjectNote` | Song document types with stable IDs |
+| `IdFactory`, `VoiceParameters`, `MeterEvent` | Host IDs, per-track voice controls, and meter changes |
+| `createProject`, `addTrack`, `addPart` | Construct a song |
+| `projectFromScore` | Wrap a single score in a native project |
+| `validateProject`, `parseProject`, `serializeProject` | Validate and round-trip native JSON |
+| `TempoMap`, `MeterMap` | Convert ticks, seconds, bars, and beats |
+| `streamProject` | Render placed tracks and parts with a stereo mix |
+| `importProjectFromFile`, `exportProjectToBytes` | Whole-song score conversion |
+| `ufDataToProject`, `projectToUfData` | Direct UtaFormatix conversion |
 
 ## Core Types
 
@@ -63,12 +79,14 @@ UTAU.js exposes a flat module surface through its main entry point. All public t
 
 | Export          | Description                             |
 |-----------------|-----------------------------------------|
-| `getVoice`      | Look up registered voice by name        |
-| `registerVoice` | Register a custom voice config          |
-| `maleVoice`     | Default male voice preset               |
-| `femaleVoice`   | Default female voice preset             |
-| `buildVoice`    | Build voice from partial overrides      |
-| `scaleVoice`    | Scale voice along perceptual dimensions |
+| `getVoice`        | Look up registered voice by name        |
+| `registerVoice`   | Register a custom voice config          |
+| `chitoseChika`    | Chitose Chika, the female voice          |
+| `chitoseSho`      | Chitose Sho, the male voice              |
+| `chitoseRen`      | Chitose Ren, the neutral voice           |
+| `chitoseVoices`   | All named voices, in UI order           |
+| `buildVoice`      | Build voice from partial overrides      |
+| `scaleVoice`      | Scale voice along perceptual dimensions |
 
 ## Playback
 

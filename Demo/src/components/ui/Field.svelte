@@ -1,0 +1,39 @@
+<script lang="ts">
+  import Slider from "./Slider.svelte";
+  import Tooltip from "./Tooltip.svelte";
+  let {
+    label,
+    value = $bindable(0),
+    min = 0,
+    max = 1,
+    step = 0.01,
+    format = (v: number) => v.toFixed(2),
+    hint = "",
+    onChange,
+    onCommit,
+  }: {
+    label: string;
+    value?: number;
+    min?: number;
+    max?: number;
+    step?: number;
+    format?: (v: number) => string;
+    hint?: string;
+    onChange?: (v: number) => void;
+    onCommit?: (() => void) | undefined;
+  } = $props();
+</script>
+
+<div class="vp-row">
+  {#if hint}
+    <Tooltip text={hint}>
+      <span class="vp-label">{label}</span>
+    </Tooltip>
+  {:else}
+    <span class="vp-label">{label}</span>
+  {/if}
+  <div class="vp-control">
+    <Slider bind:value {min} {max} {step} ariaLabel={label} onChange={(next: number) => onChange?.(next)} {onCommit} />
+    <span class="vp-value">{format(value)}</span>
+  </div>
+</div>

@@ -1,9 +1,10 @@
-import type { Note, Score } from "utaujs";
+import type { Note, Score } from "ichikara";
+import { chitoseChika } from "ichikara";
 
 export type EditorLanguage = "jp" | "en" | "zh";
 
 export function createDefaultScore(): Score {
-  return { tempos: [{ tick: 0, tempo: 120 }], resolution: 480, notes: [], voice: "female" };
+  return { tempos: [{ tick: 0, tempo: 120 }], resolution: 480, notes: [], voice: chitoseChika.name };
 }
 
 export function createDemoScore(lang: EditorLanguage = "jp"): Score {
@@ -37,5 +38,5 @@ export function createDemoScore(lang: EditorLanguage = "jp"): Score {
       { tick: tickSpacing * 5, lyric: "bang", noteNum: 69, length: tickSpacing * 2 },
     ];
   }
-  return { tempos: [{ tick: 0, tempo: 120 }], resolution: 480, notes, voice: "female" };
+  return { tempos: [{ tick: 0, tempo: 120 }], resolution: 480, notes, voice: chitoseChika.name };
 }

@@ -6,12 +6,15 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   quality:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20, 22]
+        node-version: [22, 24]
 
     steps:
       - uses: actions/checkout@v4
@@ -24,20 +27,8 @@ jobs:
 
       - run: npm ci
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Test Library
-        working-directory: Build
-        run: npx jest --silent
-
-      - name: Build Library
-        working-directory: Build
-        run: npm run build
-
-      - name: Build Demo
-        working-directory: Demo
-        run: npx tsc --noEmit
+      - name: Check library, editor, workers, and build
+        run: npm run check
 
       - name: Build Docs
         working-directory: Docs

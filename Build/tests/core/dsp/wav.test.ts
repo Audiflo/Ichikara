@@ -2,6 +2,30 @@ import { encodeWav } from "../../../src/core/dsp/wav";
 import type { AudioChunk } from "../../../src/core/types";
 
 describe("encodeWav", () => {
+  it("preserves independent stereo channels without doubling their gain", () => {
+    const view = new DataView(
+      encodeWav([
+        { data: [new Float32Array([0.25, -0.5]), new Float32Array([-0.25, 0.5])], sampleRate: 44100, startSample: 0, channels: 2 },
+      ]),
+    );
+    expect([44, 46, 48, 50].map((offset) => view.getInt16(offset, true))).toEqual([8192, -8192, -16384, 16384]);
+  });
+
+  it("rejects chunks with inconsistent channel lengths", () => {
+    expect(() =>
+      encodeWav([{ data: [new Float32Array(2), new Float32Array(1)], sampleRate: 44100, startSample: 0, channels: 2 }]),
+    ).toThrow();
+  });
+
+  it("rejects mixed sample rates instead of silently changing timing", () => {
+    expect(() =>
+      encodeWav([
+        { data: [new Float32Array(2)], sampleRate: 44100, startSample: 0, channels: 1 },
+        { data: [new Float32Array(2)], sampleRate: 48000, startSample: 2, channels: 1 },
+      ]),
+    ).toThrow();
+  });
+
   it("returns a valid RIFF/WAVE header", () => {
     const chunks: AudioChunk[] = [{ data: [new Float32Array(100).fill(0.5)], sampleRate: 44100, startSample: 0, channels: 1 }];
     const wav = encodeWav(chunks);

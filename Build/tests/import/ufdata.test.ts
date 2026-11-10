@@ -1,5 +1,6 @@
 import { ufDataToScore } from "../../src/import/ufdata";
 import type { UfData } from "../../src/import/ufdata";
+import { elementAt } from "../../src/core/validation";
 
 function makeData(overrides?: Partial<UfData["project"]>): UfData {
   return {
@@ -82,60 +83,56 @@ describe("ufDataToScore", () => {
   describe("pitch bend splitting", () => {
     it("splits absolute pitch per note, padding to note length", () => {
       const data = makeData();
-      data.project.tracks[0].pitch = {
+      elementAt(data.project.tracks, 0).pitch = {
         ticks: [0, 240, 480, 720, 960, 1200],
         values: [60, 60.5, 62, 61.5, 64, 64],
         isAbsolute: true,
       };
       const score = ufDataToScore(data);
-      expect(score.notes[0].pitchBend).toBeDefined();
-      expect(score.notes[0].pitchBend!.ticks).toEqual([0, 240, 480]);
-      expect(score.notes[0].pitchBend!.values).toEqual([0, 0.5, 2]);
-      expect(score.notes[1].pitchBend!.ticks).toEqual([0, 240, 480]);
-      expect(score.notes[1].pitchBend!.values).toEqual([0, -0.5, 2]);
-      expect(score.notes[2].pitchBend!.ticks).toEqual([0, 240, 480]);
-      expect(score.notes[2].pitchBend!.values).toEqual([0, 0, 0]);
+      expect(score.notes.map((note) => note.pitchBend)).toEqual([
+        { ticks: [0, 240, 480], values: [0, 0.5, 2] },
+        { ticks: [0, 240, 480], values: [0, -0.5, 2] },
+        { ticks: [0, 240, 480], values: [0, 0, 0] },
+      ]);
     });
 
     it("passes through relative pitch values unchanged", () => {
       const data = makeData();
-      data.project.tracks[0].pitch = {
+      elementAt(data.project.tracks, 0).pitch = {
         ticks: [0, 240, 480],
         values: [0, 0.5, 1],
         isAbsolute: false,
       };
       const score = ufDataToScore(data);
-      expect(score.notes[0].pitchBend!.values).toEqual([0, 0.5, 1]);
+      expect(elementAt(score.notes, 0).pitchBend?.values).toEqual([0, 0.5, 1]);
     });
 
     it("extrapolates start value from preceding pitch point", () => {
       const data = makeData();
-      data.project.tracks[0].pitch = {
+      elementAt(data.project.tracks, 0).pitch = {
         ticks: [-120, 120],
         values: [62, 61],
         isAbsolute: true,
       };
       const score = ufDataToScore(data);
-      expect(score.notes[0].pitchBend).toBeDefined();
-      expect(score.notes[0].pitchBend!.ticks[0]).toBe(0);
-      expect(score.notes[0].pitchBend!.values[0]).toBe(2);
+      expect(elementAt(score.notes, 0).pitchBend?.ticks[0]).toBe(0);
+      expect(elementAt(score.notes, 0).pitchBend?.values[0]).toBe(2);
     });
 
     it("filters out null pitch values from the curve", () => {
       const data = makeData();
-      data.project.tracks[0].pitch = {
+      elementAt(data.project.tracks, 0).pitch = {
         ticks: [0, 240, 480],
         values: [null, 60.5, null],
         isAbsolute: true,
       };
       const score = ufDataToScore(data);
-      expect(score.notes[0].pitchBend).toBeDefined();
-      expect(score.notes[0].pitchBend!.values).toEqual([0, 0.5, 0.5]);
+      expect(elementAt(score.notes, 0).pitchBend?.values).toEqual([0, 0.5, 0.5]);
     });
 
     it("skips notes with no pitch points in range", () => {
       const data = makeData();
-      data.project.tracks[0].pitch = {
+      elementAt(data.project.tracks, 0).pitch = {
         ticks: [2000, 2400],
         values: [62, 63],
         isAbsolute: true,
@@ -156,7 +153,7 @@ describe("ufDataToScore", () => {
 
     it("does not set pitchBend when pitch option is false", () => {
       const data = makeData();
-      data.project.tracks[0].pitch = {
+      elementAt(data.project.tracks, 0).pitch = {
         ticks: [0, 240, 480],
         values: [60, 60.5, 62],
         isAbsolute: true,

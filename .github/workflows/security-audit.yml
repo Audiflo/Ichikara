@@ -6,13 +6,18 @@ on:
   push:
     branches: [main]
     paths:
-      - "package-lock.json"
+      - "**/package-lock.json"
       - "**/package.json"
+      - ".github/workflows/security-audit.yml"
   pull_request:
     branches: [main]
     paths:
-      - "package-lock.json"
+      - "**/package-lock.json"
       - "**/package.json"
+      - ".github/workflows/security-audit.yml"
+
+permissions:
+  contents: read
 
 jobs:
   audit:
@@ -23,7 +28,7 @@ jobs:
           submodules: recursive
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: npm
 
       - run: npm ci

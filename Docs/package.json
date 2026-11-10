@@ -1,5 +1,5 @@
 {
-  "name": "utaujs-docs",
+  "name": "ichikara-docs",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
@@ -10,8 +10,8 @@
     "preview": "npx serve site"
   },
   "dependencies": {
-    "@docmd/core": "^0.8.6",
-    "@huggingface/transformers": "^4.2.0",
-    "docmd-search": "^0.1.0-alpha.1"
+    "@docmd/core": "^0.9.9",
+    "@huggingface/transformers": "^4.3.2",
+    "docmd-search": "^0.1.7"
   }
 }

@@ -1,15 +1,18 @@
 import { mount } from "svelte";
+import "./styles/global.css";
 import App from "./App.svelte";
 import { Updato } from "@nellowtcs/updato";
 import { UpdateNotification } from "@nellowtcs/updato/update-ui";
 
 declare const __BUILD_HASH__: string;
 
-mount(App, { target: document.getElementById("app")! });
+const target = document.getElementById("app");
+if (!target) throw new Error("The editor requires an #app mount element");
+mount(App, { target });
 
 const updater = Updato.init(
   {
-    repo: "NellowTCS/UTAU.js",
+    repo: "NellowTCS/Ichikara",
     mode: "commit",
     current: __BUILD_HASH__,
   },
