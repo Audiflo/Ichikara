@@ -1,80 +1,108 @@
 ---
 type: concept
-title: UTAU.js
-description: "A speech-synthesis library for singing voice synthesis in the browser"
-source: "https://nellowtcs.me/UTAU.js/docs/"
+title: Ichikara
+description: "A OneVoice song editor and TypeScript singing-synthesis library."
+source: "https://audiflo.github.io/Ichikara/docs/"
 path: /
-updated: 2026-08-15
+updated: 2026-11-10
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-08-15T05:13:33.416Z"
+  generated_at: "2026-11-10T13:24:54.244Z"
 ---
 ---
-title: "UTAU.js"
-description: "A speech-synthesis library for singing voice synthesis in the browser"
+title: "Ichikara"
+description: "A OneVoice song editor and TypeScript singing-synthesis library."
 ---
 
 ::: hero layout:split glow:true
 
 <!-- markdownlint-disable MD025 -->
-# UTAU.js
 
-A speech-synthesis library for singing voice synthesis in the browser.
+# Ichikara
 
+Write and arrange songs in the browser, or synthesize singing from your own
+TypeScript app. Ichikara generates voices from parameters rather than recorded
+voicebanks.
+
+::: tag "OneVoice Editor"
 ::: tag "LF Glottal"
-::: tag "Formant Filter"
 ::: tag "Cross-Language"
 
-::: button "Quick Start" ./getting-started/quickstart.md icon:play
 <!--markdownlint-disable MD034-->
-::: button "GitHub" external:https://github.com/NellowTCS/UTAU.js icon:github
+
+::: button "Open Editor" external:https://audiflo.github.io/Ichikara icon:play
+::: button "Quick Start" ./getting-started/quickstart.md icon:code
+
+<!--markdownlint-disable MD034-->
+
+::: button "GitHub" external:https://github.com/Audiflo/Ichikara icon:github
 
 == side
 
-::: card "Why UTAU.js?"
-Traditional UTAU needs a separate voicebank for every character or style. Each one recorded, oto'd, and bundled individually. UTAU.js flips that: one parametric voice, infinite variation. Change gender, breathiness, brightness, or vibrato with a single function call. No thousand-voice library, no multi-gigabyte downloads.
+::: card "OneVoice"
+Choose a Chitose voice, then adjust its gender, breathiness, brightness, tension,
+and vibrato. Each vocal track has its own voice and language. The same controls
+are available through `scaleVoice()` in the library.
 :::
 :::
+
+![Vocal tracks, piano-roll notes, and expression editing in Ichikara](assets/images/editor.png)
+
+## Song editor
+
+Arrange vocal parts across tracks, edit lyrics and phonemes, draw pitch curves,
+and set intensity or velocity with note-length bars. Resize the workspace to
+fit your song and follow playback in page or smooth mode.
+
+Save as `.ichi` to retain voices, expression, parts, and mix settings. Export WAV
+for audio or USTX to continue in another editor.
+
+::: button "Editor Guide" ./guide/editor.md icon:music
 
 ## Features
 
 ::: grids
 ::: grid
 ::: card "LF Glottal Source" icon:waveform
-Liljencrants-Fant glottal pulse model with jitter, shimmer, aspiration noise, and DC blocking. Control OQ, SQ, tenseness, and power independently.
+Liljencrants-Fant glottal pulses with jitter, shimmer, aspiration noise, and DC
+blocking. Control open quotient, speed quotient, tenseness, and power.
 :::
 :::
 
 ::: grid
 ::: card "Cascaded Formant Filter" icon:combine
-Series of anti-resonators + resonators modelling the vocal-tract transfer function. Smooth interpolation between phoneme targets.
+Resonators and anti-resonators model the vocal tract, interpolating between
+phoneme targets as the voice moves through a lyric.
 :::
 :::
 
 ::: grid
 ::: card "Three Languages" icon:globe
-English (ARPAbet + CMUDict G2P), Japanese (hiragana/romaji + EDICT2 kanji), Mandarin (pinyin syllable decomposition). Extensible via `registerLanguage`.
+Japanese hiragana, romaji, and kanji; English text with CMUDict; and Mandarin
+pinyin. Add another language through `registerLanguage`.
 :::
 :::
 
 ::: grid
 ::: card "Streaming Playback" icon:wind
-AsyncGenerator-based render pipeline. Play notes as they render via Web Audio with batching and buffer pooling.
+Play chunks as they render through Web Audio. Native projects include track
+placement, mute/solo, gain, and stereo pan.
 :::
 :::
 
 ::: grid
 ::: card "File Import / Export" icon:file-up
-Read and write UST, USTX, VPR, VSQX, MIDI, MusicXML, and more via utaformatix-3.
+Read and write UST, USTX, VPR, VSQX, MIDI, MusicXML, and other score formats through
+UtaFormatix. Keep an `.ichi` copy for native settings and region boundaries.
 :::
 :::
 
 ::: grid
 ::: card "OneVoice System" icon:sliders
-One parametric voice, infinite variations. Male, female, breathy, bright, tense. All from a single config. `scaleVoice()` maps high-level sliders (gender, breathiness, brightness, tension) to the underlying DSP parameters.
+Start with Chitose Chika, Sho, or Ren. Use the editor's voice controls or
+`buildVoice()` and `scaleVoice()` to change the sound.
 :::
 :::
-
 :::
 
 ## Quick Example
@@ -84,10 +112,10 @@ One parametric voice, infinite variations. Male, female, breathy, bright, tense.
 == tab "Node.js"
 
 ```typescript
-import { renderScore, femaleVoice, japanese, encodeWav } from "utau.js";
 import { writeFileSync } from "node:fs";
+import { renderScore, chitoseChika, encodeWav, type Score } from "@audiflo/ichikara";
 
-const score = {
+const score: Score = {
   tempos: [{ tick: 0, tempo: 120 }],
   resolution: 480,
   notes: [
@@ -99,50 +127,50 @@ const score = {
   ],
 };
 
-const chunks = await renderScore(score, femaleVoice, "jp");
-const wav = encodeWav(chunks);
-writeFileSync("hello.wav", Buffer.from(wav));
+const chunks = await renderScore(score, chitoseChika, "jp");
+writeFileSync("hello.wav", Buffer.from(encodeWav(chunks)));
 ```
 
 == tab "Browser"
 
-```typescript
-import { streamScore, femaleVoice, japanese, StreamPlayer } from "utau.js";
+Call playback from a user action, using the score from the Node.js tab:
 
-const score = { /* ... */ };
+```typescript
+import { streamScore, chitoseChika, StreamPlayer, type Score } from "@audiflo/ichikara";
+
 const player = new StreamPlayer();
 
-player.on((event) => {
-  if (event.type === "stateChange") console.log(event.state);
-  if (event.type === "progress") console.log(`${event.renderedSamples} samples scheduled`);
-});
-
-await player.play(streamScore(score, femaleVoice, "jp"));
+async function playPhrase(score: Score): Promise<void> {
+  await player.play(streamScore(score, chitoseChika, "jp"));
+}
 ```
 
 == tab "Custom Voice"
 
+Pass this voice to `renderScore` or `streamScore` with your score and language:
+
 ```typescript
-import { renderScore, buildVoice, scaleVoice, encodeWav } from "utau.js";
+import { buildVoice, scaleVoice } from "@audiflo/ichikara";
 
-const brightFemale = scaleVoice(buildVoice({
-  name: "Bright Alto",
-  formant: { scale: 1.25, shift: 2, bandwidth: 1.0 },
-}), {
-  gender: 0.3,
-  breathiness: 0.2,
-  vibratoAmount: 0.8,
-});
-
-const chunks = await renderScore(score, brightFemale, "en");
+const brightAlto = scaleVoice(
+  buildVoice({
+    name: "Bright Alto",
+    formant: { scale: 1.25, shift: 2, bandwidth: 1.0 },
+  }),
+  {
+    gender: 0.3,
+    breathiness: 0.2,
+    vibratoAmount: 0.8,
+  },
+);
 ```
 
 :::
 
 ## Installation
 
-```bash
-npm install utaujs
+```sh
+npm install @audiflo/ichikara
 ```
 
 ## Next Steps
@@ -152,8 +180,9 @@ npm install utaujs
 
 ### Getting Started
 
-Start here if you are new to UTAU.js.
+Edit a song in the browser or render a phrase with the library.
 
+::: button "Song Editor" ./guide/editor.md icon:music
 ::: button "Quick Start" ./getting-started/quickstart.md icon:play
 ::: button "Installation" ./getting-started/installation.md icon:download
 :::
@@ -161,7 +190,7 @@ Start here if you are new to UTAU.js.
 
 ### Learn the Engine
 
-Understand how the synthesis engine works.
+How notes, phonemes, and voice parameters become audio.
 
 ::: button "Core Concepts" ./getting-started/concepts.md icon:book
 ::: button "Architecture" ./guide/architecture.md icon:box
@@ -170,9 +199,10 @@ Understand how the synthesis engine works.
 
 ### Reference
 
-Browse the full API documentation.
+Document types, synthesis functions, and voice settings.
 
 ::: button "API Reference" ./api/ icon:code
+::: button "Native Projects" ./api/projects.md icon:folder
 ::: button "Voice Config" ./api/voice-config.md icon:sliders
 :::
 :::

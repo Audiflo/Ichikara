@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://nellowtcs.me/UTAU.js/docs/sitemap.xml
+Sitemap: https://audiflo.github.io/Ichikara/docs/sitemap.xml

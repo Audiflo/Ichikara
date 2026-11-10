@@ -10,7 +10,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="generator" content="docmd v0.8.17">
+    <meta name="generator" content="docmd v0.9.9">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script>
@@ -19,11 +19,11 @@
       if (root === '') root = './';
       window.DOCMD_ROOT = root;
 
-      window.DOCMD_SITE_ROOT = "/UTAU.js/docs/";
+      window.DOCMD_SITE_ROOT = "/Ichikara/docs/";
 
       window.DOCMD_APPEARANCE = "system";
       window.DOCMD_VERSION_ROOT = "/";
-      window.DOCMD_BASE = "/UTAU.js/docs/";
+      window.DOCMD_BASE = "/Ichikara/docs/";
       window.DOCMD_LOCALE = "";
       window.DOCMD_DEFAULT_LOCALE = "";
     </script>
@@ -98,37 +98,42 @@
         visibility: hidden;
       }
     </style>
-    <title>
-      Import / Export : UTAU.js
-    </title>
+    <title>Import / Export - Ichikara</title>
     
     
 
-    <link id="site-favicon" rel="icon" href="../../assets/favicon.ico?v=mstx7dcj">
-    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mstx7dcj">
+    <link id="site-favicon" rel="icon" href="../../assets/favicon.ico?v=mwaq2c0s">
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mwaq2c0s">
     
-    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mstx7dcj" id="hljs-light" >
-    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mstx7dcj" id="hljs-dark" disabled>
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mwaq2c0s" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mwaq2c0s" id="hljs-dark" disabled>
     
     
-<meta name="description" content="Score file import and export via utaformatix-3">
-<link rel="canonical" href="https://nellowtcs.me/UTAU.js/docs/api/import-export/">
-<meta property="og:title" content="Import / Export - UTAU.js">
-<meta property="og:description" content="Score file import and export via utaformatix-3">
-<meta property="og:url" content="https://nellowtcs.me/UTAU.js/docs/api/import-export/">
+<meta name="description" content="Native projects and score conversion through UtaFormatix.">
+<link rel="canonical" href="https://audiflo.github.io/Ichikara/docs/api/import-export/">
+<meta property="og:title" content="Import / Export - Ichikara">
+<meta property="og:description" content="Native projects and score conversion through UtaFormatix.">
+<meta property="og:url" content="https://audiflo.github.io/Ichikara/docs/api/import-export/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Import / Export - UTAU.js">
-<meta name="twitter:description" content="Score file import and export via utaformatix-3">
+<meta name="twitter:title" content="Import / Export - Ichikara">
+<meta name="twitter:description" content="Native projects and score conversion through UtaFormatix.">
+<meta name="twitter:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ichikara","item":"https://audiflo.github.io/Ichikara/docs/"},{"@type":"ListItem","position":2,"name":"API Reference","item":"https://audiflo.github.io/Ichikara/docs/api/"},{"@type":"ListItem","position":3,"name":"Import / Export","item":"https://audiflo.github.io/Ichikara/docs/api/import-export/"}]}
+</script>
 
 
 
-<link rel="stylesheet" href="../../assets/css/docmd-theme-ruby.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mstx7dcj" >
+
+<link rel="stylesheet" href="../../assets/css/docmd-theme-ruby.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-ai.css?v=mwaq2c0s" >
 
     
-      <link rel="stylesheet" href="../../assets/css/theme.css?v=mstx7dcj">
+      <link rel="stylesheet" href="../../assets/css/theme.css?v=mwaq2c0s">
     
     
   </head>
@@ -141,11 +146,16 @@
 
     
     
+
+    
+
+    
+    
       <aside class="sidebar">
         <div class="sidebar-header">
           
-<h1><a href="../../">
-                UTAU.js
+            <h1><a href="../../">
+                Ichikara
               </a></h1>
           
           <span class="mobile-view sidebar-menu-button float-right">
@@ -170,6 +180,7 @@
           </span>
         </div>
         <div class="sidebar-top-group">
+          
           
           
           
@@ -364,8 +375,8 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M12 7v14" />
-  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
 </svg>
 
           
@@ -379,6 +390,40 @@
         
           <ul class="submenu">
             
+      <li class="" >
+      
+        <a href="../../guide/editor/" class=" "
+          >
+           
+<svg class="lucide-icon icon-music " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Song Editor
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
       <li class="" >
       
         <a href="../../guide/architecture/" class=" "
@@ -531,6 +576,38 @@
             
       <li class="" >
       
+        <a href="../../api/projects/" class=" "
+          >
+           
+<svg class="lucide-icon icon-folder " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Native Projects
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
         <a href="../../api/voice-config/" class=" "
           >
            
@@ -642,25 +719,9 @@
     
       <li class="" >
       
-        <a href="https://github.com/NellowTCS/UTAU.js" class=" "
-          target=&quot;_blank&quot; rel=&quot;noopener&quot;>
+        <a href="https://github.com/Audiflo/Ichikara" class=" "
+          target="_blank" rel="noopener">
            
-<svg class="lucide-icon icon-github " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-  class="lucide lucide-github"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-  <path d="M9 18c-4.51 2-5-2-7-2" />
-</svg>
-
           
           <span class="nav-item-title">
             GitHub
@@ -698,12 +759,12 @@
           
           
           
+          
         </div>
       </aside>
       
-      
-      
       <div class="main-content-wrapper">
+        
         
         
           <header class="page-header">
@@ -770,7 +831,7 @@
     
 
     
-    <button class="theme-toggle-button" aria-label="Toggle theme">
+    <button class="theme-toggle-button" aria-label="Toggle theme" title="Toggle theme">
         
 <svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-sun"
@@ -814,6 +875,8 @@
     
 
     
+
+    
 </div>
 
               
@@ -825,7 +888,7 @@
             <div class="content-layout">
               <div class="main-content">
                 <div class="docmd-breadcrumbs-row">
-                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Import%20%2F%20Export%22%0Adescription%3A%20%22Score%20file%20import%20and%20export%20via%20utaformatix-3%22%0A---%0A%0A%23%23%20Import%0A%0AImport%20scores%20from%20any%20supported%20file%20format.%20The%20import%20pipeline%3A%0A%0A%60%60%60text%0AFile%20or%20bytes%20%20--%3E%20%20utaformatix-3%20parser%20%20--%3E%20%20UfData%20%20--%3E%20%20Score%0A%60%60%60%0A%0A%23%23%23%20Supported%20Formats%0A%0A%7C%20Extension%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Format%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Import%20%7C%20Export%20%7C%0A%7C----------------------%7C-------------------------%7C--------%7C--------%7C%0A%7C%20%60.ust%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20UTAU%20Sequence%20Text%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ustx%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20OpenUTU%20USTX%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.vsqx%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocaloid%20SQ%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.vsq%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocaloid%20SQ%20(legacy)%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.vpr%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocaloid%205%20Project%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.svp%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20SynthV%20Project%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.s5p%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20SynthV%20S5P%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ccs%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20CeVIO%20Creative%20Studio%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.dv%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20AHS%20VOICEROID%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.mid%60%20%2F%20%60.midi%60%20%20%20%20%20%7C%20Standard%20MIDI%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.musicxml%60%20%2F%20%60.xml%60%20%7C%20MusicXML%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ppsf%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Piapro%20Studio%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20No%20%20%20%20%20%7C%0A%7C%20%60.tssln%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20TSSLN%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ufdata%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20UTAU%20Format%20Data%20(JSON)%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%0A%23%23%23%20Import%20from%20File%0A%0A%60%60%60typescript%0Aimport%20%7B%20importScoreFromFile%20%7D%20from%20%22utaujs%22%3B%0A%0A%2F%2F%20Browser%20file%20input%0Aconst%20input%20%3D%20document.querySelector(&#039;input%5Btype%3D%22file%22%5D&#039;)%3B%0Ainput.addEventListener(%22change%22%2C%20async%20()%20%3D%3E%20%7B%0A%20%20const%20score%20%3D%20await%20importScoreFromFile(input.files%5B0%5D)%3B%0A%20%20%2F%2F%20score%20is%20ready%20for%20rendering%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Import%20from%20Bytes%0A%0A%60%60%60typescript%0Aimport%20%7B%20importScoreFromBytes%20%7D%20from%20%22utaujs%22%3B%0A%0Aconst%20response%20%3D%20await%20fetch(%22song.ustx%22)%3B%0Aconst%20buf%20%3D%20new%20Uint8Array(await%20response.arrayBuffer())%3B%0Aconst%20score%20%3D%20await%20importScoreFromBytes(buf%2C%20%22song.ustx%22)%3B%0A%60%60%60%0A%0A%23%23%23%20Import%20Options%0A%0A%60%60%60typescript%0Aconst%20score%20%3D%20await%20importScoreFromFile(file%2C%20%7B%0A%20%20trackIndex%3A%200%2C%20%20%20%2F%2F%20Import%20first%20track%0A%20%20pitch%3A%20true%2C%20%20%20%20%20%2F%2F%20Include%20pitch-bend%20data%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%20Export%0A%0AExport%20a%20Score%20to%20any%20supported%20format%3A%0A%0A%23%23%23%20Export%20as%20Bytes%0A%0A%60%60%60typescript%0Aimport%20%7B%20exportScoreToBytes%20%7D%20from%20%22utaujs%22%3B%0A%0Aconst%20bytes%20%3D%20await%20exportScoreToBytes(score%2C%20%7B%0A%20%20format%3A%20%22ustx%22%2C%0A%20%20projectName%3A%20%22My%20Song%22%2C%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Export%20as%20Blob%0A%0A%60%60%60typescript%0Aconst%20blob%20%3D%20await%20exportScoreToBlob(score%2C%20%7B%20format%3A%20%22mid%22%20%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Download%20in%20Browser%0A%0A%60%60%60typescript%0Aimport%20%7B%20downloadScore%20%7D%20from%20%22utaujs%22%3B%0A%0Aawait%20downloadScore(score%2C%20%7B%0A%20%20format%3A%20%22ustx%22%2C%0A%20%20projectName%3A%20%22exported-song%22%2C%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Low-Level%3A%20Direct%20UfData%20Conversion%0A%0A%60%60%60typescript%0Aimport%20%7B%20scoreToUfData%2C%20ufDataToScore%20%7D%20from%20%22utaujs%22%3B%0A%0Aconst%20ufData%20%3D%20scoreToUfData(score)%3B%0A%2F%2F%20Manipulate%20ufData%20directly...%0Aconst%20scoreBack%20%3D%20ufDataToScore(ufData)%3B%0A%60%60%60%0A" style="display: none;"></div>
+                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Import%20%2F%20Export%22%0Adescription%3A%20%22Native%20projects%20and%20score%20conversion%20through%20UtaFormatix.%22%0A---%0A%0A%23%23%20Native%20projects%20and%20whole%20songs%0A%0AUse%20%60parseProject%60%20and%20%60serializeProject%60%20for%20%60.ichi%60%20files.%20They%20retain%20native%0Avoices%2C%20mix%20settings%2C%20region%20boundaries%2C%20and%20expression.%20See%0A%5BNative%20projects%5D(projects.md)%20for%20examples.%0A%0AFor%20other%20score%20formats%2C%20%60importProjectFromFile(file%2C%20language%2C%20id)%60%20reads%20all%0Atracks.%20%60exportProjectToBytes(project%2C%20%7B%20format%3A%20%22ustx%22%20%7D)%60%20exports%20the%20whole%0Asong%20with%20absolute%20note%20placement.%20Score%20conversion%20cannot%20retain%20every%20native%0Afield%3B%20imported%20tracks%20become%20one%20part%20each.%0A%0AThe%20single-score%20functions%20below%20select%20one%20track%20on%20import.%20Use%20them%20when%20your%0Aapp%20works%20with%20%60Score%60%20rather%20than%20%60Project%60.%0A%0A%23%23%20Score%20import%0A%0AImport%20scores%20from%20any%20supported%20file%20format.%20The%20import%20pipeline%3A%0A%0A%60%60%60text%0AFile%20or%20bytes%20%20--%3E%20%20utaformatix-3%20parser%20%20--%3E%20%20UfData%20%20--%3E%20%20Score%0A%60%60%60%0A%0A%23%23%23%20Supported%20Formats%0A%0A%7C%20Extension%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Format%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Import%20%7C%20Export%20%7C%0A%7C----------------------%7C-------------------------%7C--------%7C--------%7C%0A%7C%20%60.ust%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20UTAU%20Sequence%20Text%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ustx%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20OpenUtau%20USTX%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.vsqx%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocaloid%20SQ%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.vsq%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocaloid%20SQ%20(legacy)%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.vpr%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocaloid%205%20Project%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.svp%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20SynthV%20Project%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.s5p%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20SynthV%20S5P%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ccs%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20CeVIO%20Creative%20Studio%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.dv%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20AHS%20VOICEROID%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.mid%60%20%2F%20%60.midi%60%20%20%20%20%20%7C%20Standard%20MIDI%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.musicxml%60%20%2F%20%60.xml%60%20%7C%20MusicXML%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ppsf%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Piapro%20Studio%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20No%20%20%20%20%20%7C%0A%7C%20%60.tssln%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20TSSLN%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%7C%20%60.ufdata%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20UTAU%20Format%20Data%20(JSON)%20%7C%20Yes%20%20%20%20%7C%20Yes%20%20%20%20%7C%0A%0A%23%23%23%20Import%20from%20File%0A%0A%60%60%60typescript%0Aimport%20%7B%20importScoreFromFile%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0A%2F%2F%20Browser%20file%20input%0Aconst%20input%20%3D%20document.querySelector(&#039;input%5Btype%3D%22file%22%5D&#039;)%3B%0Aif%20(!(input%20instanceof%20HTMLInputElement))%20throw%20new%20Error(%22Missing%20score%20file%20input%22)%3B%0Ainput.addEventListener(%22change%22%2C%20()%20%3D%3E%20%7B%0A%20%20const%20file%20%3D%20input.files%3F.%5B0%5D%3B%0A%20%20if%20(!file)%20return%3B%0A%20%20importScoreFromFile(file)%0A%20%20%20%20.then((score)%20%3D%3E%20console.info(%60Imported%20%24%7Bscore.notes.length%7D%20notes%60))%0A%20%20%20%20.catch((error%3A%20unknown)%20%3D%3E%20console.error(%22Could%20not%20import%20score%22%2C%20error))%3B%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Import%20from%20Bytes%0A%0A%60%60%60typescript%0Aimport%20%7B%20importScoreFromBytes%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20response%20%3D%20await%20fetch(%22song.ustx%22)%3B%0Aif%20(!response.ok)%20throw%20new%20Error(%60Score%20download%20failed%3A%20%24%7Bresponse.status%7D%60)%3B%0Aconst%20buf%20%3D%20new%20Uint8Array(await%20response.arrayBuffer())%3B%0Aconst%20score%20%3D%20await%20importScoreFromBytes(buf%2C%20%22song.ustx%22)%3B%0A%60%60%60%0A%0A%23%23%23%20Import%20Options%0A%0A%60%60%60typescript%0Aconst%20score%20%3D%20await%20importScoreFromFile(file%2C%20%7B%0A%20%20trackIndex%3A%200%2C%20%20%20%2F%2F%20Import%20first%20track%0A%20%20pitch%3A%20true%2C%20%20%20%20%20%2F%2F%20Include%20pitch-bend%20data%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%20Export%0A%0AExport%20a%20Score%20to%20any%20supported%20format%3A%0A%0A%23%23%23%20Export%20as%20Bytes%0A%0A%60%60%60typescript%0Aimport%20%7B%20exportScoreToBytes%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20bytes%20%3D%20await%20exportScoreToBytes(score%2C%20%7B%0A%20%20format%3A%20%22ustx%22%2C%0A%20%20projectName%3A%20%22My%20Song%22%2C%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Export%20as%20Blob%0A%0A%60%60%60typescript%0Aconst%20blob%20%3D%20await%20exportScoreToBlob(score%2C%20%7B%20format%3A%20%22mid%22%20%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Download%20in%20Browser%0A%0A%60%60%60typescript%0Aimport%20%7B%20downloadScore%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aawait%20downloadScore(score%2C%20%7B%0A%20%20format%3A%20%22ustx%22%2C%0A%20%20projectName%3A%20%22exported-song%22%2C%0A%7D)%3B%0A%60%60%60%0A%0A%23%23%23%20Low-Level%3A%20Direct%20UfData%20Conversion%0A%0A%60%60%60typescript%0Aimport%20%7B%20scoreToUfData%2C%20ufDataToScore%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20ufData%20%3D%20scoreToUfData(score)%3B%0Aconst%20scoreBack%20%3D%20ufDataToScore(ufData)%3B%0A%60%60%60%0A" style="display: none;"></div>
                   
                     <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
                       <ol>
@@ -866,6 +929,7 @@
                     </nav>
                   
 
+                  
                   
                     <div class="docmd-copy-widgets">
                       
@@ -910,15 +974,30 @@
                           <span class="docmd-btn-text">Copy Context</span>
                         </button>
                       
+                      
                     </div>
                   
                 </div>
                 
-                <h2 id="import" class="docmd-heading"><a href="#import" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Import</h2>
+                  <h1 class="docmd-focus-title">
+                    Import / Export
+                  </h1>
+                
+                <h2 id="native-projects-and-whole-songs" class="docmd-heading"><a href="#native-projects-and-whole-songs" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Native projects and whole songs</h2>
+<p>Use <code>parseProject</code> and <code>serializeProject</code> for <code>.ichi</code> files. They retain native<br>
+voices, mix settings, region boundaries, and expression. See<br>
+<a href="../projects/">Native projects</a> for examples.</p>
+<p>For other score formats, <code>importProjectFromFile(file, language, id)</code> reads all<br>
+tracks. <code>exportProjectToBytes(project, { format: &quot;ustx&quot; })</code> exports the whole<br>
+song with absolute note placement. Score conversion cannot retain every native<br>
+field; imported tracks become one part each.</p>
+<p>The single-score functions below select one track on import. Use them when your<br>
+app works with <code>Score</code> rather than <code>Project</code>.</p>
+<h2 id="score-import" class="docmd-heading"><a href="#score-import" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Score import</h2>
 <p>Import scores from any supported file format. The import pipeline:</p>
-<pre class="hljs"><code class="language-text">File or bytes  <span class="hljs-punctuation">--&gt;</span>  utaformatix<span class="hljs-punctuation">-</span><span class="hljs-number">3</span> parser  <span class="hljs-punctuation">--&gt;</span>  UfData  <span class="hljs-punctuation">--&gt;</span>  Score
+<pre class="hljs"><code class="language-text">File or bytes  <span class="hljs-operator">--&gt;</span>  utaformatix<span class="hljs-operator">-</span><span class="hljs-number">3</span> parser  <span class="hljs-operator">--&gt;</span>  UfData  <span class="hljs-operator">--&gt;</span>  Score
 </code></pre>
-<h3 id="import-supported-formats" class="docmd-heading"><a href="#import-supported-formats" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Supported Formats</h3>
+<h3 id="score-import-supported-formats" class="docmd-heading"><a href="#score-import-supported-formats" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Supported Formats</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -937,7 +1016,7 @@
 </tr>
 <tr>
 <td><code>.ustx</code></td>
-<td>OpenUTU USTX</td>
+<td>OpenUtau USTX</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
@@ -1015,56 +1094,60 @@
 </tr>
 </tbody>
 </table>
-</div><h3 id="import-import-from-file" class="docmd-heading"><a href="#import-import-from-file" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Import from File</h3>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { importScoreFromFile } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+</div><h3 id="score-import-import-from-file" class="docmd-heading"><a href="#score-import-import-from-file" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Import from File</h3>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { importScoreFromFile } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
 <span class="hljs-comment">// Browser file input</span>
-<span class="hljs-keyword">const</span> input <span class="hljs-punctuation">=</span> document.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#039;input[type=&quot;file&quot;]&#039;</span>);
-input.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;change&quot;</span>, <span class="hljs-keyword">async</span> () <span class="hljs-punctuation">=&gt;</span> {
-  <span class="hljs-keyword">const</span> score <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">importScoreFromFile</span>(input.<span class="hljs-attr">files</span>[<span class="hljs-number">0</span>]);
-  <span class="hljs-comment">// score is ready for rendering</span>
+<span class="hljs-keyword">const</span> input <span class="hljs-operator">=</span> document.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#039;input[type=&quot;file&quot;]&#039;</span>);
+<span class="hljs-keyword">if</span> (<span class="hljs-operator">!</span>(input <span class="hljs-keyword">instanceof</span> HTMLInputElement)) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">Error</span>(<span class="hljs-string">&quot;Missing score file input&quot;</span>);
+input.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;change&quot;</span>, () <span class="hljs-operator">=&gt;</span> {
+  <span class="hljs-keyword">const</span> file <span class="hljs-operator">=</span> input.<span class="hljs-attr">files</span><span class="hljs-operator">?</span>.[<span class="hljs-number">0</span>];
+  <span class="hljs-keyword">if</span> (<span class="hljs-operator">!</span>file) <span class="hljs-keyword">return</span>;
+  <span class="hljs-title function_">importScoreFromFile</span>(file)
+    .<span class="hljs-title function_">then</span>((score) <span class="hljs-operator">=&gt;</span> console.<span class="hljs-title function_">info</span>(<span class="hljs-string">`Imported ${score.notes.length} notes`</span>))
+    .<span class="hljs-keyword">catch</span>((error<span class="hljs-operator">:</span> unknown) <span class="hljs-operator">=&gt;</span> console.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;Could not import score&quot;</span>, error));
 });
 </code></pre>
-<h3 id="import-import-from-bytes" class="docmd-heading"><a href="#import-import-from-bytes" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Import from Bytes</h3>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { importScoreFromBytes } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+<h3 id="score-import-import-from-bytes" class="docmd-heading"><a href="#score-import-import-from-bytes" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Import from Bytes</h3>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { importScoreFromBytes } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> response <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&quot;song.ustx&quot;</span>);
-<span class="hljs-keyword">const</span> buf <span class="hljs-punctuation">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">Uint8Array</span>(<span class="hljs-keyword">await</span> response.<span class="hljs-title function_">arrayBuffer</span>());
-<span class="hljs-keyword">const</span> score <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">importScoreFromBytes</span>(buf, <span class="hljs-string">&quot;song.ustx&quot;</span>);
+<span class="hljs-keyword">const</span> response <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&quot;song.ustx&quot;</span>);
+<span class="hljs-keyword">if</span> (<span class="hljs-operator">!</span>response.<span class="hljs-attr">ok</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">Error</span>(<span class="hljs-string">`Score download failed: ${response.status}`</span>);
+<span class="hljs-keyword">const</span> buf <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">Uint8Array</span>(<span class="hljs-keyword">await</span> response.<span class="hljs-title function_">arrayBuffer</span>());
+<span class="hljs-keyword">const</span> score <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">importScoreFromBytes</span>(buf, <span class="hljs-string">&quot;song.ustx&quot;</span>);
 </code></pre>
-<h3 id="import-import-options" class="docmd-heading"><a href="#import-import-options" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Import Options</h3>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> score <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">importScoreFromFile</span>(file, {
-  trackIndex<span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>,   <span class="hljs-comment">// Import first track</span>
-  pitch<span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span>,     <span class="hljs-comment">// Include pitch-bend data</span>
+<h3 id="score-import-import-options" class="docmd-heading"><a href="#score-import-import-options" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Import Options</h3>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> score <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">importScoreFromFile</span>(file, {
+  trackIndex<span class="hljs-operator">:</span> <span class="hljs-number">0</span>,   <span class="hljs-comment">// Import first track</span>
+  pitch<span class="hljs-operator">:</span> <span class="hljs-literal">true</span>,     <span class="hljs-comment">// Include pitch-bend data</span>
 });
 </code></pre>
 <h2 id="export" class="docmd-heading"><a href="#export" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Export</h2>
 <p>Export a Score to any supported format:</p>
 <h3 id="export-export-as-bytes" class="docmd-heading"><a href="#export-export-as-bytes" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Export as Bytes</h3>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { exportScoreToBytes } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { exportScoreToBytes } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> bytes <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">exportScoreToBytes</span>(score, {
-  format<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ustx&quot;</span>,
-  projectName<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Song&quot;</span>,
+<span class="hljs-keyword">const</span> bytes <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">exportScoreToBytes</span>(score, {
+  format<span class="hljs-operator">:</span> <span class="hljs-string">&quot;ustx&quot;</span>,
+  projectName<span class="hljs-operator">:</span> <span class="hljs-string">&quot;My Song&quot;</span>,
 });
 </code></pre>
 <h3 id="export-export-as-blob" class="docmd-heading"><a href="#export-export-as-blob" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Export as Blob</h3>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> blob <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">exportScoreToBlob</span>(score, { format<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;mid&quot;</span> });
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> blob <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">exportScoreToBlob</span>(score, { format<span class="hljs-operator">:</span> <span class="hljs-string">&quot;mid&quot;</span> });
 </code></pre>
 <h3 id="export-download-in-browser" class="docmd-heading"><a href="#export-download-in-browser" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Download in Browser</h3>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { downloadScore } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { downloadScore } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
 <span class="hljs-keyword">await</span> <span class="hljs-title function_">downloadScore</span>(score, {
-  format<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ustx&quot;</span>,
-  projectName<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;exported-song&quot;</span>,
+  format<span class="hljs-operator">:</span> <span class="hljs-string">&quot;ustx&quot;</span>,
+  projectName<span class="hljs-operator">:</span> <span class="hljs-string">&quot;exported-song&quot;</span>,
 });
 </code></pre>
 <h3 id="export-low-level-direct-ufdata-conversion" class="docmd-heading"><a href="#export-low-level-direct-ufdata-conversion" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Low-Level: Direct UfData Conversion</h3>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { scoreToUfData, ufDataToScore } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { scoreToUfData, ufDataToScore } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> ufData <span class="hljs-punctuation">=</span> <span class="hljs-title function_">scoreToUfData</span>(score);
-<span class="hljs-comment">// Manipulate ufData directly...</span>
-<span class="hljs-keyword">const</span> scoreBack <span class="hljs-punctuation">=</span> <span class="hljs-title function_">ufDataToScore</span>(ufData);
+<span class="hljs-keyword">const</span> ufData <span class="hljs-operator">=</span> <span class="hljs-title function_">scoreToUfData</span>(score);
+<span class="hljs-keyword">const</span> scoreBack <span class="hljs-operator">=</span> <span class="hljs-title function_">ufDataToScore</span>(ufData);
 </code></pre>
 
                 
@@ -1101,8 +1184,11 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
                 
               </div>
               
+              
               <div class="toc-sidebar">
                 
+                
+                  
 
 
   <div class="toc-container">
@@ -1125,23 +1211,27 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
     <ul class="toc-list">
       
         <li class="toc-item toc-level-2">
-          <a href="#import" class="toc-link">Import</a>
+          <a href="#native-projects-and-whole-songs" class="toc-link">Native projects and whole songs</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#score-import" class="toc-link">Score import</a>
         </li>
       
         <li class="toc-item toc-level-3">
-          <a href="#import-supported-formats" class="toc-link">Supported Formats</a>
+          <a href="#score-import-supported-formats" class="toc-link">Supported Formats</a>
         </li>
       
         <li class="toc-item toc-level-3">
-          <a href="#import-import-from-file" class="toc-link">Import from File</a>
+          <a href="#score-import-import-from-file" class="toc-link">Import from File</a>
         </li>
       
         <li class="toc-item toc-level-3">
-          <a href="#import-import-from-bytes" class="toc-link">Import from Bytes</a>
+          <a href="#score-import-import-from-bytes" class="toc-link">Import from Bytes</a>
         </li>
       
         <li class="toc-item toc-level-3">
-          <a href="#import-import-options" class="toc-link">Import Options</a>
+          <a href="#score-import-import-options" class="toc-link">Import Options</a>
         </li>
       
         <li class="toc-item toc-level-2">
@@ -1167,19 +1257,21 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
     </ul>
   </div>
 
+                
+                
               </div>
               
             </div>
             <div class="page-footer-actions">
               
               
-                <span class="git-last-updated" data-timestamp="1786770748000">
+                <span class="git-last-updated" data-timestamp="1794317025000">
                   <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <span class="git-label">Last updated:</span>
-                  <span class="git-time" data-timestamp="1786770748000"></span>
+                  <span class="git-time" data-timestamp="1794317025000"></span>
                   
                   <div class="git-commit-tooltip" role="tooltip">
                     <div class="git-tooltip-title">Recent commits</div>
@@ -1192,10 +1284,10 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
                             
                           </div>
                           <div class="git-commit-details">
-                            <div class="git-commit-message" title="npm audit fix x2">npm audit fix x2</div>
+                            <div class="git-commit-message" title="Node 24">Node 24</div>
                             <div class="git-commit-meta">
                               <span class="git-commit-author">NellowTCS</span>
-                              <span class="git-commit-date" data-timestamp="1786770748000"></span>
+                              <span class="git-commit-date" data-timestamp="1794317025000"></span>
                             </div>
                           </div>
                         </li>
@@ -1207,7 +1299,7 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
               
               <span class="git-spacer"></span>
               
-                <a href="https://github.com/NellowTCS/UTAU.js/edit/main/Docs/docs/api/import-export.md" target="_blank" rel="noopener noreferrer" class="edit-link">
+                <a href="https://github.com/Audiflo/Ichikara/edit/main/Docs/docs/api/import-export.md" target="_blank" rel="noopener noreferrer" class="edit-link">
                   
 <svg class="lucide-icon icon-pencil " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-pencil"
@@ -1237,10 +1329,10 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
   <div class="footer-complete-top">
       <div class="footer-brand">
           
-            <span class="footer-title">UTAU.js</span>
+            <span class="footer-title">Ichikara</span>
           
           
-            <p class="footer-desc">A speech-synthesis library for singing voice synthesis in the browser.</p>
+            <p class="footer-desc">A OneVoice song editor and TypeScript singing-synthesis library.</p>
           
         </div>
         
@@ -1250,11 +1342,11 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
                 <span class="footer-column-title">Resources</span>
                 <ul>
                   
-                    <li><a href="getting-started/quickstart/" >Getting Started</a></li>
+                    <li><a href="../../guide/editor/" >Song Editor</a></li>
                   
-                    <li><a href="api/" >API Reference</a></li>
+                    <li><a href="../../api/" >API Reference</a></li>
                   
-                    <li><a href="api/voice-config/" >Voice Config</a></li>
+                    <li><a href="../../api/voice-config/" >Voice Config</a></li>
                   
                 </ul>
               </div>
@@ -1263,11 +1355,11 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
                 <span class="footer-column-title">Community</span>
                 <ul>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js" >GitHub</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara" >GitHub</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/issues" >Issues</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/issues" >Issues</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/discussions" >Discussions</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/discussions" >Discussions</a></li>
                   
                 </ul>
               </div>
@@ -1276,7 +1368,7 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
         
       </div>
       <div class="footer-complete-bottom">
-        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/NellowTCS/UTAU.js">View on GitHub</a>.</div>
+        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/Audiflo/Ichikara">View on GitHub</a>.</div>
         
           <div class="branding-footer">
             Built with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
@@ -1288,16 +1380,21 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
         </div>
       </div>
       
-      <script src="../../assets/js/docmd-main.js?v=mstx7dcj"></script>
       
-      <script src="../../assets/js/docmd-git.js?v=mstx7dcj"></script>
-      <script src="../../assets/js/docmd-image-lightbox.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/vendor/minisearch.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/docmd-search.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/docmd-git.js?v=mstx7dcj" type="module"></script>
+      <script>window.__DOCMD_VARIABLES__ = {"docmd":{"version":"0.9.9","buildTime":"2026-11-10T13:24:45.614Z","buildDate":"2026-11-10","buildYear":"2026","gitCommit":"0a48415","gitBranch":"main"},"DOCMD_VERSION":"0.9.9","BUILD_YEAR":"2026","BUILD_DATE":"2026-11-10","GIT_COMMIT":"0a48415","GIT_BRANCH":"main","git":{"commit":"0a48415","branch":"main"},"site":{"title":"Ichikara","base":"/Ichikara/docs/"},"page":{"title":"Import / Export","slug":"/Ichikara/docs/api/import-export/","path":"api/import-export/index.html"},"frontmatter":{"title":"Import / Export","description":"Native projects and score conversion through UtaFormatix.","_git":{"lastUpdated":"2026-11-10T13:23:45.000Z","lastUpdatedTimestamp":1794317025000,"commits":[{"hash":"0a48415cffcf70f254668ccf0cfbb41742d56091","shortHash":"0a48415","author":"NellowTCS","email":"neeljaiswal23@gmail.com","date":"2026-11-10T13:23:45.000Z","timestamp":1794317025000,"message":"Node 24","avatarUrl":"https://www.gravatar.com/avatar/baecf29c7bedbb00a8d5bd5984799c55?d=mp&s=64"}]}}};</script>
+      
+      <script src="../../assets/js/docmd-runtime.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-main.js?v=mwaq2c0s"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/vendor/minisearch.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-search.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-git.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-ai.js?v=mwaq2c0s" ></script>
 
   <!-- Search Modal (Injected by @docmd/plugin-search) -->
-  <div id="docmd-search-modal" data-semantic="true" class="docmd-search-modal" style="display: none;" data-show-confidence="true" data-show-filters="true"
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-semantic="true" data-show-confidence="true" data-show-filters="true"
        data-search-placeholder="Search documentation..."
        data-search-no-results="No results found."
        data-search-error="Failed to load search index."
@@ -1369,7 +1466,8 @@ input.<span class="hljs-title function_">addEventListener</span>(<span class="hl
       })();
     </script>
 
-<script>window.__git_config={"repo":"https://github.com/NellowTCS/UTAU.js/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<script>window.__git_config={"repo":"https://github.com/Audiflo/Ichikara/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<div id="docmd-ai-root"></div><script>window.__docmd_ai_config={"endpoint":"","cloud":{},"captcha":true,"position":"bottom-center","siteTitle":"Ichikara","siteBase":"/Ichikara/docs/","siteUrl":"https://audiflo.github.io/Ichikara/docs","versions":null,"i18n":null,"navigation":[{"title":"Home","path":"/","icon":"home"},{"title":"Getting Started","icon":"rocket","collapsible":false,"children":[{"title":"Quick Start","path":"/getting-started/quickstart/","icon":"play"},{"title":"Installation","path":"/getting-started/installation/","icon":"download"},{"title":"Core Concepts","path":"/getting-started/concepts/","icon":"book"}]},{"title":"Guide","icon":"book-open","collapsible":false,"children":[{"title":"Song Editor","path":"/guide/editor/","icon":"music"},{"title":"Architecture","path":"/guide/architecture/","icon":"box"},{"title":"Renderer","path":"/guide/renderer/","icon":"cpu"},{"title":"Languages","path":"/guide/languages/","icon":"globe"}]},{"title":"API Reference","icon":"code","path":"/api/","collapsible":false,"children":[{"title":"Native Projects","path":"/api/projects/","icon":"folder"},{"title":"VoiceConfig","path":"/api/voice-config/","icon":"sliders"},{"title":"DSP Primitives","path":"/api/dsp/","icon":"audio-waveform"},{"title":"Import / Export","path":"/api/import-export/","icon":"file-up"}]},{"title":"GitHub","path":"https://github.com/Audiflo/Ichikara","icon":"github","external":true}],"searchCapabilities":{"keyword":true,"semantic":true},"isWorkspace":false,"workspaceProjects":[],"messageActions":false,"fetchExternalUrls":false,"contextLimit":5};</script>
       
       
       

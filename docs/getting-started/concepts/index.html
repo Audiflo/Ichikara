@@ -10,7 +10,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="generator" content="docmd v0.8.17">
+    <meta name="generator" content="docmd v0.9.9">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script>
@@ -19,11 +19,11 @@
       if (root === '') root = './';
       window.DOCMD_ROOT = root;
 
-      window.DOCMD_SITE_ROOT = "/UTAU.js/docs/";
+      window.DOCMD_SITE_ROOT = "/Ichikara/docs/";
 
       window.DOCMD_APPEARANCE = "system";
       window.DOCMD_VERSION_ROOT = "/";
-      window.DOCMD_BASE = "/UTAU.js/docs/";
+      window.DOCMD_BASE = "/Ichikara/docs/";
       window.DOCMD_LOCALE = "";
       window.DOCMD_DEFAULT_LOCALE = "";
     </script>
@@ -98,37 +98,42 @@
         visibility: hidden;
       }
     </style>
-    <title>
-      Core Concepts : UTAU.js
-    </title>
+    <title>Core Concepts - Ichikara</title>
     
     
 
-    <link id="site-favicon" rel="icon" href="../../assets/favicon.ico?v=mstx7dcj">
-    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mstx7dcj">
+    <link id="site-favicon" rel="icon" href="../../assets/favicon.ico?v=mwaq2c0s">
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mwaq2c0s">
     
-    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mstx7dcj" id="hljs-light" >
-    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mstx7dcj" id="hljs-dark" disabled>
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mwaq2c0s" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mwaq2c0s" id="hljs-dark" disabled>
     
     
-<meta name="description" content="Understand how UTAU.js produces singing voice audio">
-<link rel="canonical" href="https://nellowtcs.me/UTAU.js/docs/getting-started/concepts/">
-<meta property="og:title" content="Core Concepts - UTAU.js">
-<meta property="og:description" content="Understand how UTAU.js produces singing voice audio">
-<meta property="og:url" content="https://nellowtcs.me/UTAU.js/docs/getting-started/concepts/">
+<meta name="description" content="Understand how Ichikara produces singing voice audio">
+<link rel="canonical" href="https://audiflo.github.io/Ichikara/docs/getting-started/concepts/">
+<meta property="og:title" content="Core Concepts - Ichikara">
+<meta property="og:description" content="Understand how Ichikara produces singing voice audio">
+<meta property="og:url" content="https://audiflo.github.io/Ichikara/docs/getting-started/concepts/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Core Concepts - UTAU.js">
-<meta name="twitter:description" content="Understand how UTAU.js produces singing voice audio">
+<meta name="twitter:title" content="Core Concepts - Ichikara">
+<meta name="twitter:description" content="Understand how Ichikara produces singing voice audio">
+<meta name="twitter:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ichikara","item":"https://audiflo.github.io/Ichikara/docs/"},{"@type":"ListItem","position":2,"name":"Getting Started"},{"@type":"ListItem","position":3,"name":"Core Concepts","item":"https://audiflo.github.io/Ichikara/docs/getting-started/concepts/"}]}
+</script>
 
 
 
-<link rel="stylesheet" href="../../assets/css/docmd-theme-ruby.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mstx7dcj" >
+
+<link rel="stylesheet" href="../../assets/css/docmd-theme-ruby.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-ai.css?v=mwaq2c0s" >
 
     
-      <link rel="stylesheet" href="../../assets/css/theme.css?v=mstx7dcj">
+      <link rel="stylesheet" href="../../assets/css/theme.css?v=mwaq2c0s">
     
     
   </head>
@@ -141,11 +146,16 @@
 
     
     
+
+    
+
+    
+    
       <aside class="sidebar">
         <div class="sidebar-header">
           
-<h1><a href="../../">
-                UTAU.js
+            <h1><a href="../../">
+                Ichikara
               </a></h1>
           
           <span class="mobile-view sidebar-menu-button float-right">
@@ -170,6 +180,7 @@
           </span>
         </div>
         <div class="sidebar-top-group">
+          
           
           
           
@@ -364,8 +375,8 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M12 7v14" />
-  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
 </svg>
 
           
@@ -379,6 +390,40 @@
         
           <ul class="submenu">
             
+      <li class="" >
+      
+        <a href="../../guide/editor/" class=" "
+          >
+           
+<svg class="lucide-icon icon-music " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Song Editor
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
       <li class="" >
       
         <a href="../../guide/architecture/" class=" "
@@ -531,6 +576,38 @@
             
       <li class="" >
       
+        <a href="../../api/projects/" class=" "
+          >
+           
+<svg class="lucide-icon icon-folder " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Native Projects
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
         <a href="../../api/voice-config/" class=" "
           >
            
@@ -642,25 +719,9 @@
     
       <li class="" >
       
-        <a href="https://github.com/NellowTCS/UTAU.js" class=" "
-          target=&quot;_blank&quot; rel=&quot;noopener&quot;>
+        <a href="https://github.com/Audiflo/Ichikara" class=" "
+          target="_blank" rel="noopener">
            
-<svg class="lucide-icon icon-github " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-  class="lucide lucide-github"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-  <path d="M9 18c-4.51 2-5-2-7-2" />
-</svg>
-
           
           <span class="nav-item-title">
             GitHub
@@ -698,12 +759,12 @@
           
           
           
+          
         </div>
       </aside>
       
-      
-      
       <div class="main-content-wrapper">
+        
         
         
           <header class="page-header">
@@ -770,7 +831,7 @@
     
 
     
-    <button class="theme-toggle-button" aria-label="Toggle theme">
+    <button class="theme-toggle-button" aria-label="Toggle theme" title="Toggle theme">
         
 <svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-sun"
@@ -814,6 +875,8 @@
     
 
     
+
+    
 </div>
 
               
@@ -825,7 +888,7 @@
             <div class="content-layout">
               <div class="main-content">
                 <div class="docmd-breadcrumbs-row">
-                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Core%20Concepts%22%0Adescription%3A%20%22Understand%20how%20UTAU.js%20produces%20singing%20voice%20audio%22%0A---%0A%0A%23%23%20Source-Filter%20Model%0A%0AUTAU.js%20implements%20the%20**source-filter%20model%20of%20speech%20production**%3A%20a%20glottal%20source%20(the%20%22buzz%22%20from%20the%20vocal%20folds)%20is%20shaped%20by%20a%20filter%20(the%20vocal%20tract&#039;s%20resonances).%20This%20separation%20lets%20you%20control%20pitch%20and%20timbre%20independently.%0A%0A%60%60%60mermaid%0Aflowchart%20LR%0A%20%20%20%20G%5BGlottal%20Source%3Cbr%2F%3ELF%20model%5D%20--%3E%20F%5BFormant%20Cascade%3Cbr%2F%3Evocal%20tract%5D%20--%3E%20O%5BOutput%5D%0A%20%20%20%20G%20-.-%3E%20Gp%5BF0%2C%20OQ%2C%20SQ%2C%3Cbr%2F%3Etenseness%2C%3Cbr%2F%3Easpiration%2C%20jitter%5D%0A%20%20%20%20F%20-.-%3E%20Fp%5BF1-F5%20frequencies%2C%3Cbr%2F%3Ebandwidths%2C%3Cbr%2F%3Eantiformants%5D%0A%60%60%60%0A%0AThe%20glottal%20source%20generates%20a%20periodic%20pulse%20train%20at%20the%20fundamental%20frequency%20(F0).%20The%20formant%20cascade%20applies%20a%20series%20of%20resonators%20(poles)%20and%20anti-resonators%20(zeros)%20to%20shape%20the%20spectrum%20into%20vowels%20and%20consonants.%0A%0A%23%23%20VoiceConfig%0A%0AThe%20%60VoiceConfig%60%20is%20the%20central%20configuration%20object.%20It%20bundles%3A%0A%0A%7C%20Component%20%20%20%20%7C%20Controls%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Perceptual%20Effect%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C--------------%7C----------------------------------------------%7C-----------------------------------------------%7C%0A%7C%20%60glottal%60%20%20%20%20%7C%20OQ%2C%20SQ%2C%20tenseness%2C%20aspiration%2C%20power%2C%20jitter%20%7C%20Voice%20quality%2C%20breathiness%2C%20roughness%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60formant%60%20%20%20%20%7C%20Scale%2C%20shift%2C%20bandwidth%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocal-tract%20size%2C%20brightness%2C%20resonance%20width%20%7C%0A%7C%20%60vibrato%60%20%20%20%20%7C%20Rate%2C%20depth%2C%20attack%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Pitch%20modulation%20(vibrato)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60sampleRate%60%20%7C%20Output%20sample%20rate%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Audio%20fidelity%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60channels%60%20%20%20%7C%20Mono%20or%20stereo%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Output%20format%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0ASee%20the%20%5BVoiceConfig%20reference%5D(..%2Fapi%2Fvoice-config.md)%20for%20detailed%20parameter%20documentation.%0A%0A%23%23%20Language%20Modules%0A%0AEach%20language%20module%20provides%3A%0A%0A-%20A%20**phoneme%20inventory**%20(Map%20of%20symbol%20-%3E%20acoustic%20definition)%0A-%20A%20**G2P%20converter**%20(lyric%20text%20-%3E%20phoneme%20symbol%20sequence)%0A-%20Optional%20**accent%20resolution**%20(pitch-accent%20patterns%20for%20prosody)%0A%0ABuilt-in%20languages%20cover%20English%20(ARPAbet%20%2B%20CMUDict)%2C%20Japanese%20(hiragana%2Fromaji%20%2B%20EDICT2)%2C%20and%20Mandarin%20(pinyin%20decomposition).%0A%0A%23%23%20Score%20and%20Rendering%0A%0AA%20%60Score%60%20is%20a%20sequence%20of%20notes%20with%20a%20tempo%20map.%20The%20renderer%3A%0A%0A1.%20Converts%20each%20note&#039;s%20lyric%20to%20phoneme%20symbols%20via%20the%20language%20module%0A2.%20Maps%20phoneme%20symbols%20to%20acoustic%20targets%20(formants%2C%20noise%20parameters)%0A3.%20Generates%20a%20glottal%20pulse%20train%20at%20the%20note&#039;s%20F0%20(%2B%20pitch%20bend%20%2B%20vibrato)%0A4.%20Filters%20through%20the%20formant%20cascade%20(with%20cross-phoneme%20interpolation)%0A5.%20Mixes%20in%20noise%20for%20consonants%0A6.%20Applies%20amplitude%20envelopes%20and%20normalisation%0A%0AThe%20output%20is%20an%20%60AudioChunk%60%20per%20note%2C%20carrying%20sample-accurate%20timeline%20positioning.%0A%0A%23%23%20Streaming%0A%0A%60streamScore()%60%20returns%20an%20%60AsyncGenerator%3CAudioChunk%3E%60%2C%20producing%20one%20chunk%20at%20a%20time.%20This%20enables%20interleaved%20rendering%20and%20playback%20via%20%60StreamPlayer%60%2C%20which%20schedules%20chunks%20against%20the%20Web%20Audio%20clock%20with%20batching%20and%20buffer%20pooling.%0A" style="display: none;"></div>
+                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Core%20Concepts%22%0Adescription%3A%20%22Understand%20how%20Ichikara%20produces%20singing%20voice%20audio%22%0A---%0A%0A%23%23%20Source-Filter%20Model%0A%0AIchikara%20implements%20the%20**source-filter%20model%20of%20speech%20production**%3A%20a%20glottal%20source%20(the%20%22buzz%22%20from%20the%20vocal%20folds)%20is%20shaped%20by%20a%20filter%20(the%20vocal%20tract&#039;s%20resonances).%20This%20separation%20lets%20you%20control%20pitch%20and%20timbre%20independently.%0A%0A%60%60%60mermaid%0Aflowchart%20LR%0A%20%20%20%20G%5BGlottal%20Source%3Cbr%2F%3ELF%20model%5D%20--%3E%20F%5BFormant%20Cascade%3Cbr%2F%3Evocal%20tract%5D%20--%3E%20O%5BOutput%5D%0A%20%20%20%20G%20-.-%3E%20Gp%5BF0%2C%20OQ%2C%20SQ%2C%3Cbr%2F%3Etenseness%2C%3Cbr%2F%3Easpiration%2C%20jitter%5D%0A%20%20%20%20F%20-.-%3E%20Fp%5BF1-F5%20frequencies%2C%3Cbr%2F%3Ebandwidths%2C%3Cbr%2F%3Eantiformants%5D%0A%60%60%60%0A%0AThe%20glottal%20source%20generates%20a%20periodic%20pulse%20train%20at%20the%20fundamental%20frequency%20(F0).%20The%20formant%20cascade%20applies%20a%20series%20of%20resonators%20(poles)%20and%20anti-resonators%20(zeros)%20to%20shape%20the%20spectrum%20into%20vowels%20and%20consonants.%0A%0A%23%23%20VoiceConfig%0A%0AThe%20%60VoiceConfig%60%20is%20the%20central%20configuration%20object.%20It%20bundles%3A%0A%0A%7C%20Component%20%20%20%20%7C%20Controls%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Perceptual%20Effect%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C--------------%7C----------------------------------------------%7C-----------------------------------------------%7C%0A%7C%20%60glottal%60%20%20%20%20%7C%20OQ%2C%20SQ%2C%20tenseness%2C%20aspiration%2C%20power%2C%20jitter%20%7C%20Voice%20quality%2C%20breathiness%2C%20roughness%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60formant%60%20%20%20%20%7C%20Scale%2C%20shift%2C%20bandwidth%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Vocal-tract%20size%2C%20brightness%2C%20resonance%20width%20%7C%0A%7C%20%60vibrato%60%20%20%20%20%7C%20Rate%2C%20depth%2C%20attack%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Pitch%20modulation%20(vibrato)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60sampleRate%60%20%7C%20Output%20sample%20rate%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Audio%20fidelity%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60channels%60%20%20%20%7C%20Mono%20or%20stereo%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Output%20format%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0ASee%20the%20%5BVoiceConfig%20reference%5D(..%2Fapi%2Fvoice-config.md)%20for%20detailed%20parameter%20documentation.%0A%0A%23%23%20Language%20Modules%0A%0AEach%20language%20module%20provides%3A%0A%0A-%20A%20**phoneme%20inventory**%20(Map%20of%20symbol%20-%3E%20acoustic%20definition)%0A-%20A%20**G2P%20converter**%20(lyric%20text%20-%3E%20phoneme%20symbol%20sequence)%0A-%20Optional%20**accent%20resolution**%20(pitch-accent%20patterns%20for%20prosody)%0A%0ABuilt-in%20languages%20cover%20English%20(ARPAbet%20%2B%20CMUDict)%2C%20Japanese%20(hiragana%2Fromaji%20%2B%20EDICT2)%2C%20and%20Mandarin%20(pinyin%20decomposition).%0A%0A%23%23%20Score%20and%20Rendering%0A%0AA%20%60Score%60%20is%20a%20sequence%20of%20notes%20with%20a%20tempo%20map.%20The%20renderer%3A%0A%0A1.%20Converts%20each%20note&#039;s%20lyric%20to%20phoneme%20symbols%20via%20the%20language%20module%0A2.%20Maps%20phoneme%20symbols%20to%20acoustic%20targets%20(formants%2C%20noise%20parameters)%0A3.%20Generates%20a%20glottal%20pulse%20train%20at%20the%20note&#039;s%20F0%20(%2B%20pitch%20bend%20%2B%20vibrato)%0A4.%20Filters%20through%20the%20formant%20cascade%20(with%20cross-phoneme%20interpolation)%0A5.%20Mixes%20in%20noise%20for%20consonants%0A6.%20Applies%20amplitude%20envelopes%20and%20normalisation%0A%0AThe%20output%20is%20an%20%60AudioChunk%60%20per%20note%2C%20carrying%20sample-accurate%20timeline%20positioning.%0A%0A%23%23%20Streaming%0A%0A%60streamScore()%60%20returns%20an%20%60AsyncGenerator%3CAudioChunk%3E%60%2C%20producing%20one%20chunk%20at%20a%20time.%20This%20enables%20interleaved%20rendering%20and%20playback%20via%20%60StreamPlayer%60%2C%20which%20schedules%20chunks%20against%20the%20Web%20Audio%20clock%20with%20batching%20and%20buffer%20pooling.%0A" style="display: none;"></div>
                   
                     <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
                       <ol>
@@ -866,6 +929,7 @@
                     </nav>
                   
 
+                  
                   
                     <div class="docmd-copy-widgets">
                       
@@ -910,12 +974,17 @@
                           <span class="docmd-btn-text">Copy Context</span>
                         </button>
                       
+                      
                     </div>
                   
                 </div>
                 
+                  <h1 class="docmd-focus-title">
+                    Core Concepts
+                  </h1>
+                
                 <h2 id="source-filter-model" class="docmd-heading"><a href="#source-filter-model" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Source-Filter Model</h2>
-<p>UTAU.js implements the <strong>source-filter model of speech production</strong>: a glottal source (the “buzz” from the vocal folds) is shaped by a filter (the vocal tract’s resonances). This separation lets you control pitch and timbre independently.</p>
+<p>Ichikara implements the <strong>source-filter model of speech production</strong>: a glottal source (the “buzz” from the vocal folds) is shaped by a filter (the vocal tract’s resonances). This separation lets you control pitch and timbre independently.</p>
 <div class="mermaid">flowchart LR
     G[Glottal Source&lt;br/&gt;LF model] --&gt; F[Formant Cascade&lt;br/&gt;vocal tract] --&gt; O[Output]
     G -.-&gt; Gp[F0, OQ, SQ,&lt;br/&gt;tenseness,&lt;br/&gt;aspiration, jitter]
@@ -1010,10 +1079,10 @@
                       </a>
                     
                     
-                      <a href="../../guide/architecture/" class="next-page">
+                      <a href="../../guide/editor/" class="next-page">
                         <span><small>Next</small>
                           <strong>
-                            Architecture
+                            Song Editor
                           </strong></span>
                         
 <svg class="lucide-icon icon-arrow-right page-nav-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
@@ -1038,8 +1107,11 @@
                 
               </div>
               
+              
               <div class="toc-sidebar">
                 
+                
+                  
 
 
   <div class="toc-container">
@@ -1084,19 +1156,21 @@
     </ul>
   </div>
 
+                
+                
               </div>
               
             </div>
             <div class="page-footer-actions">
               
               
-                <span class="git-last-updated" data-timestamp="1786770748000">
+                <span class="git-last-updated" data-timestamp="1794317025000">
                   <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <span class="git-label">Last updated:</span>
-                  <span class="git-time" data-timestamp="1786770748000"></span>
+                  <span class="git-time" data-timestamp="1794317025000"></span>
                   
                   <div class="git-commit-tooltip" role="tooltip">
                     <div class="git-tooltip-title">Recent commits</div>
@@ -1109,10 +1183,10 @@
                             
                           </div>
                           <div class="git-commit-details">
-                            <div class="git-commit-message" title="npm audit fix x2">npm audit fix x2</div>
+                            <div class="git-commit-message" title="Node 24">Node 24</div>
                             <div class="git-commit-meta">
                               <span class="git-commit-author">NellowTCS</span>
-                              <span class="git-commit-date" data-timestamp="1786770748000"></span>
+                              <span class="git-commit-date" data-timestamp="1794317025000"></span>
                             </div>
                           </div>
                         </li>
@@ -1124,7 +1198,7 @@
               
               <span class="git-spacer"></span>
               
-                <a href="https://github.com/NellowTCS/UTAU.js/edit/main/Docs/docs/getting-started/concepts.md" target="_blank" rel="noopener noreferrer" class="edit-link">
+                <a href="https://github.com/Audiflo/Ichikara/edit/main/Docs/docs/getting-started/concepts.md" target="_blank" rel="noopener noreferrer" class="edit-link">
                   
 <svg class="lucide-icon icon-pencil " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-pencil"
@@ -1154,10 +1228,10 @@
   <div class="footer-complete-top">
       <div class="footer-brand">
           
-            <span class="footer-title">UTAU.js</span>
+            <span class="footer-title">Ichikara</span>
           
           
-            <p class="footer-desc">A speech-synthesis library for singing voice synthesis in the browser.</p>
+            <p class="footer-desc">A OneVoice song editor and TypeScript singing-synthesis library.</p>
           
         </div>
         
@@ -1167,11 +1241,11 @@
                 <span class="footer-column-title">Resources</span>
                 <ul>
                   
-                    <li><a href="getting-started/quickstart/" >Getting Started</a></li>
+                    <li><a href="../../guide/editor/" >Song Editor</a></li>
                   
-                    <li><a href="api/" >API Reference</a></li>
+                    <li><a href="../../api/" >API Reference</a></li>
                   
-                    <li><a href="api/voice-config/" >Voice Config</a></li>
+                    <li><a href="../../api/voice-config/" >Voice Config</a></li>
                   
                 </ul>
               </div>
@@ -1180,11 +1254,11 @@
                 <span class="footer-column-title">Community</span>
                 <ul>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js" >GitHub</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara" >GitHub</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/issues" >Issues</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/issues" >Issues</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/discussions" >Discussions</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/discussions" >Discussions</a></li>
                   
                 </ul>
               </div>
@@ -1193,7 +1267,7 @@
         
       </div>
       <div class="footer-complete-bottom">
-        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/NellowTCS/UTAU.js">View on GitHub</a>.</div>
+        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/Audiflo/Ichikara">View on GitHub</a>.</div>
         
           <div class="branding-footer">
             Built with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
@@ -1205,17 +1279,22 @@
         </div>
       </div>
       
-      <script src="../../assets/js/docmd-main.js?v=mstx7dcj"></script>
       
-      <script src="../../assets/js/docmd-git.js?v=mstx7dcj"></script>
-      <script src="../../assets/js/docmd-image-lightbox.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/vendor/minisearch.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/docmd-search.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/init-mermaid.js?v=mstx7dcj" type="module"></script>
-<script src="../../assets/js/docmd-git.js?v=mstx7dcj" type="module"></script>
+      <script>window.__DOCMD_VARIABLES__ = {"docmd":{"version":"0.9.9","buildTime":"2026-11-10T13:24:45.614Z","buildDate":"2026-11-10","buildYear":"2026","gitCommit":"0a48415","gitBranch":"main"},"DOCMD_VERSION":"0.9.9","BUILD_YEAR":"2026","BUILD_DATE":"2026-11-10","GIT_COMMIT":"0a48415","GIT_BRANCH":"main","git":{"commit":"0a48415","branch":"main"},"site":{"title":"Ichikara","base":"/Ichikara/docs/"},"page":{"title":"Core Concepts","slug":"/Ichikara/docs/getting-started/concepts/","path":"getting-started/concepts/index.html"},"frontmatter":{"title":"Core Concepts","description":"Understand how Ichikara produces singing voice audio","_git":{"lastUpdated":"2026-11-10T13:23:45.000Z","lastUpdatedTimestamp":1794317025000,"commits":[{"hash":"0a48415cffcf70f254668ccf0cfbb41742d56091","shortHash":"0a48415","author":"NellowTCS","email":"neeljaiswal23@gmail.com","date":"2026-11-10T13:23:45.000Z","timestamp":1794317025000,"message":"Node 24","avatarUrl":"https://www.gravatar.com/avatar/baecf29c7bedbb00a8d5bd5984799c55?d=mp&s=64"}]}}};</script>
+      
+      <script src="../../assets/js/docmd-runtime.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-main.js?v=mwaq2c0s"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/vendor/minisearch.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-search.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/init-mermaid.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-git.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-ai.js?v=mwaq2c0s" ></script>
 
   <!-- Search Modal (Injected by @docmd/plugin-search) -->
-  <div id="docmd-search-modal" data-semantic="true" class="docmd-search-modal" style="display: none;" data-show-confidence="true" data-show-filters="true"
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-semantic="true" data-show-confidence="true" data-show-filters="true"
        data-search-placeholder="Search documentation..."
        data-search-no-results="No results found."
        data-search-error="Failed to load search index."
@@ -1287,7 +1366,8 @@
       })();
     </script>
 
-<script>window.__git_config={"repo":"https://github.com/NellowTCS/UTAU.js/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<script>window.__git_config={"repo":"https://github.com/Audiflo/Ichikara/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<div id="docmd-ai-root"></div><script>window.__docmd_ai_config={"endpoint":"","cloud":{},"captcha":true,"position":"bottom-center","siteTitle":"Ichikara","siteBase":"/Ichikara/docs/","siteUrl":"https://audiflo.github.io/Ichikara/docs","versions":null,"i18n":null,"navigation":[{"title":"Home","path":"/","icon":"home"},{"title":"Getting Started","icon":"rocket","collapsible":false,"children":[{"title":"Quick Start","path":"/getting-started/quickstart/","icon":"play"},{"title":"Installation","path":"/getting-started/installation/","icon":"download"},{"title":"Core Concepts","path":"/getting-started/concepts/","icon":"book"}]},{"title":"Guide","icon":"book-open","collapsible":false,"children":[{"title":"Song Editor","path":"/guide/editor/","icon":"music"},{"title":"Architecture","path":"/guide/architecture/","icon":"box"},{"title":"Renderer","path":"/guide/renderer/","icon":"cpu"},{"title":"Languages","path":"/guide/languages/","icon":"globe"}]},{"title":"API Reference","icon":"code","path":"/api/","collapsible":false,"children":[{"title":"Native Projects","path":"/api/projects/","icon":"folder"},{"title":"VoiceConfig","path":"/api/voice-config/","icon":"sliders"},{"title":"DSP Primitives","path":"/api/dsp/","icon":"audio-waveform"},{"title":"Import / Export","path":"/api/import-export/","icon":"file-up"}]},{"title":"GitHub","path":"https://github.com/Audiflo/Ichikara","icon":"github","external":true}],"searchCapabilities":{"keyword":true,"semantic":true},"isWorkspace":false,"workspaceProjects":[],"messageActions":false,"fetchExternalUrls":false,"contextLimit":5};</script>
       
       
       

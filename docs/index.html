@@ -10,7 +10,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="generator" content="docmd v0.8.17">
+    <meta name="generator" content="docmd v0.9.9">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script>
@@ -19,11 +19,11 @@
       if (root === '') root = './';
       window.DOCMD_ROOT = root;
 
-      window.DOCMD_SITE_ROOT = "/UTAU.js/docs/";
+      window.DOCMD_SITE_ROOT = "/Ichikara/docs/";
 
       window.DOCMD_APPEARANCE = "system";
       window.DOCMD_VERSION_ROOT = "/";
-      window.DOCMD_BASE = "/UTAU.js/docs/";
+      window.DOCMD_BASE = "/Ichikara/docs/";
       window.DOCMD_LOCALE = "";
       window.DOCMD_DEFAULT_LOCALE = "";
     </script>
@@ -98,37 +98,42 @@
         visibility: hidden;
       }
     </style>
-    <title>
-      UTAU.js
-    </title>
+    <title>Ichikara</title>
     
     
 
-    <link id="site-favicon" rel="icon" href="./assets/favicon.ico?v=mstx7dcj">
-    <link rel="stylesheet" href="./assets/css/docmd-main.css?v=mstx7dcj">
+    <link id="site-favicon" rel="icon" href="./assets/favicon.ico?v=mwaq2c0s">
+    <link rel="stylesheet" href="./assets/css/docmd-main.css?v=mwaq2c0s">
     
-    <link rel="stylesheet" href="./assets/css/docmd-highlight-light.css?v=mstx7dcj" id="hljs-light" >
-    <link rel="stylesheet" href="./assets/css/docmd-highlight-dark.css?v=mstx7dcj" id="hljs-dark" disabled>
+    <link rel="stylesheet" href="./assets/css/docmd-highlight-light.css?v=mwaq2c0s" id="hljs-light" >
+    <link rel="stylesheet" href="./assets/css/docmd-highlight-dark.css?v=mwaq2c0s" id="hljs-dark" disabled>
     
     
-<meta name="description" content="A speech-synthesis library for singing voice synthesis in the browser">
-<link rel="canonical" href="https://nellowtcs.me/UTAU.js/docs/">
-<meta property="og:title" content="UTAU.js">
-<meta property="og:description" content="A speech-synthesis library for singing voice synthesis in the browser">
-<meta property="og:url" content="https://nellowtcs.me/UTAU.js/docs/">
+<meta name="description" content="A OneVoice song editor and TypeScript singing-synthesis library.">
+<link rel="canonical" href="https://audiflo.github.io/Ichikara/docs/">
+<meta property="og:title" content="Ichikara">
+<meta property="og:description" content="A OneVoice song editor and TypeScript singing-synthesis library.">
+<meta property="og:url" content="https://audiflo.github.io/Ichikara/docs/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="UTAU.js">
-<meta name="twitter:description" content="A speech-synthesis library for singing voice synthesis in the browser">
+<meta name="twitter:title" content="Ichikara">
+<meta name="twitter:description" content="A OneVoice song editor and TypeScript singing-synthesis library.">
+<meta name="twitter:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Ichikara","url":"https://audiflo.github.io/Ichikara/docs/","potentialAction":{"@type":"SearchAction","target":"https://audiflo.github.io/Ichikara/docs/?q={search_term_string}","query-input":"required name=search_term_string"}}
+</script>
 
 
 
-<link rel="stylesheet" href="./assets/css/docmd-theme-ruby.css?v=mstx7dcj" >
-<link rel="stylesheet" href="./assets/css/docmd-git.css?v=mstx7dcj" >
-<link rel="stylesheet" href="./assets/css/docmd-openapi.css?v=mstx7dcj" >
+
+<link rel="stylesheet" href="./assets/css/docmd-theme-ruby.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="./assets/css/docmd-git.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="./assets/css/docmd-openapi.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="./assets/css/docmd-ai.css?v=mwaq2c0s" >
 
     
-      <link rel="stylesheet" href="./assets/css/theme.css?v=mstx7dcj">
+      <link rel="stylesheet" href="./assets/css/theme.css?v=mwaq2c0s">
     
     
   </head>
@@ -141,11 +146,16 @@
 
     
     
+
+    
+
+    
+    
       <aside class="sidebar">
         <div class="sidebar-header">
           
-<h1><a href="./">
-                UTAU.js
+            <h1><a href="./">
+                Ichikara
               </a></h1>
           
           <span class="mobile-view sidebar-menu-button float-right">
@@ -170,6 +180,7 @@
           </span>
         </div>
         <div class="sidebar-top-group">
+          
           
           
           
@@ -364,8 +375,8 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M12 7v14" />
-  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
 </svg>
 
           
@@ -379,6 +390,40 @@
         
           <ul class="submenu">
             
+      <li class="" >
+      
+        <a href="./guide/editor/" class=" "
+          >
+           
+<svg class="lucide-icon icon-music " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Song Editor
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
       <li class="" >
       
         <a href="./guide/architecture/" class=" "
@@ -531,6 +576,38 @@
             
       <li class="" >
       
+        <a href="./api/projects/" class=" "
+          >
+           
+<svg class="lucide-icon icon-folder " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Native Projects
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
         <a href="./api/voice-config/" class=" "
           >
            
@@ -642,25 +719,9 @@
     
       <li class="" >
       
-        <a href="https://github.com/NellowTCS/UTAU.js" class=" "
-          target=&quot;_blank&quot; rel=&quot;noopener&quot;>
+        <a href="https://github.com/Audiflo/Ichikara" class=" "
+          target="_blank" rel="noopener">
            
-<svg class="lucide-icon icon-github " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-  class="lucide lucide-github"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-  <path d="M9 18c-4.51 2-5-2-7-2" />
-</svg>
-
           
           <span class="nav-item-title">
             GitHub
@@ -698,12 +759,12 @@
           
           
           
+          
         </div>
       </aside>
       
-      
-      
       <div class="main-content-wrapper">
+        
         
         
           <header class="page-header">
@@ -731,7 +792,7 @@
               
               <div class="header-titles-wrapper">
                 <span class="header-title">
-                  UTAU.js
+                  Ichikara
                 </span>
               </div>
             </div>
@@ -770,7 +831,7 @@
     
 
     
-    <button class="theme-toggle-button" aria-label="Toggle theme">
+    <button class="theme-toggle-button" aria-label="Toggle theme" title="Toggle theme">
         
 <svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-sun"
@@ -814,6 +875,8 @@
     
 
     
+
+    
 </div>
 
               
@@ -825,7 +888,7 @@
             <div class="content-layout">
               <div class="main-content">
                 <div class="docmd-breadcrumbs-row">
-                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22UTAU.js%22%0Adescription%3A%20%22A%20speech-synthesis%20library%20for%20singing%20voice%20synthesis%20in%20the%20browser%22%0A---%0A%0A%3A%3A%3A%20hero%20layout%3Asplit%20glow%3Atrue%0A%0A%3C!--%20markdownlint-disable%20MD025%20--%3E%0A%23%20UTAU.js%0A%0AA%20speech-synthesis%20library%20for%20singing%20voice%20synthesis%20in%20the%20browser.%0A%0A%3A%3A%3A%20tag%20%22LF%20Glottal%22%0A%3A%3A%3A%20tag%20%22Formant%20Filter%22%0A%3A%3A%3A%20tag%20%22Cross-Language%22%0A%0A%3A%3A%3A%20button%20%22Quick%20Start%22%20.%2Fgetting-started%2Fquickstart.md%20icon%3Aplay%0A%3C!--markdownlint-disable%20MD034--%3E%0A%3A%3A%3A%20button%20%22GitHub%22%20external%3Ahttps%3A%2F%2Fgithub.com%2FNellowTCS%2FUTAU.js%20icon%3Agithub%0A%0A%3D%3D%20side%0A%0A%3A%3A%3A%20card%20%22Why%20UTAU.js%3F%22%0ATraditional%20UTAU%20needs%20a%20separate%20voicebank%20for%20every%20character%20or%20style.%20Each%20one%20recorded%2C%20oto&#039;d%2C%20and%20bundled%20individually.%20UTAU.js%20flips%20that%3A%20one%20parametric%20voice%2C%20infinite%20variation.%20Change%20gender%2C%20breathiness%2C%20brightness%2C%20or%20vibrato%20with%20a%20single%20function%20call.%20No%20thousand-voice%20library%2C%20no%20multi-gigabyte%20downloads.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%23%23%20Features%0A%0A%3A%3A%3A%20grids%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22LF%20Glottal%20Source%22%20icon%3Awaveform%0ALiljencrants-Fant%20glottal%20pulse%20model%20with%20jitter%2C%20shimmer%2C%20aspiration%20noise%2C%20and%20DC%20blocking.%20Control%20OQ%2C%20SQ%2C%20tenseness%2C%20and%20power%20independently.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22Cascaded%20Formant%20Filter%22%20icon%3Acombine%0ASeries%20of%20anti-resonators%20%2B%20resonators%20modelling%20the%20vocal-tract%20transfer%20function.%20Smooth%20interpolation%20between%20phoneme%20targets.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22Three%20Languages%22%20icon%3Aglobe%0AEnglish%20(ARPAbet%20%2B%20CMUDict%20G2P)%2C%20Japanese%20(hiragana%2Fromaji%20%2B%20EDICT2%20kanji)%2C%20Mandarin%20(pinyin%20syllable%20decomposition).%20Extensible%20via%20%60registerLanguage%60.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22Streaming%20Playback%22%20icon%3Awind%0AAsyncGenerator-based%20render%20pipeline.%20Play%20notes%20as%20they%20render%20via%20Web%20Audio%20with%20batching%20and%20buffer%20pooling.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22File%20Import%20%2F%20Export%22%20icon%3Afile-up%0ARead%20and%20write%20UST%2C%20USTX%2C%20VPR%2C%20VSQX%2C%20MIDI%2C%20MusicXML%2C%20and%20more%20via%20utaformatix-3.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22OneVoice%20System%22%20icon%3Asliders%0AOne%20parametric%20voice%2C%20infinite%20variations.%20Male%2C%20female%2C%20breathy%2C%20bright%2C%20tense.%20All%20from%20a%20single%20config.%20%60scaleVoice()%60%20maps%20high-level%20sliders%20(gender%2C%20breathiness%2C%20brightness%2C%20tension)%20to%20the%20underlying%20DSP%20parameters.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%0A%0A%23%23%20Quick%20Example%0A%0A%3A%3A%3A%20tabs%0A%0A%3D%3D%20tab%20%22Node.js%22%0A%0A%60%60%60typescript%0Aimport%20%7B%20renderScore%2C%20femaleVoice%2C%20japanese%2C%20encodeWav%20%7D%20from%20%22utau.js%22%3B%0Aimport%20%7B%20writeFileSync%20%7D%20from%20%22node%3Afs%22%3B%0A%0Aconst%20score%20%3D%20%7B%0A%20%20tempos%3A%20%5B%7B%20tick%3A%200%2C%20tempo%3A%20120%20%7D%5D%2C%0A%20%20resolution%3A%20480%2C%0A%20%20notes%3A%20%5B%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%93%22%2C%20noteNum%3A%2060%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%82%93%22%2C%20noteNum%3A%2062%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AB%22%2C%20noteNum%3A%2064%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%A1%22%2C%20noteNum%3A%2065%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AF%22%2C%20noteNum%3A%2067%2C%20length%3A%20960%20%7D%2C%0A%20%20%5D%2C%0A%7D%3B%0A%0Aconst%20chunks%20%3D%20await%20renderScore(score%2C%20femaleVoice%2C%20%22jp%22)%3B%0Aconst%20wav%20%3D%20encodeWav(chunks)%3B%0AwriteFileSync(%22hello.wav%22%2C%20Buffer.from(wav))%3B%0A%60%60%60%0A%0A%3D%3D%20tab%20%22Browser%22%0A%0A%60%60%60typescript%0Aimport%20%7B%20streamScore%2C%20femaleVoice%2C%20japanese%2C%20StreamPlayer%20%7D%20from%20%22utau.js%22%3B%0A%0Aconst%20score%20%3D%20%7B%20%2F*%20...%20*%2F%20%7D%3B%0Aconst%20player%20%3D%20new%20StreamPlayer()%3B%0A%0Aplayer.on((event)%20%3D%3E%20%7B%0A%20%20if%20(event.type%20%3D%3D%3D%20%22stateChange%22)%20console.log(event.state)%3B%0A%20%20if%20(event.type%20%3D%3D%3D%20%22progress%22)%20console.log(%60%24%7Bevent.renderedSamples%7D%20samples%20scheduled%60)%3B%0A%7D)%3B%0A%0Aawait%20player.play(streamScore(score%2C%20femaleVoice%2C%20%22jp%22))%3B%0A%60%60%60%0A%0A%3D%3D%20tab%20%22Custom%20Voice%22%0A%0A%60%60%60typescript%0Aimport%20%7B%20renderScore%2C%20buildVoice%2C%20scaleVoice%2C%20encodeWav%20%7D%20from%20%22utau.js%22%3B%0A%0Aconst%20brightFemale%20%3D%20scaleVoice(buildVoice(%7B%0A%20%20name%3A%20%22Bright%20Alto%22%2C%0A%20%20formant%3A%20%7B%20scale%3A%201.25%2C%20shift%3A%202%2C%20bandwidth%3A%201.0%20%7D%2C%0A%7D)%2C%20%7B%0A%20%20gender%3A%200.3%2C%0A%20%20breathiness%3A%200.2%2C%0A%20%20vibratoAmount%3A%200.8%2C%0A%7D)%3B%0A%0Aconst%20chunks%20%3D%20await%20renderScore(score%2C%20brightFemale%2C%20%22en%22)%3B%0A%60%60%60%0A%0A%3A%3A%3A%0A%0A%23%23%20Installation%0A%0A%60%60%60bash%0Anpm%20install%20utaujs%0A%60%60%60%0A%0A%23%23%20Next%20Steps%0A%0A%3A%3A%3A%20grids%0A%3A%3A%3A%20grid%0A%0A%23%23%23%20Getting%20Started%0A%0AStart%20here%20if%20you%20are%20new%20to%20UTAU.js.%0A%0A%3A%3A%3A%20button%20%22Quick%20Start%22%20.%2Fgetting-started%2Fquickstart.md%20icon%3Aplay%0A%3A%3A%3A%20button%20%22Installation%22%20.%2Fgetting-started%2Finstallation.md%20icon%3Adownload%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%0A%23%23%23%20Learn%20the%20Engine%0A%0AUnderstand%20how%20the%20synthesis%20engine%20works.%0A%0A%3A%3A%3A%20button%20%22Core%20Concepts%22%20.%2Fgetting-started%2Fconcepts.md%20icon%3Abook%0A%3A%3A%3A%20button%20%22Architecture%22%20.%2Fguide%2Farchitecture.md%20icon%3Abox%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%0A%23%23%23%20Reference%0A%0ABrowse%20the%20full%20API%20documentation.%0A%0A%3A%3A%3A%20button%20%22API%20Reference%22%20.%2Fapi%2F%20icon%3Acode%0A%3A%3A%3A%20button%20%22Voice%20Config%22%20.%2Fapi%2Fvoice-config.md%20icon%3Asliders%0A%3A%3A%3A%0A%3A%3A%3A%0A" style="display: none;"></div>
+                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Ichikara%22%0Adescription%3A%20%22A%20OneVoice%20song%20editor%20and%20TypeScript%20singing-synthesis%20library.%22%0A---%0A%0A%3A%3A%3A%20hero%20layout%3Asplit%20glow%3Atrue%0A%0A%3C!--%20markdownlint-disable%20MD025%20--%3E%0A%0A%23%20Ichikara%0A%0AWrite%20and%20arrange%20songs%20in%20the%20browser%2C%20or%20synthesize%20singing%20from%20your%20own%0ATypeScript%20app.%20Ichikara%20generates%20voices%20from%20parameters%20rather%20than%20recorded%0Avoicebanks.%0A%0A%3A%3A%3A%20tag%20%22OneVoice%20Editor%22%0A%3A%3A%3A%20tag%20%22LF%20Glottal%22%0A%3A%3A%3A%20tag%20%22Cross-Language%22%0A%0A%3C!--markdownlint-disable%20MD034--%3E%0A%0A%3A%3A%3A%20button%20%22Open%20Editor%22%20external%3Ahttps%3A%2F%2Faudiflo.github.io%2FIchikara%20icon%3Aplay%0A%3A%3A%3A%20button%20%22Quick%20Start%22%20.%2Fgetting-started%2Fquickstart.md%20icon%3Acode%0A%0A%3C!--markdownlint-disable%20MD034--%3E%0A%0A%3A%3A%3A%20button%20%22GitHub%22%20external%3Ahttps%3A%2F%2Fgithub.com%2FAudiflo%2FIchikara%20icon%3Agithub%0A%0A%3D%3D%20side%0A%0A%3A%3A%3A%20card%20%22OneVoice%22%0AChoose%20a%20Chitose%20voice%2C%20then%20adjust%20its%20gender%2C%20breathiness%2C%20brightness%2C%20tension%2C%0Aand%20vibrato.%20Each%20vocal%20track%20has%20its%20own%20voice%20and%20language.%20The%20same%20controls%0Aare%20available%20through%20%60scaleVoice()%60%20in%20the%20library.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A!%5BVocal%20tracks%2C%20piano-roll%20notes%2C%20and%20expression%20editing%20in%20Ichikara%5D(assets%2Fimages%2Feditor.png)%0A%0A%23%23%20Song%20editor%0A%0AArrange%20vocal%20parts%20across%20tracks%2C%20edit%20lyrics%20and%20phonemes%2C%20draw%20pitch%20curves%2C%0Aand%20set%20intensity%20or%20velocity%20with%20note-length%20bars.%20Resize%20the%20workspace%20to%0Afit%20your%20song%20and%20follow%20playback%20in%20page%20or%20smooth%20mode.%0A%0ASave%20as%20%60.ichi%60%20to%20retain%20voices%2C%20expression%2C%20parts%2C%20and%20mix%20settings.%20Export%20WAV%0Afor%20audio%20or%20USTX%20to%20continue%20in%20another%20editor.%0A%0A%3A%3A%3A%20button%20%22Editor%20Guide%22%20.%2Fguide%2Feditor.md%20icon%3Amusic%0A%0A%23%23%20Features%0A%0A%3A%3A%3A%20grids%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22LF%20Glottal%20Source%22%20icon%3Awaveform%0ALiljencrants-Fant%20glottal%20pulses%20with%20jitter%2C%20shimmer%2C%20aspiration%20noise%2C%20and%20DC%0Ablocking.%20Control%20open%20quotient%2C%20speed%20quotient%2C%20tenseness%2C%20and%20power.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22Cascaded%20Formant%20Filter%22%20icon%3Acombine%0AResonators%20and%20anti-resonators%20model%20the%20vocal%20tract%2C%20interpolating%20between%0Aphoneme%20targets%20as%20the%20voice%20moves%20through%20a%20lyric.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22Three%20Languages%22%20icon%3Aglobe%0AJapanese%20hiragana%2C%20romaji%2C%20and%20kanji%3B%20English%20text%20with%20CMUDict%3B%20and%20Mandarin%0Apinyin.%20Add%20another%20language%20through%20%60registerLanguage%60.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22Streaming%20Playback%22%20icon%3Awind%0APlay%20chunks%20as%20they%20render%20through%20Web%20Audio.%20Native%20projects%20include%20track%0Aplacement%2C%20mute%2Fsolo%2C%20gain%2C%20and%20stereo%20pan.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22File%20Import%20%2F%20Export%22%20icon%3Afile-up%0ARead%20and%20write%20UST%2C%20USTX%2C%20VPR%2C%20VSQX%2C%20MIDI%2C%20MusicXML%2C%20and%20other%20score%20formats%20through%0AUtaFormatix.%20Keep%20an%20%60.ichi%60%20copy%20for%20native%20settings%20and%20region%20boundaries.%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20card%20%22OneVoice%20System%22%20icon%3Asliders%0AStart%20with%20Chitose%20Chika%2C%20Sho%2C%20or%20Ren.%20Use%20the%20editor&#039;s%20voice%20controls%20or%0A%60buildVoice()%60%20and%20%60scaleVoice()%60%20to%20change%20the%20sound.%0A%3A%3A%3A%0A%3A%3A%3A%0A%3A%3A%3A%0A%0A%23%23%20Quick%20Example%0A%0A%3A%3A%3A%20tabs%0A%0A%3D%3D%20tab%20%22Node.js%22%0A%0A%60%60%60typescript%0Aimport%20%7B%20writeFileSync%20%7D%20from%20%22node%3Afs%22%3B%0Aimport%20%7B%20renderScore%2C%20chitoseChika%2C%20encodeWav%2C%20type%20Score%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20score%3A%20Score%20%3D%20%7B%0A%20%20tempos%3A%20%5B%7B%20tick%3A%200%2C%20tempo%3A%20120%20%7D%5D%2C%0A%20%20resolution%3A%20480%2C%0A%20%20notes%3A%20%5B%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%93%22%2C%20noteNum%3A%2060%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%82%93%22%2C%20noteNum%3A%2062%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AB%22%2C%20noteNum%3A%2064%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%A1%22%2C%20noteNum%3A%2065%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AF%22%2C%20noteNum%3A%2067%2C%20length%3A%20960%20%7D%2C%0A%20%20%5D%2C%0A%7D%3B%0A%0Aconst%20chunks%20%3D%20await%20renderScore(score%2C%20chitoseChika%2C%20%22jp%22)%3B%0AwriteFileSync(%22hello.wav%22%2C%20Buffer.from(encodeWav(chunks)))%3B%0A%60%60%60%0A%0A%3D%3D%20tab%20%22Browser%22%0A%0ACall%20playback%20from%20a%20user%20action%2C%20using%20the%20score%20from%20the%20Node.js%20tab%3A%0A%0A%60%60%60typescript%0Aimport%20%7B%20streamScore%2C%20chitoseChika%2C%20StreamPlayer%2C%20type%20Score%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20player%20%3D%20new%20StreamPlayer()%3B%0A%0Aasync%20function%20playPhrase(score%3A%20Score)%3A%20Promise%3Cvoid%3E%20%7B%0A%20%20await%20player.play(streamScore(score%2C%20chitoseChika%2C%20%22jp%22))%3B%0A%7D%0A%60%60%60%0A%0A%3D%3D%20tab%20%22Custom%20Voice%22%0A%0APass%20this%20voice%20to%20%60renderScore%60%20or%20%60streamScore%60%20with%20your%20score%20and%20language%3A%0A%0A%60%60%60typescript%0Aimport%20%7B%20buildVoice%2C%20scaleVoice%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20brightAlto%20%3D%20scaleVoice(%0A%20%20buildVoice(%7B%0A%20%20%20%20name%3A%20%22Bright%20Alto%22%2C%0A%20%20%20%20formant%3A%20%7B%20scale%3A%201.25%2C%20shift%3A%202%2C%20bandwidth%3A%201.0%20%7D%2C%0A%20%20%7D)%2C%0A%20%20%7B%0A%20%20%20%20gender%3A%200.3%2C%0A%20%20%20%20breathiness%3A%200.2%2C%0A%20%20%20%20vibratoAmount%3A%200.8%2C%0A%20%20%7D%2C%0A)%3B%0A%60%60%60%0A%0A%3A%3A%3A%0A%0A%23%23%20Installation%0A%0A%60%60%60sh%0Anpm%20install%20%40audiflo%2Fichikara%0A%60%60%60%0A%0A%23%23%20Next%20Steps%0A%0A%3A%3A%3A%20grids%0A%3A%3A%3A%20grid%0A%0A%23%23%23%20Getting%20Started%0A%0AEdit%20a%20song%20in%20the%20browser%20or%20render%20a%20phrase%20with%20the%20library.%0A%0A%3A%3A%3A%20button%20%22Song%20Editor%22%20.%2Fguide%2Feditor.md%20icon%3Amusic%0A%3A%3A%3A%20button%20%22Quick%20Start%22%20.%2Fgetting-started%2Fquickstart.md%20icon%3Aplay%0A%3A%3A%3A%20button%20%22Installation%22%20.%2Fgetting-started%2Finstallation.md%20icon%3Adownload%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%0A%23%23%23%20Learn%20the%20Engine%0A%0AHow%20notes%2C%20phonemes%2C%20and%20voice%20parameters%20become%20audio.%0A%0A%3A%3A%3A%20button%20%22Core%20Concepts%22%20.%2Fgetting-started%2Fconcepts.md%20icon%3Abook%0A%3A%3A%3A%20button%20%22Architecture%22%20.%2Fguide%2Farchitecture.md%20icon%3Abox%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%0A%23%23%23%20Reference%0A%0ADocument%20types%2C%20synthesis%20functions%2C%20and%20voice%20settings.%0A%0A%3A%3A%3A%20button%20%22API%20Reference%22%20.%2Fapi%2F%20icon%3Acode%0A%3A%3A%3A%20button%20%22Native%20Projects%22%20.%2Fapi%2Fprojects.md%20icon%3Afolder%0A%3A%3A%3A%20button%20%22Voice%20Config%22%20.%2Fapi%2Fvoice-config.md%20icon%3Asliders%0A%3A%3A%3A%0A%3A%3A%3A%0A" style="display: none;"></div>
                   
                     <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
                       <ol>
@@ -842,6 +905,7 @@
                     </nav>
                   
 
+                  
                   
                     <div class="docmd-copy-widgets">
                       
@@ -886,18 +950,25 @@
                           <span class="docmd-btn-text">Copy Context</span>
                         </button>
                       
+                      
                     </div>
                   
                 </div>
                 
+                  <h1 class="docmd-focus-title">
+                    Ichikara
+                  </h1>
+                
                 <div class="docmd-hero hero-split hero-glow"><div class="hero-content">
-<p>&lt;!-- markdownlint-disable MD025 --&gt;</p>
-<h1>UTAU.js</h1>
-<p>A speech-synthesis library for singing voice synthesis in the browser.</p>
-<p><span class="docmd-tag">LF Glottal</span><br>
-<span class="docmd-tag">Formant Filter</span><br>
-<span class="docmd-tag">Cross-Language</span></p>
-<a href="./getting-started/quickstart/" class="docmd-button">
+<!-- markdownlint-disable MD025 -->
+<h1>Ichikara</h1>
+<p>Write and arrange songs in the browser, or synthesize singing from your own<br>
+TypeScript app. Ichikara generates voices from parameters rather than recorded<br>
+voicebanks.</p>
+<span class="docmd-tag">OneVoice Editor</span><br>
+<span class="docmd-tag">LF Glottal</span><br>
+<span class="docmd-tag">Cross-Language</span><!--markdownlint-disable MD034-->
+<a href="https://audiflo.github.io/Ichikara" class="docmd-button" target="_blank" rel="noopener noreferrer">
 <svg class="lucide-icon icon-play button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-play"
   xmlns="http://www.w3.org/2000/svg"
@@ -912,10 +983,10 @@
 >
   <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
 </svg>
-Quick Start</a><p>&lt;!–markdownlint-disable MD034–&gt;</p>
-<a href="https://github.com/NellowTCS/UTAU.js" class="docmd-button" target="_blank" rel="noopener noreferrer">
-<svg class="lucide-icon icon-github button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-  class="lucide lucide-github"
+Open Editor</a><br>
+<a href="./getting-started/quickstart/" class="docmd-button">
+<svg class="lucide-icon icon-code button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-code"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -926,18 +997,46 @@ Quick Start</a><p>&lt;!–markdownlint-disable MD034–&gt;</p>
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-  <path d="M9 18c-4.51 2-5-2-7-2" />
+  <path d="m16 18 6-6-6-6" />
+  <path d="m8 6-6 6 6 6" />
 </svg>
-GitHub</a></div>
+Quick Start</a><!--markdownlint-disable MD034-->
+<a href="https://github.com/Audiflo/Ichikara" class="docmd-button" target="_blank" rel="noopener noreferrer">GitHub</a></div>
 <div class="hero-side">
-<div class="docmd-container card"><div class="card-title">Why UTAU.js?</div><div class="card-content"><p>Traditional UTAU needs a separate voicebank for every character or style. Each one recorded, oto’d, and bundled individually. UTAU.js flips that: one parametric voice, infinite variation. Change gender, breathiness, brightness, or vibrato with a single function call. No thousand-voice library, no multi-gigabyte downloads.</p>
+<div class="docmd-container card"><div class="card-title">OneVoice</div><div class="card-content"><p>Choose a Chitose voice, then adjust its gender, breathiness, brightness, tension,<br>
+and vibrato. Each vocal track has its own voice and language. The same controls<br>
+are available through <code>scaleVoice()</code> in the library.</p>
 </div></div></div>
 </div>
-<h2 id="features" class="docmd-heading"><a href="#features" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Features</h2>
+<p><img src="./assets/images/editor.png" alt="Vocal tracks, piano-roll notes, and expression editing in Ichikara"></p>
+<h2 id="song-editor" class="docmd-heading"><a href="#song-editor" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Song editor</h2>
+<p>Arrange vocal parts across tracks, edit lyrics and phonemes, draw pitch curves,<br>
+and set intensity or velocity with note-length bars. Resize the workspace to<br>
+fit your song and follow playback in page or smooth mode.</p>
+<p>Save as <code>.ichi</code> to retain voices, expression, parts, and mix settings. Export WAV<br>
+for audio or USTX to continue in another editor.</p>
+<a href="./guide/editor/" class="docmd-button">
+<svg class="lucide-icon icon-music button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+Editor Guide</a><h2 id="features" class="docmd-heading"><a href="#features" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Features</h2>
 <div class="docmd-container grids">
 <div class="docmd-container grid-item">
-<div class="docmd-container card"><div class="card-title">LF Glottal Source</div><div class="card-content"><p>Liljencrants-Fant glottal pulse model with jitter, shimmer, aspiration noise, and DC blocking. Control OQ, SQ, tenseness, and power independently.</p>
+<div class="docmd-container card"><div class="card-title">LF Glottal Source</div><div class="card-content"><p>Liljencrants-Fant glottal pulses with jitter, shimmer, aspiration noise, and DC<br>
+blocking. Control open quotient, speed quotient, tenseness, and power.</p>
 </div></div></div>
 <div class="docmd-container grid-item">
 <div class="docmd-container card"><div class="card-title">
@@ -960,7 +1059,8 @@ GitHub</a></div>
   <rect x="14" y="14" width="7" height="7" rx="1" />
   <rect x="3" y="3" width="7" height="7" rx="1" />
 </svg>
-Cascaded Formant Filter</div><div class="card-content"><p>Series of anti-resonators + resonators modelling the vocal-tract transfer function. Smooth interpolation between phoneme targets.</p>
+Cascaded Formant Filter</div><div class="card-content"><p>Resonators and anti-resonators model the vocal tract, interpolating between<br>
+phoneme targets as the voice moves through a lyric.</p>
 </div></div></div>
 <div class="docmd-container grid-item">
 <div class="docmd-container card"><div class="card-title">
@@ -980,7 +1080,8 @@ Cascaded Formant Filter</div><div class="card-content"><p>Series of anti-resonat
   <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
   <path d="M2 12h20" />
 </svg>
-Three Languages</div><div class="card-content"><p>English (ARPAbet + CMUDict G2P), Japanese (hiragana/romaji + EDICT2 kanji), Mandarin (pinyin syllable decomposition). Extensible via <code>registerLanguage</code>.</p>
+Three Languages</div><div class="card-content"><p>Japanese hiragana, romaji, and kanji; English text with CMUDict; and Mandarin<br>
+pinyin. Add another language through <code>registerLanguage</code>.</p>
 </div></div></div>
 <div class="docmd-container grid-item">
 <div class="docmd-container card"><div class="card-title">
@@ -1000,7 +1101,8 @@ Three Languages</div><div class="card-content"><p>English (ARPAbet + CMUDict G2P
   <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" />
   <path d="M9.8 4.4A2 2 0 1 1 11 8H2" />
 </svg>
-Streaming Playback</div><div class="card-content"><p>AsyncGenerator-based render pipeline. Play notes as they render via Web Audio with batching and buffer pooling.</p>
+Streaming Playback</div><div class="card-content"><p>Play chunks as they render through Web Audio. Native projects include track<br>
+placement, mute/solo, gain, and stereo pan.</p>
 </div></div></div>
 <div class="docmd-container grid-item">
 <div class="docmd-container card"><div class="card-title">
@@ -1021,7 +1123,8 @@ Streaming Playback</div><div class="card-content"><p>AsyncGenerator-based render
   <path d="M12 12v6" />
   <path d="m15 15-3-3-3 3" />
 </svg>
-File Import / Export</div><div class="card-content"><p>Read and write UST, USTX, VPR, VSQX, MIDI, MusicXML, and more via utaformatix-3.</p>
+File Import / Export</div><div class="card-content"><p>Read and write UST, USTX, VPR, VSQX, MIDI, MusicXML, and other score formats through<br>
+UtaFormatix. Keep an <code>.ichi</code> copy for native settings and region boundaries.</p>
 </div></div></div>
 <div class="docmd-container grid-item">
 <div class="docmd-container card"><div class="card-title">
@@ -1047,63 +1150,80 @@ File Import / Export</div><div class="card-content"><p>Read and write UST, USTX,
   <path d="M5 10V3" />
   <path d="M5 21v-7" />
 </svg>
-OneVoice System</div><div class="card-content"><p>One parametric voice, infinite variations. Male, female, breathy, bright, tense. All from a single config. <code>scaleVoice()</code> maps high-level sliders (gender, breathiness, brightness, tension) to the underlying DSP parameters.</p>
+OneVoice System</div><div class="card-content"><p>Start with Chitose Chika, Sho, or Ren. Use the editor’s voice controls or<br>
+<code>buildVoice()</code> and <code>scaleVoice()</code> to change the sound.</p>
 </div></div></div>
 </div>
 <h2 id="quick-example" class="docmd-heading"><a href="#quick-example" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Quick Example</h2>
 <div class="docmd-tabs">
-<div class="docmd-tabs-nav"><div class="docmd-tabs-nav-item active"><span>Node.js</span></div><div class="docmd-tabs-nav-item "><span>Browser</span></div><div class="docmd-tabs-nav-item "><span>Custom Voice</span></div></div><div class="docmd-tabs-content"><div class="docmd-tab-pane active"><pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { renderScore, femaleVoice, japanese, encodeWav } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utau.js&quot;</span>;
-<span class="hljs-keyword">import</span> { writeFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node:fs&quot;</span>;
+<div class="docmd-tabs-nav"><div class="docmd-tabs-nav-item active"><span>Node.js</span></div><div class="docmd-tabs-nav-item "><span>Browser</span></div><div class="docmd-tabs-nav-item "><span>Custom Voice</span></div></div><div class="docmd-tabs-content"><div class="docmd-tab-pane active"><pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { writeFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node:fs&quot;</span>;
+<span class="hljs-keyword">import</span> { renderScore, chitoseChika, encodeWav, <span class="hljs-keyword">type</span> Score } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> score <span class="hljs-punctuation">=</span> {
-  tempos<span class="hljs-punctuation">:</span> [{ tick<span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>, tempo<span class="hljs-punctuation">:</span> <span class="hljs-number">120</span> }],
-  resolution<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span>,
-  notes<span class="hljs-punctuation">:</span> [
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;こ&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">60</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ん&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">62</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;に&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">64</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ち&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">65</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;は&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">67</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">960</span> },
+<span class="hljs-keyword">const</span> score<span class="hljs-operator">:</span> Score <span class="hljs-operator">=</span> {
+  tempos<span class="hljs-operator">:</span> [{ tick<span class="hljs-operator">:</span> <span class="hljs-number">0</span>, tempo<span class="hljs-operator">:</span> <span class="hljs-number">120</span> }],
+  resolution<span class="hljs-operator">:</span> <span class="hljs-number">480</span>,
+  notes<span class="hljs-operator">:</span> [
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;こ&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">60</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;ん&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">62</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;に&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">64</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;ち&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">65</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;は&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">67</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">960</span> },
   ],
 };
 
-<span class="hljs-keyword">const</span> chunks <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, femaleVoice, <span class="hljs-string">&quot;jp&quot;</span>);
-<span class="hljs-keyword">const</span> wav <span class="hljs-punctuation">=</span> <span class="hljs-title function_">encodeWav</span>(chunks);
-<span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">&quot;hello.wav&quot;</span>, Buffer.<span class="hljs-keyword">from</span>(wav));
+<span class="hljs-keyword">const</span> chunks <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, chitoseChika, <span class="hljs-string">&quot;jp&quot;</span>);
+<span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">&quot;hello.wav&quot;</span>, Buffer.<span class="hljs-keyword">from</span>(<span class="hljs-title function_">encodeWav</span>(chunks)));
 </code></pre>
-</div><div class="docmd-tab-pane "><pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { streamScore, femaleVoice, japanese, StreamPlayer } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utau.js&quot;</span>;
+</div><div class="docmd-tab-pane "><p>Call playback from a user action, using the score from the Node.js tab:</p>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { streamScore, chitoseChika, StreamPlayer, <span class="hljs-keyword">type</span> Score } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> score <span class="hljs-punctuation">=</span> { <span class="hljs-comment">/* ... */</span> };
-<span class="hljs-keyword">const</span> player <span class="hljs-punctuation">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">StreamPlayer</span>();
+<span class="hljs-keyword">const</span> player <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">StreamPlayer</span>();
 
-player.<span class="hljs-title function_">on</span>((event) <span class="hljs-punctuation">=&gt;</span> {
-  <span class="hljs-keyword">if</span> (event.<span class="hljs-keyword">type</span> <span class="hljs-punctuation">===</span> <span class="hljs-string">&quot;stateChange&quot;</span>) console.<span class="hljs-title function_">log</span>(event.<span class="hljs-attr">state</span>);
-  <span class="hljs-keyword">if</span> (event.<span class="hljs-keyword">type</span> <span class="hljs-punctuation">===</span> <span class="hljs-string">&quot;progress&quot;</span>) console.<span class="hljs-title function_">log</span>(<span class="hljs-string">`${event.renderedSamples} samples scheduled`</span>);
-});
-
-<span class="hljs-keyword">await</span> player.<span class="hljs-title function_">play</span>(<span class="hljs-title function_">streamScore</span>(score, femaleVoice, <span class="hljs-string">&quot;jp&quot;</span>));
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">playPhrase</span>(score<span class="hljs-operator">:</span> Score)<span class="hljs-operator">:</span> Promise<span class="hljs-operator">&lt;</span><span class="hljs-keyword">void</span><span class="hljs-operator">&gt;</span> {
+  <span class="hljs-keyword">await</span> player.<span class="hljs-title function_">play</span>(<span class="hljs-title function_">streamScore</span>(score, chitoseChika, <span class="hljs-string">&quot;jp&quot;</span>));
+}
 </code></pre>
-</div><div class="docmd-tab-pane "><pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { renderScore, buildVoice, scaleVoice, encodeWav } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utau.js&quot;</span>;
+</div><div class="docmd-tab-pane "><p>Pass this voice to <code>renderScore</code> or <code>streamScore</code> with your score and language:</p>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { buildVoice, scaleVoice } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> brightFemale <span class="hljs-punctuation">=</span> <span class="hljs-title function_">scaleVoice</span>(<span class="hljs-title function_">buildVoice</span>({
-  name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Bright Alto&quot;</span>,
-  formant<span class="hljs-punctuation">:</span> { scale<span class="hljs-punctuation">:</span> <span class="hljs-number">1.25</span>, shift<span class="hljs-punctuation">:</span> <span class="hljs-number">2</span>, bandwidth<span class="hljs-punctuation">:</span> <span class="hljs-number">1.0</span> },
-}), {
-  gender<span class="hljs-punctuation">:</span> <span class="hljs-number">0.3</span>,
-  breathiness<span class="hljs-punctuation">:</span> <span class="hljs-number">0.2</span>,
-  vibratoAmount<span class="hljs-punctuation">:</span> <span class="hljs-number">0.8</span>,
-});
-
-<span class="hljs-keyword">const</span> chunks <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, brightFemale, <span class="hljs-string">&quot;en&quot;</span>);
+<span class="hljs-keyword">const</span> brightAlto <span class="hljs-operator">=</span> <span class="hljs-title function_">scaleVoice</span>(
+  <span class="hljs-title function_">buildVoice</span>({
+    name<span class="hljs-operator">:</span> <span class="hljs-string">&quot;Bright Alto&quot;</span>,
+    formant<span class="hljs-operator">:</span> { scale<span class="hljs-operator">:</span> <span class="hljs-number">1.25</span>, shift<span class="hljs-operator">:</span> <span class="hljs-number">2</span>, bandwidth<span class="hljs-operator">:</span> <span class="hljs-number">1.0</span> },
+  }),
+  {
+    gender<span class="hljs-operator">:</span> <span class="hljs-number">0.3</span>,
+    breathiness<span class="hljs-operator">:</span> <span class="hljs-number">0.2</span>,
+    vibratoAmount<span class="hljs-operator">:</span> <span class="hljs-number">0.8</span>,
+  },
+);
 </code></pre>
 </div></div></div><h2 id="installation" class="docmd-heading"><a href="#installation" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Installation</h2>
-<pre class="hljs"><code class="language-bash"><span class="hljs-keyword">npm</span> install utaujs
+<pre class="hljs"><code class="language-sh"><span class="hljs-keyword">npm</span> install @audiflo<span class="hljs-operator">/</span>ichikara
 </code></pre>
 <h2 id="next-steps" class="docmd-heading"><a href="#next-steps" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Next Steps</h2>
 <div class="docmd-container grids">
 <div class="docmd-container grid-item">
 <h3>Getting Started</h3>
-<p>Start here if you are new to UTAU.js.</p>
+<p>Edit a song in the browser or render a phrase with the library.</p>
+<a href="./guide/editor/" class="docmd-button">
+<svg class="lucide-icon icon-music button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+Song Editor</a><br>
 <a href="./getting-started/quickstart/" class="docmd-button">
 <svg class="lucide-icon icon-play button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-play"
@@ -1119,7 +1239,8 @@ player.<span class="hljs-title function_">on</span>((event) <span class="hljs-pu
 >
   <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
 </svg>
-Quick Start</a><a href="./getting-started/installation/" class="docmd-button">
+Quick Start</a><br>
+<a href="./getting-started/installation/" class="docmd-button">
 <svg class="lucide-icon icon-download button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-download"
   xmlns="http://www.w3.org/2000/svg"
@@ -1139,7 +1260,7 @@ Quick Start</a><a href="./getting-started/installation/" class="docmd-button">
 Installation</a></div>
 <div class="docmd-container grid-item">
 <h3>Learn the Engine</h3>
-<p>Understand how the synthesis engine works.</p>
+<p>How notes, phonemes, and voice parameters become audio.</p>
 <a href="./getting-started/concepts/" class="docmd-button">
 <svg class="lucide-icon icon-book button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-book"
@@ -1155,7 +1276,8 @@ Installation</a></div>
 >
   <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
 </svg>
-Core Concepts</a><a href="./guide/architecture/" class="docmd-button">
+Core Concepts</a><br>
+<a href="./guide/architecture/" class="docmd-button">
 <svg class="lucide-icon icon-box button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-box"
   xmlns="http://www.w3.org/2000/svg"
@@ -1175,7 +1297,7 @@ Core Concepts</a><a href="./guide/architecture/" class="docmd-button">
 Architecture</a></div>
 <div class="docmd-container grid-item">
 <h3>Reference</h3>
-<p>Browse the full API documentation.</p>
+<p>Document types, synthesis functions, and voice settings.</p>
 <a href="./api/" class="docmd-button">
 <svg class="lucide-icon icon-code button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-code"
@@ -1192,7 +1314,24 @@ Architecture</a></div>
   <path d="m16 18 6-6-6-6" />
   <path d="m8 6-6 6 6 6" />
 </svg>
-API Reference</a><a href="./api/voice-config/" class="docmd-button">
+API Reference</a><br>
+<a href="./api/projects/" class="docmd-button">
+<svg class="lucide-icon icon-folder button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</svg>
+Native Projects</a><br>
+<a href="./api/voice-config/" class="docmd-button">
 <svg class="lucide-icon icon-sliders button-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-sliders-vertical"
   xmlns="http://www.w3.org/2000/svg"
@@ -1253,8 +1392,11 @@ Voice Config</a></div>
                 
               </div>
               
+              
               <div class="toc-sidebar">
                 
+                
+                  
 
 
   <div class="toc-container">
@@ -1277,6 +1419,10 @@ Voice Config</a></div>
     <ul class="toc-list">
       
         <li class="toc-item toc-level-2">
+          <a href="#song-editor" class="toc-link">Song editor</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
           <a href="#features" class="toc-link">Features</a>
         </li>
       
@@ -1295,19 +1441,21 @@ Voice Config</a></div>
     </ul>
   </div>
 
+                
+                
               </div>
               
             </div>
             <div class="page-footer-actions">
               
               
-                <span class="git-last-updated" data-timestamp="1786770748000">
+                <span class="git-last-updated" data-timestamp="1794317025000">
                   <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <span class="git-label">Last updated:</span>
-                  <span class="git-time" data-timestamp="1786770748000"></span>
+                  <span class="git-time" data-timestamp="1794317025000"></span>
                   
                   <div class="git-commit-tooltip" role="tooltip">
                     <div class="git-tooltip-title">Recent commits</div>
@@ -1320,10 +1468,10 @@ Voice Config</a></div>
                             
                           </div>
                           <div class="git-commit-details">
-                            <div class="git-commit-message" title="npm audit fix x2">npm audit fix x2</div>
+                            <div class="git-commit-message" title="Node 24">Node 24</div>
                             <div class="git-commit-meta">
                               <span class="git-commit-author">NellowTCS</span>
-                              <span class="git-commit-date" data-timestamp="1786770748000"></span>
+                              <span class="git-commit-date" data-timestamp="1794317025000"></span>
                             </div>
                           </div>
                         </li>
@@ -1335,7 +1483,7 @@ Voice Config</a></div>
               
               <span class="git-spacer"></span>
               
-                <a href="https://github.com/NellowTCS/UTAU.js/edit/main/Docs/docs/index.md" target="_blank" rel="noopener noreferrer" class="edit-link">
+                <a href="https://github.com/Audiflo/Ichikara/edit/main/Docs/docs/index.md" target="_blank" rel="noopener noreferrer" class="edit-link">
                   
 <svg class="lucide-icon icon-pencil " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-pencil"
@@ -1365,10 +1513,10 @@ Voice Config</a></div>
   <div class="footer-complete-top">
       <div class="footer-brand">
           
-            <span class="footer-title">UTAU.js</span>
+            <span class="footer-title">Ichikara</span>
           
           
-            <p class="footer-desc">A speech-synthesis library for singing voice synthesis in the browser.</p>
+            <p class="footer-desc">A OneVoice song editor and TypeScript singing-synthesis library.</p>
           
         </div>
         
@@ -1378,7 +1526,7 @@ Voice Config</a></div>
                 <span class="footer-column-title">Resources</span>
                 <ul>
                   
-                    <li><a href="./getting-started/quickstart/" >Getting Started</a></li>
+                    <li><a href="./guide/editor/" >Song Editor</a></li>
                   
                     <li><a href="./api/" >API Reference</a></li>
                   
@@ -1391,11 +1539,11 @@ Voice Config</a></div>
                 <span class="footer-column-title">Community</span>
                 <ul>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js" >GitHub</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara" >GitHub</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/issues" >Issues</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/issues" >Issues</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/discussions" >Discussions</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/discussions" >Discussions</a></li>
                   
                 </ul>
               </div>
@@ -1404,7 +1552,7 @@ Voice Config</a></div>
         
       </div>
       <div class="footer-complete-bottom">
-        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/NellowTCS/UTAU.js">View on GitHub</a>.</div>
+        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/Audiflo/Ichikara">View on GitHub</a>.</div>
         
           <div class="branding-footer">
             Built with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
@@ -1416,16 +1564,21 @@ Voice Config</a></div>
         </div>
       </div>
       
-      <script src="./assets/js/docmd-main.js?v=mstx7dcj"></script>
       
-      <script src="./assets/js/docmd-git.js?v=mstx7dcj"></script>
-      <script src="./assets/js/docmd-image-lightbox.js?v=mstx7dcj" ></script>
-<script src="./assets/js/vendor/minisearch.js?v=mstx7dcj" ></script>
-<script src="./assets/js/docmd-search.js?v=mstx7dcj" ></script>
-<script src="./assets/js/docmd-git.js?v=mstx7dcj" type="module"></script>
+      <script>window.__DOCMD_VARIABLES__ = {"docmd":{"version":"0.9.9","buildTime":"2026-11-10T13:24:45.614Z","buildDate":"2026-11-10","buildYear":"2026","gitCommit":"0a48415","gitBranch":"main"},"DOCMD_VERSION":"0.9.9","BUILD_YEAR":"2026","BUILD_DATE":"2026-11-10","GIT_COMMIT":"0a48415","GIT_BRANCH":"main","git":{"commit":"0a48415","branch":"main"},"site":{"title":"Ichikara","base":"/Ichikara/docs/"},"page":{"title":"Ichikara","slug":"/Ichikara/docs/","path":"index.html"},"frontmatter":{"title":"Ichikara","description":"A OneVoice song editor and TypeScript singing-synthesis library.","_git":{"lastUpdated":"2026-11-10T13:23:45.000Z","lastUpdatedTimestamp":1794317025000,"commits":[{"hash":"0a48415cffcf70f254668ccf0cfbb41742d56091","shortHash":"0a48415","author":"NellowTCS","email":"neeljaiswal23@gmail.com","date":"2026-11-10T13:23:45.000Z","timestamp":1794317025000,"message":"Node 24","avatarUrl":"https://www.gravatar.com/avatar/baecf29c7bedbb00a8d5bd5984799c55?d=mp&s=64"}]}}};</script>
+      
+      <script src="./assets/js/docmd-runtime.js?v=mwaq2c0s"></script>
+      <script src="./assets/js/docmd-main.js?v=mwaq2c0s"></script>
+      
+      <script src="./assets/js/docmd-git.js?v=mwaq2c0s"></script>
+      <script src="./assets/js/docmd-image-lightbox.js?v=mwaq2c0s" ></script>
+<script src="./assets/js/vendor/minisearch.js?v=mwaq2c0s" ></script>
+<script src="./assets/js/docmd-search.js?v=mwaq2c0s" ></script>
+<script src="./assets/js/docmd-git.js?v=mwaq2c0s" ></script>
+<script src="./assets/js/docmd-ai.js?v=mwaq2c0s" ></script>
 
   <!-- Search Modal (Injected by @docmd/plugin-search) -->
-  <div id="docmd-search-modal" data-semantic="true" class="docmd-search-modal" style="display: none;" data-show-confidence="true" data-show-filters="true"
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-semantic="true" data-show-confidence="true" data-show-filters="true"
        data-search-placeholder="Search documentation..."
        data-search-no-results="No results found."
        data-search-error="Failed to load search index."
@@ -1497,7 +1650,8 @@ Voice Config</a></div>
       })();
     </script>
 
-<script>window.__git_config={"repo":"https://github.com/NellowTCS/UTAU.js/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<script>window.__git_config={"repo":"https://github.com/Audiflo/Ichikara/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<div id="docmd-ai-root"></div><script>window.__docmd_ai_config={"endpoint":"","cloud":{},"captcha":true,"position":"bottom-center","siteTitle":"Ichikara","siteBase":"/Ichikara/docs/","siteUrl":"https://audiflo.github.io/Ichikara/docs","versions":null,"i18n":null,"navigation":[{"title":"Home","path":"/","icon":"home"},{"title":"Getting Started","icon":"rocket","collapsible":false,"children":[{"title":"Quick Start","path":"/getting-started/quickstart/","icon":"play"},{"title":"Installation","path":"/getting-started/installation/","icon":"download"},{"title":"Core Concepts","path":"/getting-started/concepts/","icon":"book"}]},{"title":"Guide","icon":"book-open","collapsible":false,"children":[{"title":"Song Editor","path":"/guide/editor/","icon":"music"},{"title":"Architecture","path":"/guide/architecture/","icon":"box"},{"title":"Renderer","path":"/guide/renderer/","icon":"cpu"},{"title":"Languages","path":"/guide/languages/","icon":"globe"}]},{"title":"API Reference","icon":"code","path":"/api/","collapsible":false,"children":[{"title":"Native Projects","path":"/api/projects/","icon":"folder"},{"title":"VoiceConfig","path":"/api/voice-config/","icon":"sliders"},{"title":"DSP Primitives","path":"/api/dsp/","icon":"audio-waveform"},{"title":"Import / Export","path":"/api/import-export/","icon":"file-up"}]},{"title":"GitHub","path":"https://github.com/Audiflo/Ichikara","icon":"github","external":true}],"searchCapabilities":{"keyword":true,"semantic":true},"isWorkspace":false,"workspaceProjects":[],"messageActions":false,"fetchExternalUrls":false,"contextLimit":5};</script>
       
       
       

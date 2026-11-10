@@ -1,17 +1,17 @@
 ---
 type: concept
 title: Architecture
-description: "How the UTAU.js library is organised"
-source: "https://nellowtcs.me/UTAU.js/docs/guide/architecture/"
+description: "How the Ichikara library is organised"
+source: "https://audiflo.github.io/Ichikara/docs/guide/architecture/"
 path: /guide/architecture/
-updated: 2026-08-15
+updated: 2026-11-10
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-08-15T05:13:33.415Z"
+  generated_at: "2026-11-10T13:24:54.242Z"
 ---
 ---
 title: "Architecture"
-description: "How the UTAU.js library is organised"
+description: "How the Ichikara library is organised"
 ---
 
 ## Module Layout
@@ -33,7 +33,7 @@ src/
     renderer.ts      - Single-note renderer
     stream.ts        - Score-level streaming + mixing
   voices/            - Voice presets and configuration
-    index.ts         - maleVoice, femaleVoice, buildVoice, scaleVoice
+    index.ts         - chitoseChika, chitoseSho, chitoseRen, buildVoice, scaleVoice
   player/            - Web Audio playback
     stream-player.ts - AsyncGenerator consumption + AudioContext scheduling
   import/            - File import (utaformatix-ts based)

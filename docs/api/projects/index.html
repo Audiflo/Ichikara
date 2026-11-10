@@ -1,0 +1,1420 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.9.9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script>
+      var root = "../../";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      window.DOCMD_SITE_ROOT = "/Ichikara/docs/";
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/Ichikara/docs/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    //
+    // Resolve from three sources, in priority order:
+    //   1. localStorage explicit user choice (light / dark)
+    //   2. window.DOCMD_APPEARANCE  (current canonical name, set by EJS templates)
+    //   3. window.DOCMD_DEFAULT_MODE (legacy alias kept for pre-0.8.7 outputs)
+    //   4. 'light' as the final fallback
+    //
+    // Note: localStorage is only honoured when it holds an explicit
+    // 'light' or 'dark' value. A stored 'system' value (from a prior
+    // session where the user picked "follow system") must NOT win over
+    // a freshly resolved config value — the resolved value will itself
+    // be 'system' in that case and the OS preference check below takes
+    // over, so this is a no-op for the in-session behaviour but keeps
+    // any future storage migration simple.
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_APPEARANCE
+      || window.DOCMD_DEFAULT_MODE
+      || 'light';
+    var theme = (localValue === 'light' || localValue === 'dark')
+      ? localValue
+      : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    <title>Native projects - Ichikara</title>
+    
+    
+
+    <link id="site-favicon" rel="icon" href="../../assets/favicon.ico?v=mwaq2c0s">
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mwaq2c0s">
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mwaq2c0s" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mwaq2c0s" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="Create, validate, save, and render multi-track Ichikara songs.">
+<link rel="canonical" href="https://audiflo.github.io/Ichikara/docs/api/projects/">
+<meta property="og:title" content="Native projects - Ichikara">
+<meta property="og:description" content="Create, validate, save, and render multi-track Ichikara songs.">
+<meta property="og:url" content="https://audiflo.github.io/Ichikara/docs/api/projects/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Native projects - Ichikara">
+<meta name="twitter:description" content="Create, validate, save, and render multi-track Ichikara songs.">
+<meta name="twitter:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ichikara","item":"https://audiflo.github.io/Ichikara/docs/"},{"@type":"ListItem","position":2,"name":"API Reference","item":"https://audiflo.github.io/Ichikara/docs/api/"},{"@type":"ListItem","position":3,"name":"Native Projects","item":"https://audiflo.github.io/Ichikara/docs/api/projects/"}]}
+</script>
+
+
+
+
+<link rel="stylesheet" href="../../assets/css/docmd-theme-ruby.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-ai.css?v=mwaq2c0s" >
+
+    
+      <link rel="stylesheet" href="../../assets/css/theme.css?v=mwaq2c0s">
+    
+    
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="true" data-spa-enabled="true" data-source-file="docs/api/projects.md">
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="../../">
+                Ichikara
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="Main Navigation">
+  <ul>
+    
+      <li class="" >
+      
+        <a href="../../" class=" "
+          >
+           
+<svg class="lucide-icon icon-home " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-house"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Home
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="expanded nav-group" >
+      
+        <span class="nav-label nav-group">
+           
+<svg class="lucide-icon icon-rocket " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-rocket"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+  <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Getting Started
+          </span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="../../getting-started/quickstart/" class=" "
+          >
+           
+<svg class="lucide-icon icon-play " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-play"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Quick Start
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../getting-started/installation/" class=" "
+          >
+           
+<svg class="lucide-icon icon-download " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-download"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 15V3" />
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  <path d="m7 10 5 5 5-5" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Installation
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../getting-started/concepts/" class=" "
+          >
+           
+<svg class="lucide-icon icon-book " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-book"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Core Concepts
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+      <li class="expanded nav-group" >
+      
+        <span class="nav-label nav-group">
+           
+<svg class="lucide-icon icon-book-open " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-book-open"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Guide
+          </span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="../../guide/editor/" class=" "
+          >
+           
+<svg class="lucide-icon icon-music " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Song Editor
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../guide/architecture/" class=" "
+          >
+           
+<svg class="lucide-icon icon-box " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-box"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+  <path d="m3.3 7 8.7 5 8.7-5" />
+  <path d="M12 22V12" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Architecture
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../guide/renderer/" class=" "
+          >
+           
+<svg class="lucide-icon icon-cpu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-cpu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20v2" />
+  <path d="M12 2v2" />
+  <path d="M17 20v2" />
+  <path d="M17 2v2" />
+  <path d="M2 12h2" />
+  <path d="M2 17h2" />
+  <path d="M2 7h2" />
+  <path d="M20 12h2" />
+  <path d="M20 17h2" />
+  <path d="M20 7h2" />
+  <path d="M7 20v2" />
+  <path d="M7 2v2" />
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+  <rect x="8" y="8" width="8" height="8" rx="1" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Renderer
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../guide/languages/" class=" "
+          >
+           
+<svg class="lucide-icon icon-globe " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-globe"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+  <path d="M2 12h20" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Languages
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+      <li class="active-parent expanded nav-group" >
+      
+        <a href="../../api/" class=" nav-group"
+          >
+           
+<svg class="lucide-icon icon-code " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-code"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m16 18 6-6-6-6" />
+  <path d="m8 6-6 6 6 6" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            API Reference
+            </span>
+          
+          
+        </a>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="active" >
+      
+        <a href="../../api/projects/" class="active "
+          >
+           
+<svg class="lucide-icon icon-folder " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Native Projects
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../api/voice-config/" class=" "
+          >
+           
+<svg class="lucide-icon icon-sliders " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sliders-vertical"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 8h4" />
+  <path d="M12 21v-9" />
+  <path d="M12 8V3" />
+  <path d="M17 16h4" />
+  <path d="M19 12V3" />
+  <path d="M19 21v-5" />
+  <path d="M3 14h4" />
+  <path d="M5 10V3" />
+  <path d="M5 21v-7" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            VoiceConfig
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../api/dsp/" class=" "
+          >
+           
+<svg class="lucide-icon icon-audio-waveform " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-audio-waveform"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            DSP Primitives
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../api/import-export/" class=" "
+          >
+           
+<svg class="lucide-icon icon-file-up " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-file-up"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <path d="M12 12v6" />
+  <path d="m15 15-3-3-3 3" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Import / Export
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="https://github.com/Audiflo/Ichikara" class=" "
+          target="_blank" rel="noopener">
+           
+          
+          <span class="nav-item-title">
+            GitHub
+            </span>
+          
+           
+<svg class="lucide-icon icon-external-link nav-external-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-external-link"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 3h6v6" />
+  <path d="M10 14 21 3" />
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+</svg>
+
+          
+        </a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="Toggle Sidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  Native projects
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="Search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">Search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="Toggle theme" title="Toggle theme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Native%20projects%22%0Adescription%3A%20%22Create%2C%20validate%2C%20save%2C%20and%20render%20multi-track%20Ichikara%20songs.%22%0A---%0A%0A%23%20Native%20projects%0A%0A%60Project%60%20is%20the%20document%20behind%20an%20%60.ichi%60%20file.%20It%20contains%20the%20song&#039;s%20timing%2C%0Atracks%2C%20parts%2C%20notes%2C%20voices%2C%20and%20mix%20settings.%20It%20does%20not%20contain%20file%20handles%2C%0Aaudio%20resources%2C%20panel%20sizes%2C%20or%20other%20host-specific%20state.%0A%0A%23%23%20Create%20a%20song%0A%0AIDs%20come%20from%20the%20host%20and%20must%20be%20unique%20throughout%20the%20document.%20Pass%20a%0Afunction%20that%20calls%20%60crypto.randomUUID()%60%20rather%20than%20an%20unbound%20browser%20method.%0A%0A%60%60%60typescript%0Aimport%20%7B%20createProject%2C%20addTrack%2C%20addPart%2C%20chitoseChika%2C%20serializeProject%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20id%20%3D%20()%20%3D%3E%20crypto.randomUUID()%3B%0Aconst%20project%20%3D%20createProject(%22Evening%22%2C%20id)%3B%0Aconst%20track%20%3D%20addTrack(project%2C%20%22Lead%22%2C%20chitoseChika%2C%20%22jp%22%2C%20id)%3B%0Aconst%20part%20%3D%20addPart(track%2C%20%22Verse%22%2C%200%2C%201920%2C%20id)%3B%0A%0Apart.notes.push(%7B%0A%20%20id%3A%20id()%2C%0A%20%20tick%3A%200%2C%0A%20%20length%3A%20960%2C%0A%20%20noteNum%3A%2064%2C%0A%20%20lyric%3A%20%22%E3%81%82%22%2C%0A%20%20intensity%3A%20100%2C%0A%20%20pitchBend%3A%20%7B%20ticks%3A%20%5B0%2C%20240%2C%20960%5D%2C%20values%3A%20%5B-0.5%2C%200%2C%200%5D%20%7D%2C%0A%7D)%3B%0A%0Aconst%20source%20%3D%20serializeProject(project)%3B%0A%60%60%60%0A%0A%60createProject%60%20starts%20at%20120%20BPM%2C%204%2F4%2C%20and%20480%20ticks%20per%20quarter%20note.%0A%60addTrack%60%20and%20%60addPart%60%20append%20to%20their%20parent%20and%20return%20the%20new%20object.%0A%60addTrack%60%20clones%20the%20supplied%20base%20voice%20so%20tracks%20can%20be%20edited%20independently.%0A%0A%23%23%20Coordinates%20and%20fields%0A%0A%7C%20Field%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Meaning%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20--------------------------%20%7C%20-----------------------------------------------------%20%7C%0A%7C%20%60project.tempos%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Absolute%20tick%20positions%20and%20BPM%20values%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60project.meters%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Absolute%20tick%20positions%2C%20numerators%2C%20and%20denominators%20%7C%0A%7C%20%60track.voice%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Stored%20base%20voice%20configuration%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60track.parameters%60%20%20%20%20%20%20%20%20%20%7C%20Per-track%20%60scaleVoice%60%20parameters%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60track.gain%60%2C%20%60track.pan%60%20%20%7C%20Linear%20gain%20and%20pan%20from%20-1%20(left)%20to%201%20(right)%20%20%20%20%20%20%20%7C%0A%7C%20%60track.mute%60%2C%20%60track.solo%60%20%7C%20Track%20playback%20and%20render%20selection%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60part.tick%60%2C%20%60part.length%60%20%7C%20Absolute%20start%20and%20duration%20in%20project%20ticks%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60note.tick%60%2C%20%60note.length%60%20%7C%20Start%20relative%20to%20the%20part%2C%20and%20duration%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60note.pitchBend%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Note-relative%20ticks%20and%20semitone%20offsets%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0A%60ProjectNote%60%20extends%20%60Note%60%20with%20a%20required%20stable%20%60id%60%20and%20%60tick%60.%20A%20note&#039;s%0Aabsolute%20song%20position%20is%20%60part.tick%20%2B%20note.tick%60.%20Use%20%60TempoMap%60%20to%20convert%0Aticks%20and%20seconds%2C%20and%20%60MeterMap%60%20for%20bar%2Fbeat%20positions%20and%20grid%20lines.%0A%0A%23%23%20Validate%20and%20save%0A%0A%60serializeProject(project)%60%20validates%20the%20document%20and%20returns%20JSON%20with%20a%20final%0Anewline.%20%60parseProject(source)%60%20reads%20JSON%20and%20validates%20its%20fields%20and%20version.%0ABoth%20throw%20for%20invalid%20documents%3B%20handle%20those%20errors%20at%20your%20file%20or%20UI%20boundary.%0A%60validateProject(value)%60%20also%20accepts%20unknown%20data%20and%20narrows%20it%20to%20%60Project%60.%0A%0AThe%20filename%20extension%20is%20%60.ichi%60%3B%20the%20JSON%20discriminator%20remains%0A%60format%3A%20%22ichikara%22%60%20and%20%60version%3A%201%60.%20Changing%20the%20extension%20does%20not%20change%20the%0Adocument%20schema.%20The%20editor%20still%20accepts%20the%20older%20%60.ichikara%60%20extension.%0A%0A%23%23%20Render%20the%20song%0A%0A%60%60%60typescript%0Aimport%20%7B%20streamProject%2C%20encodeWav%2C%20type%20AudioChunk%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0Aconst%20chunks%3A%20AudioChunk%5B%5D%20%3D%20%5B%5D%3B%0Afor%20await%20(const%20chunk%20of%20streamProject(project%2C%2048000))%20%7B%0A%20%20chunks.push(chunk)%3B%0A%7D%0Aconst%20wav%20%3D%20encodeWav(chunks)%3B%0A%60%60%60%0A%0A%60streamProject%60%20yields%20stereo%20chunks%20in%20absolute%20sample%20order.%20It%20applies%20part%0Aplacement%2C%20track%20voice%20parameters%2C%20mute%2Fsolo%2C%20gain%2C%20and%20equal-power%20pan.%20The%0Adefault%20sample%20rate%20is%2044100%20Hz.%20Chunks%20may%20overlap%3B%20%60encodeWav%60%20mixes%20them.%0AAn%20early%20iterator%20return%20closes%20the%20part%20producers.%20Validation%2C%20language%2C%20and%0Asynthesis%20errors%20propagate%20to%20the%20caller.%0A%0A%23%23%20Convert%20other%20formats%0A%0A%60importProjectFromFile(file%2C%20language%2C%20id)%60%20imports%20every%20track%20from%20a%20supported%0Ascore%20file.%20Each%20imported%20track%20gets%20a%20native%20part%20and%20host-generated%20IDs.%0A%60exportProjectToBytes(project%2C%20%7B%20format%3A%20%22ustx%22%20%7D)%60%20exports%20all%20tracks%20using%0Aabsolute%20note%20positions.%0A%0AFor%20direct%20conversion%2C%20use%20%60ufDataToProject(data%2C%20language%2C%20id)%60%20and%0A%60projectToUfData(project%2C%20options)%60.%20Region%20boundaries%2C%20native%20voices%2C%20mix%0Acontrols%2C%20and%20some%20expression%20fields%20are%20not%20represented%20by%20UtaFormatix%20data.%0AKeep%20an%20%60.ichi%60%20copy%20when%20converting.%20See%20%5BImport%20%2F%20Export%5D(import-export.md).%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item " >
+                            
+                              <a href="../../api/">API Reference</a>
+                            
+                            
+                              <span class="breadcrumb-separator">
+<svg class="lucide-icon icon-chevron-right " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+                            
+                          </li>
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>Native Projects</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="Copied!" title="Copy Markdown" aria-label="Copy Markdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="Copied!" title="Copy Context">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">Copy Context</span>
+                        </button>
+                      
+                      
+                    </div>
+                  
+                </div>
+                
+                  <h1 class="docmd-focus-title">
+                    Native projects
+                  </h1>
+                
+                <h1 id="native-projects" class="docmd-heading"><a href="#native-projects" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Native projects</h1>
+<p><code>Project</code> is the document behind an <code>.ichi</code> file. It contains the song’s timing,<br>
+tracks, parts, notes, voices, and mix settings. It does not contain file handles,<br>
+audio resources, panel sizes, or other host-specific state.</p>
+<h2 id="native-projects-create-a-song" class="docmd-heading"><a href="#native-projects-create-a-song" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Create a song</h2>
+<p>IDs come from the host and must be unique throughout the document. Pass a<br>
+function that calls <code>crypto.randomUUID()</code> rather than an unbound browser method.</p>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { createProject, addTrack, addPart, chitoseChika, serializeProject } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">id</span> <span class="hljs-operator">=</span> () <span class="hljs-operator">=&gt;</span> crypto.<span class="hljs-title function_">randomUUID</span>();
+<span class="hljs-keyword">const</span> project <span class="hljs-operator">=</span> <span class="hljs-title function_">createProject</span>(<span class="hljs-string">&quot;Evening&quot;</span>, <span class="hljs-keyword">id</span>);
+<span class="hljs-keyword">const</span> track <span class="hljs-operator">=</span> <span class="hljs-title function_">addTrack</span>(project, <span class="hljs-string">&quot;Lead&quot;</span>, chitoseChika, <span class="hljs-string">&quot;jp&quot;</span>, <span class="hljs-keyword">id</span>);
+<span class="hljs-keyword">const</span> part <span class="hljs-operator">=</span> <span class="hljs-title function_">addPart</span>(track, <span class="hljs-string">&quot;Verse&quot;</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1920</span>, <span class="hljs-keyword">id</span>);
+
+part.<span class="hljs-attr">notes</span>.<span class="hljs-title function_">push</span>({
+  <span class="hljs-keyword">id</span><span class="hljs-operator">:</span> <span class="hljs-keyword">id</span>(),
+  tick<span class="hljs-operator">:</span> <span class="hljs-number">0</span>,
+  length<span class="hljs-operator">:</span> <span class="hljs-number">960</span>,
+  noteNum<span class="hljs-operator">:</span> <span class="hljs-number">64</span>,
+  lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;あ&quot;</span>,
+  intensity<span class="hljs-operator">:</span> <span class="hljs-number">100</span>,
+  pitchBend<span class="hljs-operator">:</span> { ticks<span class="hljs-operator">:</span> [<span class="hljs-number">0</span>, <span class="hljs-number">240</span>, <span class="hljs-number">960</span>], values<span class="hljs-operator">:</span> [<span class="hljs-operator">-</span><span class="hljs-number">0.5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>] },
+});
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">source</span> <span class="hljs-operator">=</span> <span class="hljs-title function_">serializeProject</span>(project);
+</code></pre>
+<p><code>createProject</code> starts at 120 BPM, 4/4, and 480 ticks per quarter note.<br>
+<code>addTrack</code> and <code>addPart</code> append to their parent and return the new object.<br>
+<code>addTrack</code> clones the supplied base voice so tracks can be edited independently.</p>
+<h2 id="native-projects-coordinates-and-fields" class="docmd-heading"><a href="#native-projects-coordinates-and-fields" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Coordinates and fields</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>project.tempos</code></td>
+<td>Absolute tick positions and BPM values</td>
+</tr>
+<tr>
+<td><code>project.meters</code></td>
+<td>Absolute tick positions, numerators, and denominators</td>
+</tr>
+<tr>
+<td><code>track.voice</code></td>
+<td>Stored base voice configuration</td>
+</tr>
+<tr>
+<td><code>track.parameters</code></td>
+<td>Per-track <code>scaleVoice</code> parameters</td>
+</tr>
+<tr>
+<td><code>track.gain</code>, <code>track.pan</code></td>
+<td>Linear gain and pan from -1 (left) to 1 (right)</td>
+</tr>
+<tr>
+<td><code>track.mute</code>, <code>track.solo</code></td>
+<td>Track playback and render selection</td>
+</tr>
+<tr>
+<td><code>part.tick</code>, <code>part.length</code></td>
+<td>Absolute start and duration in project ticks</td>
+</tr>
+<tr>
+<td><code>note.tick</code>, <code>note.length</code></td>
+<td>Start relative to the part, and duration</td>
+</tr>
+<tr>
+<td><code>note.pitchBend</code></td>
+<td>Note-relative ticks and semitone offsets</td>
+</tr>
+</tbody>
+</table>
+</div><p><code>ProjectNote</code> extends <code>Note</code> with a required stable <code>id</code> and <code>tick</code>. A note’s<br>
+absolute song position is <code>part.tick + note.tick</code>. Use <code>TempoMap</code> to convert<br>
+ticks and seconds, and <code>MeterMap</code> for bar/beat positions and grid lines.</p>
+<h2 id="native-projects-validate-and-save" class="docmd-heading"><a href="#native-projects-validate-and-save" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Validate and save</h2>
+<p><code>serializeProject(project)</code> validates the document and returns JSON with a final<br>
+newline. <code>parseProject(source)</code> reads JSON and validates its fields and version.<br>
+Both throw for invalid documents; handle those errors at your file or UI boundary.<br>
+<code>validateProject(value)</code> also accepts unknown data and narrows it to <code>Project</code>.</p>
+<p>The filename extension is <code>.ichi</code>; the JSON discriminator remains<br>
+<code>format: &quot;ichikara&quot;</code> and <code>version: 1</code>. Changing the extension does not change the<br>
+document schema. The editor still accepts the older <code>.ichikara</code> extension.</p>
+<h2 id="native-projects-render-the-song" class="docmd-heading"><a href="#native-projects-render-the-song" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Render the song</h2>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { streamProject, encodeWav, <span class="hljs-keyword">type</span> AudioChunk } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
+
+<span class="hljs-keyword">const</span> chunks<span class="hljs-operator">:</span> AudioChunk[] <span class="hljs-operator">=</span> [];
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> chunk <span class="hljs-keyword">of</span> <span class="hljs-title function_">streamProject</span>(project, <span class="hljs-number">48000</span>)) {
+  chunks.<span class="hljs-title function_">push</span>(chunk);
+}
+<span class="hljs-keyword">const</span> wav <span class="hljs-operator">=</span> <span class="hljs-title function_">encodeWav</span>(chunks);
+</code></pre>
+<p><code>streamProject</code> yields stereo chunks in absolute sample order. It applies part<br>
+placement, track voice parameters, mute/solo, gain, and equal-power pan. The<br>
+default sample rate is 44100 Hz. Chunks may overlap; <code>encodeWav</code> mixes them.<br>
+An early iterator return closes the part producers. Validation, language, and<br>
+synthesis errors propagate to the caller.</p>
+<h2 id="native-projects-convert-other-formats" class="docmd-heading"><a href="#native-projects-convert-other-formats" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Convert other formats</h2>
+<p><code>importProjectFromFile(file, language, id)</code> imports every track from a supported<br>
+score file. Each imported track gets a native part and host-generated IDs.<br>
+<code>exportProjectToBytes(project, { format: &quot;ustx&quot; })</code> exports all tracks using<br>
+absolute note positions.</p>
+<p>For direct conversion, use <code>ufDataToProject(data, language, id)</code> and<br>
+<code>projectToUfData(project, options)</code>. Region boundaries, native voices, mix<br>
+controls, and some expression fields are not represented by UtaFormatix data.<br>
+Keep an <code>.ichi</code> copy when converting. See <a href="../import-export/">Import / Export</a>.</p>
+
+                
+                  <div class="page-navigation">
+                    
+                      <a href="../../api/" class="prev-page">
+                        
+<svg class="lucide-icon icon-arrow-left page-nav-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-arrow-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m12 19-7-7 7-7" />
+  <path d="M19 12H5" />
+</svg>
+
+                        <span><small>Previous</small><strong>
+                            API Reference
+                          </strong></span>
+                      </a>
+                    
+                    
+                      <a href="../../api/voice-config/" class="next-page">
+                        <span><small>Next</small>
+                          <strong>
+                            VoiceConfig
+                          </strong></span>
+                        
+<svg class="lucide-icon icon-arrow-right page-nav-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-arrow-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg>
+
+                      </a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+              <div class="toc-sidebar">
+                
+                
+                  
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">On This Page<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#native-projects" class="toc-link">Native projects</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#native-projects-create-a-song" class="toc-link">Create a song</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#native-projects-coordinates-and-fields" class="toc-link">Coordinates and fields</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#native-projects-validate-and-save" class="toc-link">Validate and save</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#native-projects-render-the-song" class="toc-link">Render the song</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#native-projects-convert-other-formats" class="toc-link">Convert other formats</a>
+        </li>
+      
+    </ul>
+  </div>
+
+                
+                
+              </div>
+              
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1794317025000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1794317025000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="NellowTCS">
+                            
+                              <img src="https://www.gravatar.com/avatar/baecf29c7bedbb00a8d5bd5984799c55?d=mp&amp;s=64" alt="NellowTCS">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Node 24">Node 24</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">NellowTCS</span>
+                              <span class="git-commit-date" data-timestamp="1794317025000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+                <a href="https://github.com/Audiflo/Ichikara/edit/main/Docs/docs/api/projects.md" target="_blank" rel="noopener noreferrer" class="edit-link">
+                  
+<svg class="lucide-icon icon-pencil " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-pencil"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+  <path d="m15 5 4 4" />
+</svg>
+
+                  Edit this page
+                </a>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="footer-complete">
+  <div class="footer-complete-top">
+      <div class="footer-brand">
+          
+            <span class="footer-title">Ichikara</span>
+          
+          
+            <p class="footer-desc">A OneVoice song editor and TypeScript singing-synthesis library.</p>
+          
+        </div>
+        
+          <div class="footer-columns">
+            
+              <div class="footer-column">
+                <span class="footer-column-title">Resources</span>
+                <ul>
+                  
+                    <li><a href="../../guide/editor/" >Song Editor</a></li>
+                  
+                    <li><a href="../../api/" >API Reference</a></li>
+                  
+                    <li><a href="../../api/voice-config/" >Voice Config</a></li>
+                  
+                </ul>
+              </div>
+            
+              <div class="footer-column">
+                <span class="footer-column-title">Community</span>
+                <ul>
+                  
+                    <li><a href="https://github.com/Audiflo/Ichikara" >GitHub</a></li>
+                  
+                    <li><a href="https://github.com/Audiflo/Ichikara/issues" >Issues</a></li>
+                  
+                    <li><a href="https://github.com/Audiflo/Ichikara/discussions" >Discussions</a></li>
+                  
+                </ul>
+              </div>
+            
+          </div>
+        
+      </div>
+      <div class="footer-complete-bottom">
+        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/Audiflo/Ichikara">View on GitHub</a>.</div>
+        
+          <div class="branding-footer">
+            Built with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+          </div>
+        
+      </div>
+  </footer>
+
+        </div>
+      </div>
+      
+      
+      <script>window.__DOCMD_VARIABLES__ = {"docmd":{"version":"0.9.9","buildTime":"2026-11-10T13:24:45.614Z","buildDate":"2026-11-10","buildYear":"2026","gitCommit":"0a48415","gitBranch":"main"},"DOCMD_VERSION":"0.9.9","BUILD_YEAR":"2026","BUILD_DATE":"2026-11-10","GIT_COMMIT":"0a48415","GIT_BRANCH":"main","git":{"commit":"0a48415","branch":"main"},"site":{"title":"Ichikara","base":"/Ichikara/docs/"},"page":{"title":"Native projects","slug":"/Ichikara/docs/api/projects/","path":"api/projects/index.html"},"frontmatter":{"title":"Native projects","description":"Create, validate, save, and render multi-track Ichikara songs.","_git":{"lastUpdated":"2026-11-10T13:23:45.000Z","lastUpdatedTimestamp":1794317025000,"commits":[{"hash":"0a48415cffcf70f254668ccf0cfbb41742d56091","shortHash":"0a48415","author":"NellowTCS","email":"neeljaiswal23@gmail.com","date":"2026-11-10T13:23:45.000Z","timestamp":1794317025000,"message":"Node 24","avatarUrl":"https://www.gravatar.com/avatar/baecf29c7bedbb00a8d5bd5984799c55?d=mp&s=64"}]}}};</script>
+      
+      <script src="../../assets/js/docmd-runtime.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-main.js?v=mwaq2c0s"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/vendor/minisearch.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-search.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-git.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-ai.js?v=mwaq2c0s" ></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-semantic="true" data-show-confidence="true" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-offline="Search requires a web server. Open this site via http://localhost instead of file:// to enable search."
+       data-search-offline-build="Search is disabled because these docs were built with the --offline flag. Rebuild the site without the flag to enable search."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":"https://github.com/Audiflo/Ichikara/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<div id="docmd-ai-root"></div><script>window.__docmd_ai_config={"endpoint":"","cloud":{},"captcha":true,"position":"bottom-center","siteTitle":"Ichikara","siteBase":"/Ichikara/docs/","siteUrl":"https://audiflo.github.io/Ichikara/docs","versions":null,"i18n":null,"navigation":[{"title":"Home","path":"/","icon":"home"},{"title":"Getting Started","icon":"rocket","collapsible":false,"children":[{"title":"Quick Start","path":"/getting-started/quickstart/","icon":"play"},{"title":"Installation","path":"/getting-started/installation/","icon":"download"},{"title":"Core Concepts","path":"/getting-started/concepts/","icon":"book"}]},{"title":"Guide","icon":"book-open","collapsible":false,"children":[{"title":"Song Editor","path":"/guide/editor/","icon":"music"},{"title":"Architecture","path":"/guide/architecture/","icon":"box"},{"title":"Renderer","path":"/guide/renderer/","icon":"cpu"},{"title":"Languages","path":"/guide/languages/","icon":"globe"}]},{"title":"API Reference","icon":"code","path":"/api/","collapsible":false,"children":[{"title":"Native Projects","path":"/api/projects/","icon":"folder"},{"title":"VoiceConfig","path":"/api/voice-config/","icon":"sliders"},{"title":"DSP Primitives","path":"/api/dsp/","icon":"audio-waveform"},{"title":"Import / Export","path":"/api/import-export/","icon":"file-up"}]},{"title":"GitHub","path":"https://github.com/Audiflo/Ichikara","icon":"github","external":true}],"searchCapabilities":{"keyword":true,"semantic":true},"isWorkspace":false,"workspaceProjects":[],"messageActions":false,"fetchExternalUrls":false,"contextLimit":5};</script>
+      
+      
+      
+  </body>
+</html>

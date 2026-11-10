@@ -10,7 +10,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="generator" content="docmd v0.8.17">
+    <meta name="generator" content="docmd v0.9.9">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script>
@@ -19,11 +19,11 @@
       if (root === '') root = './';
       window.DOCMD_ROOT = root;
 
-      window.DOCMD_SITE_ROOT = "/UTAU.js/docs/";
+      window.DOCMD_SITE_ROOT = "/Ichikara/docs/";
 
       window.DOCMD_APPEARANCE = "system";
       window.DOCMD_VERSION_ROOT = "/";
-      window.DOCMD_BASE = "/UTAU.js/docs/";
+      window.DOCMD_BASE = "/Ichikara/docs/";
       window.DOCMD_LOCALE = "";
       window.DOCMD_DEFAULT_LOCALE = "";
     </script>
@@ -98,37 +98,42 @@
         visibility: hidden;
       }
     </style>
-    <title>
-      API Reference : UTAU.js
-    </title>
+    <title>API Reference - Ichikara</title>
     
     
 
-    <link id="site-favicon" rel="icon" href="../assets/favicon.ico?v=mstx7dcj">
-    <link rel="stylesheet" href="../assets/css/docmd-main.css?v=mstx7dcj">
+    <link id="site-favicon" rel="icon" href="../assets/favicon.ico?v=mwaq2c0s">
+    <link rel="stylesheet" href="../assets/css/docmd-main.css?v=mwaq2c0s">
     
-    <link rel="stylesheet" href="../assets/css/docmd-highlight-light.css?v=mstx7dcj" id="hljs-light" >
-    <link rel="stylesheet" href="../assets/css/docmd-highlight-dark.css?v=mstx7dcj" id="hljs-dark" disabled>
+    <link rel="stylesheet" href="../assets/css/docmd-highlight-light.css?v=mwaq2c0s" id="hljs-light" >
+    <link rel="stylesheet" href="../assets/css/docmd-highlight-dark.css?v=mwaq2c0s" id="hljs-dark" disabled>
     
     
-<meta name="description" content="Complete API reference for UTAU.js">
-<link rel="canonical" href="https://nellowtcs.me/UTAU.js/docs/api/">
-<meta property="og:title" content="API Reference - UTAU.js">
-<meta property="og:description" content="Complete API reference for UTAU.js">
-<meta property="og:url" content="https://nellowtcs.me/UTAU.js/docs/api/">
+<meta name="description" content="Public types and functions for synthesis, projects, playback, and score conversion.">
+<link rel="canonical" href="https://audiflo.github.io/Ichikara/docs/api/">
+<meta property="og:title" content="API Reference - Ichikara">
+<meta property="og:description" content="Public types and functions for synthesis, projects, playback, and score conversion.">
+<meta property="og:url" content="https://audiflo.github.io/Ichikara/docs/api/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="API Reference - UTAU.js">
-<meta name="twitter:description" content="Complete API reference for UTAU.js">
+<meta name="twitter:title" content="API Reference - Ichikara">
+<meta name="twitter:description" content="Public types and functions for synthesis, projects, playback, and score conversion.">
+<meta name="twitter:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ichikara","item":"https://audiflo.github.io/Ichikara/docs/"},{"@type":"ListItem","position":2,"name":"API Reference","item":"https://audiflo.github.io/Ichikara/docs/api/"}]}
+</script>
 
 
 
-<link rel="stylesheet" href="../assets/css/docmd-theme-ruby.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../assets/css/docmd-git.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../assets/css/docmd-openapi.css?v=mstx7dcj" >
+
+<link rel="stylesheet" href="../assets/css/docmd-theme-ruby.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../assets/css/docmd-git.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../assets/css/docmd-openapi.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../assets/css/docmd-ai.css?v=mwaq2c0s" >
 
     
-      <link rel="stylesheet" href="../assets/css/theme.css?v=mstx7dcj">
+      <link rel="stylesheet" href="../assets/css/theme.css?v=mwaq2c0s">
     
     
   </head>
@@ -141,11 +146,16 @@
 
     
     
+
+    
+
+    
+    
       <aside class="sidebar">
         <div class="sidebar-header">
           
-<h1><a href="../">
-                UTAU.js
+            <h1><a href="../">
+                Ichikara
               </a></h1>
           
           <span class="mobile-view sidebar-menu-button float-right">
@@ -170,6 +180,7 @@
           </span>
         </div>
         <div class="sidebar-top-group">
+          
           
           
           
@@ -364,8 +375,8 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M12 7v14" />
-  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
 </svg>
 
           
@@ -379,6 +390,40 @@
         
           <ul class="submenu">
             
+      <li class="" >
+      
+        <a href="../guide/editor/" class=" "
+          >
+           
+<svg class="lucide-icon icon-music " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Song Editor
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
       <li class="" >
       
         <a href="../guide/architecture/" class=" "
@@ -531,6 +576,38 @@
             
       <li class="" >
       
+        <a href="../api/projects/" class=" "
+          >
+           
+<svg class="lucide-icon icon-folder " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Native Projects
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
         <a href="../api/voice-config/" class=" "
           >
            
@@ -642,25 +719,9 @@
     
       <li class="" >
       
-        <a href="https://github.com/NellowTCS/UTAU.js" class=" "
-          target=&quot;_blank&quot; rel=&quot;noopener&quot;>
+        <a href="https://github.com/Audiflo/Ichikara" class=" "
+          target="_blank" rel="noopener">
            
-<svg class="lucide-icon icon-github " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-  class="lucide lucide-github"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-  <path d="M9 18c-4.51 2-5-2-7-2" />
-</svg>
-
           
           <span class="nav-item-title">
             GitHub
@@ -698,12 +759,12 @@
           
           
           
+          
         </div>
       </aside>
       
-      
-      
       <div class="main-content-wrapper">
+        
         
         
           <header class="page-header">
@@ -770,7 +831,7 @@
     
 
     
-    <button class="theme-toggle-button" aria-label="Toggle theme">
+    <button class="theme-toggle-button" aria-label="Toggle theme" title="Toggle theme">
         
 <svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-sun"
@@ -814,6 +875,8 @@
     
 
     
+
+    
 </div>
 
               
@@ -825,7 +888,7 @@
             <div class="content-layout">
               <div class="main-content">
                 <div class="docmd-breadcrumbs-row">
-                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22API%20Reference%22%0Adescription%3A%20%22Complete%20API%20reference%20for%20UTAU.js%22%0A---%0A%0AUTAU.js%20exposes%20a%20flat%20module%20surface%20through%20its%20main%20entry%20point.%20All%20public%20types%20and%20functions%20are%20exported%20from%20%60utaujs%60.%0A%0A%23%23%20Core%20Types%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C-----------------------%7C-------------------------------------------------------------------------%7C%0A%7C%20%60VoiceConfig%60%20%20%20%20%20%20%20%20%20%7C%20Complete%20voice%20configuration%20(glottal%2C%20formant%2C%20vibrato%2C%20output%20format)%20%7C%0A%7C%20%60GlottalConfig%60%20%20%20%20%20%20%20%7C%20LF%20glottal%20pulse%20source%20parameters%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantConfig%60%20%20%20%20%20%20%20%7C%20Vocal-tract%20formant%20transformation%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60VibratoConfig%60%20%20%20%20%20%20%20%7C%20Pitch%20vibrato%20modulation%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantTarget%60%20%20%20%20%20%20%20%7C%20Single%20formant%20centre%20frequency%20%2B%20bandwidth%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60NoiseConfig%60%20%20%20%20%20%20%20%20%20%7C%20Noise%20source%20for%20consonant%20generation%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PhonemeDef%60%20%20%20%20%20%20%20%20%20%20%7C%20Full%20acoustic%20definition%20of%20a%20phoneme%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Note%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20A%20single%20note%20with%20lyric%2C%20pitch%2C%20timing%2C%20and%20overrides%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Score%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Complete%20musical%20score%20(tempos%20%2B%20notes)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60TempoEvent%60%20%20%20%20%20%20%20%20%20%20%7C%20Tempo%20change%20event%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60AudioChunk%60%20%20%20%20%20%20%20%20%20%20%7C%20Processed%20audio%20segment%20with%20timeline%20position%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60LanguageModule%60%20%20%20%20%20%20%7C%20Language%20module%20interface%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PitchBend%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Pitch-bend%20envelope%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60GlottalSourceParams%60%20%7C%20Runtime%20glottal%20source%20parameters%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0A%23%23%20DSP%20Primitives%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C--------------------------%7C----------------------------------------------%7C%0A%7C%20%60LFGlottalSource%60%20%20%20%20%20%20%20%20%7C%20LF%20glottal%20pulse%20source%20(stateful)%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantFilter%60%20%20%20%20%20%20%20%20%20%20%7C%20Biquad%20resonator%20%2F%20anti-resonator%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantCascade%60%20%20%20%20%20%20%20%20%20%7C%20Cascaded%20formant%20filter%20bank%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60interpolateFormants%60%20%20%20%20%7C%20Smooth%20interpolation%20between%20formant%20targets%20%7C%0A%7C%20%60NoiseSource%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20White%20noise%20generator%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60shapeNoiseWithFormants%60%20%7C%20Filter%20noise%20through%20formant%20resonators%20%20%20%20%20%20%7C%0A%7C%20%60applyAmplitudeEnvelope%60%20%7C%20Attack%2Frelease%20envelope%20shaping%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60mixBuffers%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Additive%20buffer%20mixing%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60encodeWav%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Encode%20AudioChunks%20as%20WAV%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0A%23%23%20Synthesis%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C---------------%7C---------------------------------%7C%0A%7C%20%60renderNote%60%20%20%7C%20Render%20a%20single%20note%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60renderScore%60%20%7C%20Render%20an%20entire%20score%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60streamScore%60%20%7C%20Stream%20score%20as%20async%20generator%20%7C%0A%7C%20%60mixChunks%60%20%20%20%7C%20Mix%20overlapping%20AudioChunks%20%20%20%20%20%7C%0A%0A%23%23%20Language%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C-----------------------%7C---------------------------------------%7C%0A%7C%20%60getLanguage%60%20%20%20%20%20%20%20%20%20%7C%20Look%20up%20language%20module%20by%20ID%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60registerLanguage%60%20%20%20%20%7C%20Register%20a%20custom%20language%20module%20%20%20%20%20%7C%0A%7C%20%60japanese%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Japanese%20language%20module%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60english%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20English%20language%20module%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60mandarin%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Mandarin%20Chinese%20language%20module%20%20%20%20%20%20%7C%0A%7C%20%60toCanonical%60%20%20%20%20%20%20%20%20%20%7C%20Map%20phoneme%20symbol%20to%20canonical%20IPA%20%20%20%7C%0A%7C%20%60sequenceToCanonical%60%20%7C%20Map%20phoneme%20sequence%20to%20canonical%20IPA%20%7C%0A%0A%23%23%20Voice%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C-----------------%7C-----------------------------------------%7C%0A%7C%20%60getVoice%60%20%20%20%20%20%20%7C%20Look%20up%20registered%20voice%20by%20name%20%20%20%20%20%20%20%20%7C%0A%7C%20%60registerVoice%60%20%7C%20Register%20a%20custom%20voice%20config%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60maleVoice%60%20%20%20%20%20%7C%20Default%20male%20voice%20preset%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60femaleVoice%60%20%20%20%7C%20Default%20female%20voice%20preset%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60buildVoice%60%20%20%20%20%7C%20Build%20voice%20from%20partial%20overrides%20%20%20%20%20%20%7C%0A%7C%20%60scaleVoice%60%20%20%20%20%7C%20Scale%20voice%20along%20perceptual%20dimensions%20%7C%0A%0A%23%23%20Playback%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C----------------%7C---------------------------------------------------%7C%0A%7C%20%60StreamPlayer%60%20%7C%20Web%20Audio%20streaming%20player%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PlayerState%60%20%20%7C%20Player%20state%20type%20(%22idle%22%20%2F%20%22playing%22%20%2F%20%22paused%22)%20%7C%0A%7C%20%60PlayerEvent%60%20%20%7C%20Player%20event%20union%20type%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PlayOptions%60%20%20%7C%20Playback%20options%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0A%23%23%20Import%20%2F%20Export%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C------------------------%7C------------------------------------------------------%7C%0A%7C%20%60ufDataToScore%60%20%20%20%20%20%20%20%20%7C%20Convert%20UfData%20(utaformatix-3%20intermediate)%20to%20Score%20%7C%0A%7C%20%60importScoreFromFile%60%20%20%7C%20Import%20score%20from%20a%20File%20object%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60importScoreFromBytes%60%20%7C%20Import%20score%20from%20raw%20bytes%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60ImportOptions%60%20%20%20%20%20%20%20%20%7C%20Import%20options%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60UfData%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20UTAU%20Format%20Data%20structure%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60scoreToUfData%60%20%20%20%20%20%20%20%20%7C%20Convert%20Score%20to%20UfData%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60exportScoreToBytes%60%20%20%20%7C%20Export%20score%20as%20Uint8Array%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60exportScoreToBlob%60%20%20%20%20%7C%20Export%20score%20as%20Blob%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60exportScoreToUrl%60%20%20%20%20%20%7C%20Export%20score%20as%20blob%20URL%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60downloadScore%60%20%20%20%20%20%20%20%20%7C%20Trigger%20browser%20download%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60ExportOptions%60%20%20%20%20%20%20%20%20%7C%20Export%20options%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A" style="display: none;"></div>
+                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22API%20Reference%22%0Adescription%3A%20%22Public%20types%20and%20functions%20for%20synthesis%2C%20projects%2C%20playback%2C%20and%20score%20conversion.%22%0A---%0A%0AImport%20these%20types%20and%20functions%20from%20%60%40audiflo%2Fichikara%60.%0A%0A%23%23%20Native%20projects%0A%0ASee%20%5BNative%20projects%5D(projects.md)%20for%20document%20structure%20and%20examples.%0A%0A%7C%20Export%20%7C%20Description%20%7C%0A%7C%20---%20%7C%20---%20%7C%0A%7C%20%60Project%60%2C%20%60VocalTrack%60%2C%20%60VocalPart%60%2C%20%60ProjectNote%60%20%7C%20Song%20document%20types%20with%20stable%20IDs%20%7C%0A%7C%20%60IdFactory%60%2C%20%60VoiceParameters%60%2C%20%60MeterEvent%60%20%7C%20Host%20IDs%2C%20per-track%20voice%20controls%2C%20and%20meter%20changes%20%7C%0A%7C%20%60createProject%60%2C%20%60addTrack%60%2C%20%60addPart%60%20%7C%20Construct%20a%20song%20%7C%0A%7C%20%60projectFromScore%60%20%7C%20Wrap%20a%20single%20score%20in%20a%20native%20project%20%7C%0A%7C%20%60validateProject%60%2C%20%60parseProject%60%2C%20%60serializeProject%60%20%7C%20Validate%20and%20round-trip%20native%20JSON%20%7C%0A%7C%20%60TempoMap%60%2C%20%60MeterMap%60%20%7C%20Convert%20ticks%2C%20seconds%2C%20bars%2C%20and%20beats%20%7C%0A%7C%20%60streamProject%60%20%7C%20Render%20placed%20tracks%20and%20parts%20with%20a%20stereo%20mix%20%7C%0A%7C%20%60importProjectFromFile%60%2C%20%60exportProjectToBytes%60%20%7C%20Whole-song%20score%20conversion%20%7C%0A%7C%20%60ufDataToProject%60%2C%20%60projectToUfData%60%20%7C%20Direct%20UtaFormatix%20conversion%20%7C%0A%0A%23%23%20Core%20Types%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C-----------------------%7C-------------------------------------------------------------------------%7C%0A%7C%20%60VoiceConfig%60%20%20%20%20%20%20%20%20%20%7C%20Complete%20voice%20configuration%20(glottal%2C%20formant%2C%20vibrato%2C%20output%20format)%20%7C%0A%7C%20%60GlottalConfig%60%20%20%20%20%20%20%20%7C%20LF%20glottal%20pulse%20source%20parameters%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantConfig%60%20%20%20%20%20%20%20%7C%20Vocal-tract%20formant%20transformation%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60VibratoConfig%60%20%20%20%20%20%20%20%7C%20Pitch%20vibrato%20modulation%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantTarget%60%20%20%20%20%20%20%20%7C%20Single%20formant%20centre%20frequency%20%2B%20bandwidth%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60NoiseConfig%60%20%20%20%20%20%20%20%20%20%7C%20Noise%20source%20for%20consonant%20generation%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PhonemeDef%60%20%20%20%20%20%20%20%20%20%20%7C%20Full%20acoustic%20definition%20of%20a%20phoneme%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Note%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20A%20single%20note%20with%20lyric%2C%20pitch%2C%20timing%2C%20and%20overrides%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Score%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Complete%20musical%20score%20(tempos%20%2B%20notes)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60TempoEvent%60%20%20%20%20%20%20%20%20%20%20%7C%20Tempo%20change%20event%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60AudioChunk%60%20%20%20%20%20%20%20%20%20%20%7C%20Processed%20audio%20segment%20with%20timeline%20position%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60LanguageModule%60%20%20%20%20%20%20%7C%20Language%20module%20interface%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PitchBend%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Pitch-bend%20envelope%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60GlottalSourceParams%60%20%7C%20Runtime%20glottal%20source%20parameters%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0A%23%23%20DSP%20Primitives%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C--------------------------%7C----------------------------------------------%7C%0A%7C%20%60LFGlottalSource%60%20%20%20%20%20%20%20%20%7C%20LF%20glottal%20pulse%20source%20(stateful)%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantFilter%60%20%20%20%20%20%20%20%20%20%20%7C%20Biquad%20resonator%20%2F%20anti-resonator%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60FormantCascade%60%20%20%20%20%20%20%20%20%20%7C%20Cascaded%20formant%20filter%20bank%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60interpolateFormants%60%20%20%20%20%7C%20Smooth%20interpolation%20between%20formant%20targets%20%7C%0A%7C%20%60NoiseSource%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20White%20noise%20generator%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60shapeNoiseWithFormants%60%20%7C%20Filter%20noise%20through%20formant%20resonators%20%20%20%20%20%20%7C%0A%7C%20%60applyAmplitudeEnvelope%60%20%7C%20Attack%2Frelease%20envelope%20shaping%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60mixBuffers%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Additive%20buffer%20mixing%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60encodeWav%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Encode%20AudioChunks%20as%20WAV%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0A%23%23%20Synthesis%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C---------------%7C---------------------------------%7C%0A%7C%20%60renderNote%60%20%20%7C%20Render%20a%20single%20note%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60renderScore%60%20%7C%20Render%20an%20entire%20score%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60streamScore%60%20%7C%20Stream%20score%20as%20async%20generator%20%7C%0A%7C%20%60mixChunks%60%20%20%20%7C%20Mix%20overlapping%20AudioChunks%20%20%20%20%20%7C%0A%0A%23%23%20Language%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C-----------------------%7C---------------------------------------%7C%0A%7C%20%60getLanguage%60%20%20%20%20%20%20%20%20%20%7C%20Look%20up%20language%20module%20by%20ID%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60registerLanguage%60%20%20%20%20%7C%20Register%20a%20custom%20language%20module%20%20%20%20%20%7C%0A%7C%20%60japanese%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Japanese%20language%20module%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60english%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20English%20language%20module%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60mandarin%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Mandarin%20Chinese%20language%20module%20%20%20%20%20%20%7C%0A%7C%20%60toCanonical%60%20%20%20%20%20%20%20%20%20%7C%20Map%20phoneme%20symbol%20to%20canonical%20IPA%20%20%20%7C%0A%7C%20%60sequenceToCanonical%60%20%7C%20Map%20phoneme%20sequence%20to%20canonical%20IPA%20%7C%0A%0A%23%23%20Voice%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C-----------------%7C-----------------------------------------%7C%0A%7C%20%60getVoice%60%20%20%20%20%20%20%20%20%7C%20Look%20up%20registered%20voice%20by%20name%20%20%20%20%20%20%20%20%7C%0A%7C%20%60registerVoice%60%20%20%20%7C%20Register%20a%20custom%20voice%20config%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60chitoseChika%60%20%20%20%20%7C%20Chitose%20Chika%2C%20the%20female%20voice%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60chitoseSho%60%20%20%20%20%20%20%7C%20Chitose%20Sho%2C%20the%20male%20voice%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60chitoseRen%60%20%20%20%20%20%20%7C%20Chitose%20Ren%2C%20the%20neutral%20voice%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60chitoseVoices%60%20%20%20%7C%20All%20named%20voices%2C%20in%20UI%20order%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60buildVoice%60%20%20%20%20%20%20%7C%20Build%20voice%20from%20partial%20overrides%20%20%20%20%20%20%7C%0A%7C%20%60scaleVoice%60%20%20%20%20%20%20%7C%20Scale%20voice%20along%20perceptual%20dimensions%20%7C%0A%0A%23%23%20Playback%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C----------------%7C---------------------------------------------------%7C%0A%7C%20%60StreamPlayer%60%20%7C%20Web%20Audio%20streaming%20player%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PlayerState%60%20%20%7C%20Player%20state%20type%20(%22idle%22%20%2F%20%22playing%22%20%2F%20%22paused%22)%20%7C%0A%7C%20%60PlayerEvent%60%20%20%7C%20Player%20event%20union%20type%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60PlayOptions%60%20%20%7C%20Playback%20options%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0A%23%23%20Import%20%2F%20Export%0A%0A%7C%20Export%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C------------------------%7C------------------------------------------------------%7C%0A%7C%20%60ufDataToScore%60%20%20%20%20%20%20%20%20%7C%20Convert%20UfData%20(utaformatix-3%20intermediate)%20to%20Score%20%7C%0A%7C%20%60importScoreFromFile%60%20%20%7C%20Import%20score%20from%20a%20File%20object%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60importScoreFromBytes%60%20%7C%20Import%20score%20from%20raw%20bytes%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60ImportOptions%60%20%20%20%20%20%20%20%20%7C%20Import%20options%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60UfData%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20UTAU%20Format%20Data%20structure%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60scoreToUfData%60%20%20%20%20%20%20%20%20%7C%20Convert%20Score%20to%20UfData%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60exportScoreToBytes%60%20%20%20%7C%20Export%20score%20as%20Uint8Array%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60exportScoreToBlob%60%20%20%20%20%7C%20Export%20score%20as%20Blob%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60exportScoreToUrl%60%20%20%20%20%20%7C%20Export%20score%20as%20blob%20URL%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60downloadScore%60%20%20%20%20%20%20%20%20%7C%20Trigger%20browser%20download%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60ExportOptions%60%20%20%20%20%20%20%20%20%7C%20Export%20options%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A" style="display: none;"></div>
                   
                     <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
                       <ol>
@@ -842,6 +905,7 @@
                     </nav>
                   
 
+                  
                   
                     <div class="docmd-copy-widgets">
                       
@@ -886,12 +950,65 @@
                           <span class="docmd-btn-text">Copy Context</span>
                         </button>
                       
+                      
                     </div>
                   
                 </div>
                 
-                <p>UTAU.js exposes a flat module surface through its main entry point. All public types and functions are exported from <code>utaujs</code>.</p>
-<h2 id="core-types" class="docmd-heading"><a href="#core-types" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Core Types</h2>
+                  <h1 class="docmd-focus-title">
+                    API Reference
+                  </h1>
+                
+                <p>Import these types and functions from <code>@audiflo/ichikara</code>.</p>
+<h2 id="native-projects" class="docmd-heading"><a href="#native-projects" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Native projects</h2>
+<p>See <a href="projects/">Native projects</a> for document structure and examples.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Export</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Project</code>, <code>VocalTrack</code>, <code>VocalPart</code>, <code>ProjectNote</code></td>
+<td>Song document types with stable IDs</td>
+</tr>
+<tr>
+<td><code>IdFactory</code>, <code>VoiceParameters</code>, <code>MeterEvent</code></td>
+<td>Host IDs, per-track voice controls, and meter changes</td>
+</tr>
+<tr>
+<td><code>createProject</code>, <code>addTrack</code>, <code>addPart</code></td>
+<td>Construct a song</td>
+</tr>
+<tr>
+<td><code>projectFromScore</code></td>
+<td>Wrap a single score in a native project</td>
+</tr>
+<tr>
+<td><code>validateProject</code>, <code>parseProject</code>, <code>serializeProject</code></td>
+<td>Validate and round-trip native JSON</td>
+</tr>
+<tr>
+<td><code>TempoMap</code>, <code>MeterMap</code></td>
+<td>Convert ticks, seconds, bars, and beats</td>
+</tr>
+<tr>
+<td><code>streamProject</code></td>
+<td>Render placed tracks and parts with a stereo mix</td>
+</tr>
+<tr>
+<td><code>importProjectFromFile</code>, <code>exportProjectToBytes</code></td>
+<td>Whole-song score conversion</td>
+</tr>
+<tr>
+<td><code>ufDataToProject</code>, <code>projectToUfData</code></td>
+<td>Direct UtaFormatix conversion</td>
+</tr>
+</tbody>
+</table>
+</div><h2 id="core-types" class="docmd-heading"><a href="#core-types" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Core Types</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1089,12 +1206,20 @@
 <td>Register a custom voice config</td>
 </tr>
 <tr>
-<td><code>maleVoice</code></td>
-<td>Default male voice preset</td>
+<td><code>chitoseChika</code></td>
+<td>Chitose Chika, the female voice</td>
 </tr>
 <tr>
-<td><code>femaleVoice</code></td>
-<td>Default female voice preset</td>
+<td><code>chitoseSho</code></td>
+<td>Chitose Sho, the male voice</td>
+</tr>
+<tr>
+<td><code>chitoseRen</code></td>
+<td>Chitose Ren, the neutral voice</td>
+</tr>
+<tr>
+<td><code>chitoseVoices</code></td>
+<td>All named voices, in UI order</td>
 </tr>
 <tr>
 <td><code>buildVoice</code></td>
@@ -1216,10 +1341,10 @@
                       </a>
                     
                     
-                      <a href="../api/voice-config/" class="next-page">
+                      <a href="../api/projects/" class="next-page">
                         <span><small>Next</small>
                           <strong>
-                            VoiceConfig
+                            Native Projects
                           </strong></span>
                         
 <svg class="lucide-icon icon-arrow-right page-nav-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
@@ -1244,8 +1369,11 @@
                 
               </div>
               
+              
               <div class="toc-sidebar">
                 
+                
+                  
 
 
   <div class="toc-container">
@@ -1266,6 +1394,10 @@
 </svg>
 </span></h2>
     <ul class="toc-list">
+      
+        <li class="toc-item toc-level-2">
+          <a href="#native-projects" class="toc-link">Native projects</a>
+        </li>
       
         <li class="toc-item toc-level-2">
           <a href="#core-types" class="toc-link">Core Types</a>
@@ -1298,19 +1430,21 @@
     </ul>
   </div>
 
+                
+                
               </div>
               
             </div>
             <div class="page-footer-actions">
               
               
-                <span class="git-last-updated" data-timestamp="1786770748000">
+                <span class="git-last-updated" data-timestamp="1794317025000">
                   <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <span class="git-label">Last updated:</span>
-                  <span class="git-time" data-timestamp="1786770748000"></span>
+                  <span class="git-time" data-timestamp="1794317025000"></span>
                   
                   <div class="git-commit-tooltip" role="tooltip">
                     <div class="git-tooltip-title">Recent commits</div>
@@ -1323,10 +1457,10 @@
                             
                           </div>
                           <div class="git-commit-details">
-                            <div class="git-commit-message" title="npm audit fix x2">npm audit fix x2</div>
+                            <div class="git-commit-message" title="Node 24">Node 24</div>
                             <div class="git-commit-meta">
                               <span class="git-commit-author">NellowTCS</span>
-                              <span class="git-commit-date" data-timestamp="1786770748000"></span>
+                              <span class="git-commit-date" data-timestamp="1794317025000"></span>
                             </div>
                           </div>
                         </li>
@@ -1338,7 +1472,7 @@
               
               <span class="git-spacer"></span>
               
-                <a href="https://github.com/NellowTCS/UTAU.js/edit/main/Docs/docs/api/index.md" target="_blank" rel="noopener noreferrer" class="edit-link">
+                <a href="https://github.com/Audiflo/Ichikara/edit/main/Docs/docs/api/index.md" target="_blank" rel="noopener noreferrer" class="edit-link">
                   
 <svg class="lucide-icon icon-pencil " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-pencil"
@@ -1368,10 +1502,10 @@
   <div class="footer-complete-top">
       <div class="footer-brand">
           
-            <span class="footer-title">UTAU.js</span>
+            <span class="footer-title">Ichikara</span>
           
           
-            <p class="footer-desc">A speech-synthesis library for singing voice synthesis in the browser.</p>
+            <p class="footer-desc">A OneVoice song editor and TypeScript singing-synthesis library.</p>
           
         </div>
         
@@ -1381,11 +1515,11 @@
                 <span class="footer-column-title">Resources</span>
                 <ul>
                   
-                    <li><a href="getting-started/quickstart/" >Getting Started</a></li>
+                    <li><a href="../guide/editor/" >Song Editor</a></li>
                   
-                    <li><a href="api/" >API Reference</a></li>
+                    <li><a href="../api/" >API Reference</a></li>
                   
-                    <li><a href="api/voice-config/" >Voice Config</a></li>
+                    <li><a href="../api/voice-config/" >Voice Config</a></li>
                   
                 </ul>
               </div>
@@ -1394,11 +1528,11 @@
                 <span class="footer-column-title">Community</span>
                 <ul>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js" >GitHub</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara" >GitHub</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/issues" >Issues</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/issues" >Issues</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/discussions" >Discussions</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/discussions" >Discussions</a></li>
                   
                 </ul>
               </div>
@@ -1407,7 +1541,7 @@
         
       </div>
       <div class="footer-complete-bottom">
-        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/NellowTCS/UTAU.js">View on GitHub</a>.</div>
+        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/Audiflo/Ichikara">View on GitHub</a>.</div>
         
           <div class="branding-footer">
             Built with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
@@ -1419,16 +1553,21 @@
         </div>
       </div>
       
-      <script src="../assets/js/docmd-main.js?v=mstx7dcj"></script>
       
-      <script src="../assets/js/docmd-git.js?v=mstx7dcj"></script>
-      <script src="../assets/js/docmd-image-lightbox.js?v=mstx7dcj" ></script>
-<script src="../assets/js/vendor/minisearch.js?v=mstx7dcj" ></script>
-<script src="../assets/js/docmd-search.js?v=mstx7dcj" ></script>
-<script src="../assets/js/docmd-git.js?v=mstx7dcj" type="module"></script>
+      <script>window.__DOCMD_VARIABLES__ = {"docmd":{"version":"0.9.9","buildTime":"2026-11-10T13:24:45.614Z","buildDate":"2026-11-10","buildYear":"2026","gitCommit":"0a48415","gitBranch":"main"},"DOCMD_VERSION":"0.9.9","BUILD_YEAR":"2026","BUILD_DATE":"2026-11-10","GIT_COMMIT":"0a48415","GIT_BRANCH":"main","git":{"commit":"0a48415","branch":"main"},"site":{"title":"Ichikara","base":"/Ichikara/docs/"},"page":{"title":"API Reference","slug":"/Ichikara/docs/api/","path":"api/index.html"},"frontmatter":{"title":"API Reference","description":"Public types and functions for synthesis, projects, playback, and score conversion.","_git":{"lastUpdated":"2026-11-10T13:23:45.000Z","lastUpdatedTimestamp":1794317025000,"commits":[{"hash":"0a48415cffcf70f254668ccf0cfbb41742d56091","shortHash":"0a48415","author":"NellowTCS","email":"neeljaiswal23@gmail.com","date":"2026-11-10T13:23:45.000Z","timestamp":1794317025000,"message":"Node 24","avatarUrl":"https://www.gravatar.com/avatar/baecf29c7bedbb00a8d5bd5984799c55?d=mp&s=64"}]}}};</script>
+      
+      <script src="../assets/js/docmd-runtime.js?v=mwaq2c0s"></script>
+      <script src="../assets/js/docmd-main.js?v=mwaq2c0s"></script>
+      
+      <script src="../assets/js/docmd-git.js?v=mwaq2c0s"></script>
+      <script src="../assets/js/docmd-image-lightbox.js?v=mwaq2c0s" ></script>
+<script src="../assets/js/vendor/minisearch.js?v=mwaq2c0s" ></script>
+<script src="../assets/js/docmd-search.js?v=mwaq2c0s" ></script>
+<script src="../assets/js/docmd-git.js?v=mwaq2c0s" ></script>
+<script src="../assets/js/docmd-ai.js?v=mwaq2c0s" ></script>
 
   <!-- Search Modal (Injected by @docmd/plugin-search) -->
-  <div id="docmd-search-modal" data-semantic="true" class="docmd-search-modal" style="display: none;" data-show-confidence="true" data-show-filters="true"
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-semantic="true" data-show-confidence="true" data-show-filters="true"
        data-search-placeholder="Search documentation..."
        data-search-no-results="No results found."
        data-search-error="Failed to load search index."
@@ -1500,7 +1639,8 @@
       })();
     </script>
 
-<script>window.__git_config={"repo":"https://github.com/NellowTCS/UTAU.js/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<script>window.__git_config={"repo":"https://github.com/Audiflo/Ichikara/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<div id="docmd-ai-root"></div><script>window.__docmd_ai_config={"endpoint":"","cloud":{},"captcha":true,"position":"bottom-center","siteTitle":"Ichikara","siteBase":"/Ichikara/docs/","siteUrl":"https://audiflo.github.io/Ichikara/docs","versions":null,"i18n":null,"navigation":[{"title":"Home","path":"/","icon":"home"},{"title":"Getting Started","icon":"rocket","collapsible":false,"children":[{"title":"Quick Start","path":"/getting-started/quickstart/","icon":"play"},{"title":"Installation","path":"/getting-started/installation/","icon":"download"},{"title":"Core Concepts","path":"/getting-started/concepts/","icon":"book"}]},{"title":"Guide","icon":"book-open","collapsible":false,"children":[{"title":"Song Editor","path":"/guide/editor/","icon":"music"},{"title":"Architecture","path":"/guide/architecture/","icon":"box"},{"title":"Renderer","path":"/guide/renderer/","icon":"cpu"},{"title":"Languages","path":"/guide/languages/","icon":"globe"}]},{"title":"API Reference","icon":"code","path":"/api/","collapsible":false,"children":[{"title":"Native Projects","path":"/api/projects/","icon":"folder"},{"title":"VoiceConfig","path":"/api/voice-config/","icon":"sliders"},{"title":"DSP Primitives","path":"/api/dsp/","icon":"audio-waveform"},{"title":"Import / Export","path":"/api/import-export/","icon":"file-up"}]},{"title":"GitHub","path":"https://github.com/Audiflo/Ichikara","icon":"github","external":true}],"searchCapabilities":{"keyword":true,"semantic":true},"isWorkspace":false,"workspaceProjects":[],"messageActions":false,"fetchExternalUrls":false,"contextLimit":5};</script>
       
       
       

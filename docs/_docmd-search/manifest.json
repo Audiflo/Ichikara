@@ -3,64 +3,79 @@
   "model": "Xenova/all-MiniLM-L6-v2",
   "dimensions": 384,
   "status": "complete",
-  "totalFiles": 11,
-  "indexedFiles": 11,
-  "totalChunks": 99,
+  "totalFiles": 14,
+  "indexedFiles": 14,
+  "totalChunks": 122,
   "batchCount": 1,
   "files": {
     "api/dsp.md": {
-      "mtime": 1786770760179.237,
+      "mtime": 1794317036150.896,
       "size": 3006,
       "batches": []
     },
     "api/import-export.md": {
-      "mtime": 1786770760179.2764,
-      "size": 2856,
+      "mtime": 1794317036150.9797,
+      "size": 3832,
       "batches": []
     },
     "api/index.md": {
-      "mtime": 1786770760179.2764,
-      "size": 5650,
+      "mtime": 1794317036150.9797,
+      "size": 6624,
+      "batches": []
+    },
+    "api/projects.md": {
+      "mtime": 1794317036150.9797,
+      "size": 4286,
       "batches": []
     },
     "api/voice-config.md": {
-      "mtime": 1786770760179.2764,
-      "size": 8316,
+      "mtime": 1794317036150.9797,
+      "size": 10473,
+      "batches": []
+    },
+    "development.md": {
+      "mtime": 1794317036150.9797,
+      "size": 2385,
       "batches": []
     },
     "getting-started/concepts.md": {
-      "mtime": 1786770760179.2764,
-      "size": 2993,
+      "mtime": 1794317036150.9797,
+      "size": 2995,
       "batches": []
     },
     "getting-started/installation.md": {
-      "mtime": 1786770760179.4429,
-      "size": 713,
+      "mtime": 1794317036151.371,
+      "size": 1071,
       "batches": []
     },
     "getting-started/quickstart.md": {
-      "mtime": 1786770760179.4429,
-      "size": 3565,
+      "mtime": 1794317036151.371,
+      "size": 3634,
       "batches": []
     },
     "guide/architecture.md": {
-      "mtime": 1786770760179.4429,
-      "size": 2355,
+      "mtime": 1794317036151.371,
+      "size": 2370,
+      "batches": []
+    },
+    "guide/editor.md": {
+      "mtime": 1794317036151.5198,
+      "size": 4514,
       "batches": []
     },
     "guide/languages.md": {
-      "mtime": 1786770760179.5383,
-      "size": 2823,
+      "mtime": 1794317036151.5198,
+      "size": 3779,
       "batches": []
     },
     "guide/renderer.md": {
-      "mtime": 1786770760179.5383,
-      "size": 2899,
+      "mtime": 1794317036151.5198,
+      "size": 3009,
       "batches": []
     },
     "index.md": {
-      "mtime": 1786770760179.5383,
-      "size": 4227,
+      "mtime": 1794317036151.5198,
+      "size": 4967,
       "batches": []
     }
   }

@@ -2,12 +2,12 @@
 type: concept
 title: Languages
 description: "Built-in language support and how to add custom languages"
-source: "https://nellowtcs.me/UTAU.js/docs/guide/languages/"
+source: "https://audiflo.github.io/Ichikara/docs/guide/languages/"
 path: /guide/languages/
-updated: 2026-08-15
+updated: 2026-11-10
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-08-15T05:13:33.415Z"
+  generated_at: "2026-11-10T13:24:54.243Z"
 ---
 ---
 title: "Languages"
@@ -37,16 +37,44 @@ description: "Built-in language support and how to add custom languages"
 - **Tone handling**: Tone numbers (1-5) are stripped from pinyin input; pitch contour is expected to be handled by note-level pitch bend in the score
 - **Data sources**: Wu 1990 (standard Mandarin formant values), general acoustic phonetics
 
+## Rests
+
+A UTAU score marks a rest with an uppercase `R`. Every built-in language maps
+that lyric to the `sil` phoneme, which is defined with `type: "silence"` and
+`voiced: false`, so the note renders as true digital silence:
+
+```typescript
+renderScore(
+  {
+    tempos: [{ tick: 0, tempo: 120 }],
+    resolution: 480,
+    notes: [
+      { tick: 0, lyric: "か", noteNum: 60, length: 480 },
+      { tick: 480, lyric: "R", noteNum: 60, length: 480 }, // silence
+      { tick: 960, lyric: "な", noteNum: 62, length: 480 },
+    ],
+  },
+  voice,
+  "jp",
+);
+```
+
+The check is case-sensitive. Lowercase `r` stays singable, because it is a real
+phoneme: the Japanese mora ら and the English approximant /ɹ/.
+
+A custom language module must define `sil` as an unvoiced `silence` phoneme and
+map the rest marker to it, or rests in imported scores will be sung.
+
 ## Using Language Modules
 
 ```typescript
-import { japanese, english, mandarin, getLanguage } from "utaujs";
+import { japanese, english, mandarin, getLanguage } from "@audiflo/ichikara";
 
 // Direct reference
-renderScore(score, voice, japanese);  // or "jp"
+renderScore(score, voice, japanese); // or "jp"
 
 // String lookup
-const lang = getLanguage("eng");  // returns english module
+const lang = getLanguage("eng"); // returns english module
 renderScore(score, voice, lang);
 ```
 
@@ -55,22 +83,33 @@ renderScore(score, voice, lang);
 Implement the `LanguageModule` interface and register it:
 
 ```typescript
-import { registerLanguage } from "utaujs";
-import type { LanguageModule, PhonemeDef } from "utaujs";
+import { registerLanguage } from "@audiflo/ichikara";
+import type { LanguageModule, PhonemeDef } from "@audiflo/ichikara";
 
 const myLang: LanguageModule = {
   id: "custom",
   name: "My Language",
   phonemes: new Map([
-    ["a", { symbol: "a", type: "vowel", voiced: true,
-            formants: [{ f: 800, bw: 100 }, { f: 1200, bw: 150 },
-                       { f: 2500, bw: 200 }, { f: 3500, bw: 250 },
-                       { f: 4500, bw: 300 }] }],
+    [
+      "a",
+      {
+        symbol: "a",
+        type: "vowel",
+        voiced: true,
+        formants: [
+          { f: 800, bw: 100 },
+          { f: 1200, bw: 150 },
+          { f: 2500, bw: 200 },
+          { f: 3500, bw: 250 },
+          { f: 4500, bw: 300 },
+        ],
+      },
+    ],
     // ... more phonemes
   ]),
   lyricToPhonemes(lyric: string): string[] {
     // Your G2P logic here
-    return [...lyric].filter(ch => this.phonemes.has(ch));
+    return [...lyric].filter((ch) => this.phonemes.has(ch));
   },
 };
 
@@ -85,11 +124,11 @@ const chunks = await renderScore(score, voice, "custom");
 The alias system maps language-specific phoneme symbols to a canonical IPA-like set. This is useful when a voicebank recorded for one language sings lyrics in another:
 
 ```typescript
-import { toCanonical, sequenceToCanonical } from "utaujs";
+import { toCanonical, sequenceToCanonical } from "@audiflo/ichikara";
 
 // Map a single phoneme
-toCanonical("en", "IY");   // -> "i"
-toCanonical("jp", "sh");   // -> "S"
+toCanonical("en", "IY"); // -> "i"
+toCanonical("jp", "sh"); // -> "S"
 
 // Map a sequence
 sequenceToCanonical("zh", ["zh", "ir"]);

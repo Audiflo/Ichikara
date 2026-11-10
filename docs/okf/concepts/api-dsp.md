@@ -2,12 +2,12 @@
 type: api
 title: "DSP Primitives"
 description: "Low-level digital signal processing components"
-source: "https://nellowtcs.me/UTAU.js/docs/api/dsp/"
+source: "https://audiflo.github.io/Ichikara/docs/api/dsp/"
 path: /api/dsp/
-updated: 2026-08-15
+updated: 2026-11-10
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-08-15T05:13:33.411Z"
+  generated_at: "2026-11-10T13:24:54.237Z"
 ---
 ---
 title: "DSP Primitives"

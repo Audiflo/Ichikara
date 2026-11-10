@@ -2,12 +2,12 @@
 type: concept
 title: Renderer
 description: "How the synthesis engine produces audio from a score"
-source: "https://nellowtcs.me/UTAU.js/docs/guide/renderer/"
+source: "https://audiflo.github.io/Ichikara/docs/guide/renderer/"
 path: /guide/renderer/
-updated: 2026-08-15
+updated: 2026-11-10
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-08-15T05:13:33.415Z"
+  generated_at: "2026-11-10T13:24:54.243Z"
 ---
 ---
 title: "Renderer"
@@ -63,6 +63,7 @@ Consonants add shaped noise:
 
 - **Fricatives**: noise filtered through resonant peaks at the fricative's spectral centre
 - **Plosives**: short noise burst with fast decay
+- **Affricates**: a silent stop closure followed by a brief decaying release, so `ch` is not a sustained `sh`
 - **Aspiration**: low-passed noise mixed into vowels (controlled by `glottal.aspiration`)
 
 ### 6. Envelope and Normalisation

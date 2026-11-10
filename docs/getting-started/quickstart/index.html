@@ -10,7 +10,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="generator" content="docmd v0.8.17">
+    <meta name="generator" content="docmd v0.9.9">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script>
@@ -19,11 +19,11 @@
       if (root === '') root = './';
       window.DOCMD_ROOT = root;
 
-      window.DOCMD_SITE_ROOT = "/UTAU.js/docs/";
+      window.DOCMD_SITE_ROOT = "/Ichikara/docs/";
 
       window.DOCMD_APPEARANCE = "system";
       window.DOCMD_VERSION_ROOT = "/";
-      window.DOCMD_BASE = "/UTAU.js/docs/";
+      window.DOCMD_BASE = "/Ichikara/docs/";
       window.DOCMD_LOCALE = "";
       window.DOCMD_DEFAULT_LOCALE = "";
     </script>
@@ -98,37 +98,42 @@
         visibility: hidden;
       }
     </style>
-    <title>
-      Quick Start : UTAU.js
-    </title>
+    <title>Quick Start - Ichikara</title>
     
     
 
-    <link id="site-favicon" rel="icon" href="../../assets/favicon.ico?v=mstx7dcj">
-    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mstx7dcj">
+    <link id="site-favicon" rel="icon" href="../../assets/favicon.ico?v=mwaq2c0s">
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mwaq2c0s">
     
-    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mstx7dcj" id="hljs-light" >
-    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mstx7dcj" id="hljs-dark" disabled>
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mwaq2c0s" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mwaq2c0s" id="hljs-dark" disabled>
     
     
-<meta name="description" content="Render your first singing voice synthesis in 5 minutes">
-<link rel="canonical" href="https://nellowtcs.me/UTAU.js/docs/getting-started/quickstart/">
-<meta property="og:title" content="Quick Start - UTAU.js">
-<meta property="og:description" content="Render your first singing voice synthesis in 5 minutes">
-<meta property="og:url" content="https://nellowtcs.me/UTAU.js/docs/getting-started/quickstart/">
+<meta name="description" content="Render a phrase to WAV and play it in the browser.">
+<link rel="canonical" href="https://audiflo.github.io/Ichikara/docs/getting-started/quickstart/">
+<meta property="og:title" content="Quick Start - Ichikara">
+<meta property="og:description" content="Render a phrase to WAV and play it in the browser.">
+<meta property="og:url" content="https://audiflo.github.io/Ichikara/docs/getting-started/quickstart/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Quick Start - UTAU.js">
-<meta name="twitter:description" content="Render your first singing voice synthesis in 5 minutes">
+<meta name="twitter:title" content="Quick Start - Ichikara">
+<meta name="twitter:description" content="Render a phrase to WAV and play it in the browser.">
+<meta name="twitter:image" content="https://audiflo.github.io/Ichikara/docs/assets/images/editor.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ichikara","item":"https://audiflo.github.io/Ichikara/docs/"},{"@type":"ListItem","position":2,"name":"Getting Started"},{"@type":"ListItem","position":3,"name":"Quick Start","item":"https://audiflo.github.io/Ichikara/docs/getting-started/quickstart/"}]}
+</script>
 
 
 
-<link rel="stylesheet" href="../../assets/css/docmd-theme-ruby.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mstx7dcj" >
-<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mstx7dcj" >
+
+<link rel="stylesheet" href="../../assets/css/docmd-theme-ruby.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mwaq2c0s" >
+<link rel="stylesheet" href="../../assets/css/docmd-ai.css?v=mwaq2c0s" >
 
     
-      <link rel="stylesheet" href="../../assets/css/theme.css?v=mstx7dcj">
+      <link rel="stylesheet" href="../../assets/css/theme.css?v=mwaq2c0s">
     
     
   </head>
@@ -141,11 +146,16 @@
 
     
     
+
+    
+
+    
+    
       <aside class="sidebar">
         <div class="sidebar-header">
           
-<h1><a href="../../">
-                UTAU.js
+            <h1><a href="../../">
+                Ichikara
               </a></h1>
           
           <span class="mobile-view sidebar-menu-button float-right">
@@ -170,6 +180,7 @@
           </span>
         </div>
         <div class="sidebar-top-group">
+          
           
           
           
@@ -364,8 +375,8 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M12 7v14" />
-  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
 </svg>
 
           
@@ -379,6 +390,40 @@
         
           <ul class="submenu">
             
+      <li class="" >
+      
+        <a href="../../guide/editor/" class=" "
+          >
+           
+<svg class="lucide-icon icon-music " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-eighth-notes"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19" />
+  <circle cx="18" cy="16" r="3" />
+  <circle cx="6" cy="19" r="3" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Song Editor
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
       <li class="" >
       
         <a href="../../guide/architecture/" class=" "
@@ -531,6 +576,38 @@
             
       <li class="" >
       
+        <a href="../../api/projects/" class=" "
+          >
+           
+<svg class="lucide-icon icon-folder " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+</svg>
+
+          
+          <span class="nav-item-title">
+            Native Projects
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
         <a href="../../api/voice-config/" class=" "
           >
            
@@ -642,25 +719,9 @@
     
       <li class="" >
       
-        <a href="https://github.com/NellowTCS/UTAU.js" class=" "
-          target=&quot;_blank&quot; rel=&quot;noopener&quot;>
+        <a href="https://github.com/Audiflo/Ichikara" class=" "
+          target="_blank" rel="noopener">
            
-<svg class="lucide-icon icon-github " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-  class="lucide lucide-github"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-  <path d="M9 18c-4.51 2-5-2-7-2" />
-</svg>
-
           
           <span class="nav-item-title">
             GitHub
@@ -698,12 +759,12 @@
           
           
           
+          
         </div>
       </aside>
       
-      
-      
       <div class="main-content-wrapper">
+        
         
         
           <header class="page-header">
@@ -770,7 +831,7 @@
     
 
     
-    <button class="theme-toggle-button" aria-label="Toggle theme">
+    <button class="theme-toggle-button" aria-label="Toggle theme" title="Toggle theme">
         
 <svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-sun"
@@ -814,6 +875,8 @@
     
 
     
+
+    
 </div>
 
               
@@ -825,7 +888,7 @@
             <div class="content-layout">
               <div class="main-content">
                 <div class="docmd-breadcrumbs-row">
-                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Quick%20Start%22%0Adescription%3A%20%22Render%20your%20first%20singing%20voice%20synthesis%20in%205%20minutes%22%0A---%0A%0AThis%20guide%20gets%20you%20from%20zero%20to%20a%20working%20UTAU.js%20render.%20You%20will%20create%20a%20score%2C%20render%20it%20with%20a%20voice%20preset%2C%20and%20save%20the%20output%20as%20a%20WAV%20file.%0A%0A%3A%3A%3A%20callout%20tip%20%22Prerequisites%22%0AYou%20need%20Node.js%2018%2B%20or%20a%20modern%20browser.%20See%20%5BInstallation%5D(.%2Finstallation)%20to%20set%20things%20up.%0A%3A%3A%3A%0A%0A%3A%3A%3A%20steps%0A%0A1.%20**Create%20a%20Score**%0A%0A%20%20%20A%20Score%20is%20the%20input%20to%20the%20renderer%3A%20tempo%20map%2C%20timing%20resolution%2C%20and%20a%20list%20of%20notes.%20Each%20note%20has%20a%20lyric%2C%20MIDI%20note%20number%2C%20and%20duration.%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20import%20%7B%20renderScore%2C%20femaleVoice%2C%20japanese%2C%20encodeWav%20%7D%20from%20%22utaujs%22%3B%0A%0A%20%20%20const%20score%20%3D%20%7B%0A%20%20%20%20%20tempos%3A%20%5B%7B%20tick%3A%200%2C%20tempo%3A%20120%20%7D%5D%2C%0A%20%20%20%20%20resolution%3A%20480%2C%0A%20%20%20%20%20notes%3A%20%5B%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%93%22%2C%20noteNum%3A%2060%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%82%93%22%2C%20noteNum%3A%2062%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AB%22%2C%20noteNum%3A%2064%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%A1%22%2C%20noteNum%3A%2065%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AF%22%2C%20noteNum%3A%2067%2C%20length%3A%20960%20%7D%2C%0A%20%20%20%20%20%5D%2C%0A%20%20%20%7D%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20The%20lyric%20text%20is%20passed%20through%20the%20language%20module&#039;s%20G2P%20pipeline%3A%0A%20%20%20-%20**Japanese**%3A%20hiragana%20%2F%20kanji%20-%3E%20romaji%20-%3E%20phoneme%20symbols%0A%20%20%20-%20**English**%3A%20text%20-%3E%20CMUDict%20lookup%20-%3E%20ARPAbet%20phonemes%0A%20%20%20-%20**Mandarin**%3A%20pinyin%20syllables%20-%3E%20initial%20%2B%20final%20decomposition%0A%0A2.%20**Render%20the%20Score**%0A%0A%20%20%20Call%20%60renderScore%60%20with%20your%20score%2C%20a%20voice%20config%2C%20and%20a%20language%20identifier%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20const%20chunks%20%3D%20await%20renderScore(score%2C%20femaleVoice%2C%20%22jp%22)%3B%0A%20%20%20console.log(%60Rendered%20%24%7Bchunks.length%7D%20notes%60)%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20Each%20chunk%20is%20an%20%60AudioChunk%60%20with%20sample-accurate%20positioning%20on%20the%20timeline.%20You%20can%20mix%20them%20into%20a%20single%20buffer%20or%20stream%20them%20to%20the%20audio%20output.%0A%0A3.%20**Export%20as%20WAV**%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20const%20wav%20%3D%20encodeWav(chunks)%3B%0A%20%20%20%2F%2F%20Node.js%3A%20save%20to%20disk%0A%20%20%20const%20%7B%20writeFileSync%20%7D%20%3D%20await%20import(%22node%3Afs%22)%3B%0A%20%20%20writeFileSync(%22output.wav%22%2C%20Buffer.from(wav))%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20Or%20in%20the%20browser%2C%20create%20a%20download%20link%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20const%20blob%20%3D%20new%20Blob(%5Bwav%5D%2C%20%7B%20type%3A%20%22audio%2Fwav%22%20%7D)%3B%0A%20%20%20const%20url%20%3D%20URL.createObjectURL(blob)%3B%0A%20%20%20const%20a%20%3D%20document.createElement(%22a%22)%3B%0A%20%20%20a.href%20%3D%20url%3B%0A%20%20%20a.download%20%3D%20%22output.wav%22%3B%0A%20%20%20a.click()%3B%0A%20%20%20URL.revokeObjectURL(url)%3B%0A%20%20%20%60%60%60%0A%0A4.%20**Stream%20to%20Audio%20Output%20(Browser)**%0A%0A%20%20%20For%20real-time%20playback%20without%20waiting%20for%20the%20full%20render%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20import%20%7B%20streamScore%2C%20StreamPlayer%20%7D%20from%20%22utaujs%22%3B%0A%0A%20%20%20const%20player%20%3D%20new%20StreamPlayer()%3B%0A%20%20%20await%20player.play(streamScore(score%2C%20femaleVoice%2C%20%22jp%22))%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20The%20renderer%20produces%20audio%20chunks%20while%20the%20player%20schedules%20them%20against%20the%20Web%20Audio%20clock.%20Pre-buffer%20threshold%20defaults%20to%201%20second.%0A%0A5.%20**Try%20a%20Different%20Voice**%0A%0A%20%20%20UTAU.js%20ships%20with%20male%20and%20female%20presets%2C%20plus%20a%20builder%20for%20custom%20voices%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20import%20%7B%20maleVoice%2C%20buildVoice%2C%20scaleVoice%20%7D%20from%20%22utaujs%22%3B%0A%0A%20%20%20%2F%2F%20Use%20the%20built-in%20male%20voice%0A%20%20%20const%20chunks1%20%3D%20await%20renderScore(score%2C%20maleVoice%2C%20%22jp%22)%3B%0A%0A%20%20%20%2F%2F%20Build%20a%20custom%20voice%0A%20%20%20const%20custom%20%3D%20buildVoice(%7B%20name%3A%20%22My%20Voice%22%2C%20sampleRate%3A%2048000%20%7D)%3B%0A%0A%20%20%20%2F%2F%20Scale%20along%20perceptual%20dimensions%0A%20%20%20const%20breathy%20%3D%20scaleVoice(femaleVoice%2C%20%7B%0A%20%20%20%20%20breathiness%3A%200.6%2C%0A%20%20%20%20%20tension%3A%200.3%2C%0A%20%20%20%20%20vibratoAmount%3A%200.5%2C%0A%20%20%20%7D)%3B%0A%0A%20%20%20const%20chunks2%20%3D%20await%20renderScore(score%2C%20breathy%2C%20%22en%22)%3B%0A%20%20%20%60%60%60%0A%0A%3A%3A%3A%0A%0A%23%23%20Next%20Steps%0A%0A%3A%3A%3A%20grids%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22Installation%22%20.%2Finstallation.md%20icon%3Adownload%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22Core%20Concepts%22%20.%2Fconcepts.md%20icon%3Abook%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22API%20Reference%22%20..%2Fapi%2F%20icon%3Acode%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22Voice%20Config%22%20..%2Fapi%2Fvoice-config.md%20icon%3Asliders%0A%3A%3A%3A%0A%3A%3A%3A%0A" style="display: none;"></div>
+                  <div id="docmd-raw-markdown" data-content="---%0Atitle%3A%20%22Quick%20Start%22%0Adescription%3A%20%22Render%20a%20phrase%20to%20WAV%20and%20play%20it%20in%20the%20browser.%22%0A---%0A%0AThis%20example%20renders%20a%20Japanese%20phrase%20with%20Chitose%20Chika%20and%20saves%20it%20as%20WAV.%0AFor%20the%20browser%20editor%2C%20see%20the%20%5Bsong%20editor%20guide%5D(..%2Fguide%2Feditor.md).%0A%0A%3A%3A%3A%20callout%20tip%20%22Prerequisites%22%0AUse%20Node.js%2022.18%2B%20or%2024%20for%20the%20file%20example%2C%20or%20a%20modern%20browser%20for%20playback.%0ASee%20%5BInstallation%5D(.%2Finstallation).%0A%3A%3A%3A%0A%0A%3A%3A%3A%20steps%0A%0A1.%20**Create%20a%20Score**%0A%0A%20%20%20A%20Score%20is%20the%20input%20to%20the%20renderer%3A%20tempo%20map%2C%20timing%20resolution%2C%20and%20a%20list%20of%20notes.%20Each%20note%20has%20a%20lyric%2C%20MIDI%20note%20number%2C%20and%20duration.%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20import%20%7B%20renderScore%2C%20chitoseChika%2C%20encodeWav%2C%20type%20Score%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0A%20%20%20const%20score%3A%20Score%20%3D%20%7B%0A%20%20%20%20%20tempos%3A%20%5B%7B%20tick%3A%200%2C%20tempo%3A%20120%20%7D%5D%2C%0A%20%20%20%20%20resolution%3A%20480%2C%0A%20%20%20%20%20notes%3A%20%5B%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%93%22%2C%20noteNum%3A%2060%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%82%93%22%2C%20noteNum%3A%2062%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AB%22%2C%20noteNum%3A%2064%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%A1%22%2C%20noteNum%3A%2065%2C%20length%3A%20480%20%7D%2C%0A%20%20%20%20%20%20%20%7B%20lyric%3A%20%22%E3%81%AF%22%2C%20noteNum%3A%2067%2C%20length%3A%20960%20%7D%2C%0A%20%20%20%20%20%5D%2C%0A%20%20%20%7D%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20The%20lyric%20text%20is%20passed%20through%20the%20language%20module&#039;s%20G2P%20pipeline%3A%0A%20%20%20-%20**Japanese**%3A%20hiragana%20%2F%20kanji%20-%3E%20romaji%20-%3E%20phoneme%20symbols%0A%20%20%20-%20**English**%3A%20text%20-%3E%20CMUDict%20lookup%20-%3E%20ARPAbet%20phonemes%0A%20%20%20-%20**Mandarin**%3A%20pinyin%20syllables%20-%3E%20initial%20%2B%20final%20decomposition%0A%0A2.%20**Render%20the%20Score**%0A%0A%20%20%20Call%20%60renderScore%60%20with%20your%20score%2C%20a%20voice%20config%2C%20and%20a%20language%20identifier%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20const%20chunks%20%3D%20await%20renderScore(score%2C%20chitoseChika%2C%20%22jp%22)%3B%0A%20%20%20console.log(%60Rendered%20%24%7Bchunks.length%7D%20notes%60)%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20Each%20chunk%20is%20an%20%60AudioChunk%60%20with%20sample-accurate%20positioning%20on%20the%20timeline.%20You%20can%20mix%20them%20into%20a%20single%20buffer%20or%20stream%20them%20to%20the%20audio%20output.%0A%0A3.%20**Export%20as%20WAV**%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20const%20wav%20%3D%20encodeWav(chunks)%3B%0A%20%20%20%2F%2F%20Node.js%3A%20save%20to%20disk%0A%20%20%20const%20%7B%20writeFileSync%20%7D%20%3D%20await%20import(%22node%3Afs%22)%3B%0A%20%20%20writeFileSync(%22output.wav%22%2C%20Buffer.from(wav))%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20Or%20in%20the%20browser%2C%20create%20a%20download%20link%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20const%20blob%20%3D%20new%20Blob(%5Bwav%5D%2C%20%7B%20type%3A%20%22audio%2Fwav%22%20%7D)%3B%0A%20%20%20const%20url%20%3D%20URL.createObjectURL(blob)%3B%0A%20%20%20const%20a%20%3D%20document.createElement(%22a%22)%3B%0A%20%20%20a.href%20%3D%20url%3B%0A%20%20%20a.download%20%3D%20%22output.wav%22%3B%0A%20%20%20a.click()%3B%0A%20%20%20URL.revokeObjectURL(url)%3B%0A%20%20%20%60%60%60%0A%0A4.%20**Stream%20to%20Audio%20Output%20(Browser)**%0A%0A%20%20%20For%20real-time%20playback%20without%20waiting%20for%20the%20full%20render%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20import%20%7B%20streamScore%2C%20StreamPlayer%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0A%20%20%20const%20player%20%3D%20new%20StreamPlayer()%3B%0A%20%20%20await%20player.play(streamScore(score%2C%20chitoseChika%2C%20%22jp%22))%3B%0A%20%20%20%60%60%60%0A%0A%20%20%20The%20renderer%20produces%20audio%20chunks%20while%20the%20player%20schedules%20them%20against%20the%20Web%20Audio%20clock.%20Pre-buffer%20threshold%20defaults%20to%201%20second.%0A%0A5.%20**Try%20a%20Different%20Voice**%0A%0A%20%20%20Ichikara%20ships%20with%20three%20named%20voices%2C%20plus%20a%20builder%20for%20custom%20ones%3A%0A%0A%20%20%20%60%60%60typescript%0A%20%20%20import%20%7B%20chitoseChika%2C%20chitoseSho%2C%20buildVoice%2C%20scaleVoice%20%7D%20from%20%22%40audiflo%2Fichikara%22%3B%0A%0A%20%20%20%2F%2F%20Use%20a%20built-in%20voice%0A%20%20%20const%20chunks1%20%3D%20await%20renderScore(score%2C%20chitoseSho%2C%20%22jp%22)%3B%0A%0A%20%20%20%2F%2F%20Build%20a%20custom%20voice%0A%20%20%20const%20custom%20%3D%20buildVoice(%7B%20name%3A%20%22My%20Voice%22%2C%20sampleRate%3A%2048000%20%7D)%3B%0A%0A%20%20%20%2F%2F%20Scale%20along%20perceptual%20dimensions%0A%20%20%20const%20breathy%20%3D%20scaleVoice(chitoseChika%2C%20%7B%0A%20%20%20%20%20breathiness%3A%200.6%2C%0A%20%20%20%20%20tension%3A%200.3%2C%0A%20%20%20%20%20vibratoAmount%3A%200.5%2C%0A%20%20%20%7D)%3B%0A%0A%20%20%20const%20chunks2%20%3D%20await%20renderScore(score%2C%20breathy%2C%20%22jp%22)%3B%0A%20%20%20%60%60%60%0A%0A%3A%3A%3A%0A%0A%23%23%20Next%20Steps%0A%0A%3A%3A%3A%20grids%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22Installation%22%20.%2Finstallation.md%20icon%3Adownload%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22Core%20Concepts%22%20.%2Fconcepts.md%20icon%3Abook%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22API%20Reference%22%20..%2Fapi%2F%20icon%3Acode%0A%3A%3A%3A%0A%3A%3A%3A%20grid%0A%3A%3A%3A%20button%20%22Voice%20Config%22%20..%2Fapi%2Fvoice-config.md%20icon%3Asliders%0A%3A%3A%3A%0A%3A%3A%3A%0A" style="display: none;"></div>
                   
                     <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
                       <ol>
@@ -866,6 +929,7 @@
                     </nav>
                   
 
+                  
                   
                     <div class="docmd-copy-widgets">
                       
@@ -910,27 +974,34 @@
                           <span class="docmd-btn-text">Copy Context</span>
                         </button>
                       
+                      
                     </div>
                   
                 </div>
                 
-                <p>This guide gets you from zero to a working UTAU.js render. You will create a score, render it with a voice preset, and save the output as a WAV file.</p>
+                  <h1 class="docmd-focus-title">
+                    Quick Start
+                  </h1>
+                
+                <p>This example renders a Japanese phrase with Chitose Chika and saves it as WAV.<br>
+For the browser editor, see the <a href="../../guide/editor/">song editor guide</a>.</p>
 <div class="docmd-container callout callout-tip"><div class="callout-title">Prerequisites</div><div class="callout-content">
-<p>You need Node.js 18+ or a modern browser. See <a href="../installation/">Installation</a> to set things up.</p>
+<p>Use Node.js 22.18+ or 24 for the file example, or a modern browser for playback.<br>
+See <a href="../installation/">Installation</a>.</p>
 </div></div>
 <div class="docmd-container steps steps-reset"><ol class="steps-list"><li class="step-item" id="step-1"><a href="#step-1" class="step-permalink" aria-label="Permalink to this step"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><p><strong>Create a Score</strong></p>
 <p>A Score is the input to the renderer: tempo map, timing resolution, and a list of notes. Each note has a lyric, MIDI note number, and duration.</p>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { renderScore, femaleVoice, japanese, encodeWav } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { renderScore, chitoseChika, encodeWav, <span class="hljs-keyword">type</span> Score } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> score <span class="hljs-punctuation">=</span> {
-  tempos<span class="hljs-punctuation">:</span> [{ tick<span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>, tempo<span class="hljs-punctuation">:</span> <span class="hljs-number">120</span> }],
-  resolution<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span>,
-  notes<span class="hljs-punctuation">:</span> [
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;こ&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">60</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ん&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">62</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;に&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">64</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ち&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">65</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">480</span> },
-    { lyric<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;は&quot;</span>, noteNum<span class="hljs-punctuation">:</span> <span class="hljs-number">67</span>, length<span class="hljs-punctuation">:</span> <span class="hljs-number">960</span> },
+<span class="hljs-keyword">const</span> score<span class="hljs-operator">:</span> Score <span class="hljs-operator">=</span> {
+  tempos<span class="hljs-operator">:</span> [{ tick<span class="hljs-operator">:</span> <span class="hljs-number">0</span>, tempo<span class="hljs-operator">:</span> <span class="hljs-number">120</span> }],
+  resolution<span class="hljs-operator">:</span> <span class="hljs-number">480</span>,
+  notes<span class="hljs-operator">:</span> [
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;こ&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">60</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;ん&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">62</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;に&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">64</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;ち&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">65</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">480</span> },
+    { lyric<span class="hljs-operator">:</span> <span class="hljs-string">&quot;は&quot;</span>, noteNum<span class="hljs-operator">:</span> <span class="hljs-number">67</span>, length<span class="hljs-operator">:</span> <span class="hljs-number">960</span> },
   ],
 };
 </code></pre>
@@ -943,54 +1014,54 @@
 </li>
 <li class="step-item" id="step-5"><a href="#step-5" class="step-permalink" aria-label="Permalink to this step"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><p><strong>Render the Score</strong></p>
 <p>Call <code>renderScore</code> with your score, a voice config, and a language identifier:</p>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> chunks <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, femaleVoice, <span class="hljs-string">&quot;jp&quot;</span>);
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> chunks <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, chitoseChika, <span class="hljs-string">&quot;jp&quot;</span>);
 console.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Rendered ${chunks.length} notes`</span>);
 </code></pre>
 <p>Each chunk is an <code>AudioChunk</code> with sample-accurate positioning on the timeline. You can mix them into a single buffer or stream them to the audio output.</p>
 </li>
 <li class="step-item" id="step-6"><a href="#step-6" class="step-permalink" aria-label="Permalink to this step"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><p><strong>Export as WAV</strong></p>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> wav <span class="hljs-punctuation">=</span> <span class="hljs-title function_">encodeWav</span>(chunks);
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> wav <span class="hljs-operator">=</span> <span class="hljs-title function_">encodeWav</span>(chunks);
 <span class="hljs-comment">// Node.js: save to disk</span>
-<span class="hljs-keyword">const</span> { writeFileSync } <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;node:fs&quot;</span>);
+<span class="hljs-keyword">const</span> { writeFileSync } <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;node:fs&quot;</span>);
 <span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">&quot;output.wav&quot;</span>, Buffer.<span class="hljs-keyword">from</span>(wav));
 </code></pre>
 <p>Or in the browser, create a download link:</p>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> blob <span class="hljs-punctuation">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">Blob</span>([wav], { <span class="hljs-keyword">type</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;audio/wav&quot;</span> });
-<span class="hljs-keyword">const</span> url <span class="hljs-punctuation">=</span> URL.<span class="hljs-title function_">createObjectURL</span>(blob);
-<span class="hljs-keyword">const</span> a <span class="hljs-punctuation">=</span> document.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;a&quot;</span>);
-a.<span class="hljs-attr">href</span> <span class="hljs-punctuation">=</span> url;
-a.<span class="hljs-attr">download</span> <span class="hljs-punctuation">=</span> <span class="hljs-string">&quot;output.wav&quot;</span>;
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">const</span> blob <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">Blob</span>([wav], { <span class="hljs-keyword">type</span><span class="hljs-operator">:</span> <span class="hljs-string">&quot;audio/wav&quot;</span> });
+<span class="hljs-keyword">const</span> url <span class="hljs-operator">=</span> URL.<span class="hljs-title function_">createObjectURL</span>(blob);
+<span class="hljs-keyword">const</span> a <span class="hljs-operator">=</span> document.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;a&quot;</span>);
+a.<span class="hljs-attr">href</span> <span class="hljs-operator">=</span> url;
+a.<span class="hljs-attr">download</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;output.wav&quot;</span>;
 a.<span class="hljs-title function_">click</span>();
 URL.<span class="hljs-title function_">revokeObjectURL</span>(url);
 </code></pre>
 </li>
 <li class="step-item" id="step-7"><a href="#step-7" class="step-permalink" aria-label="Permalink to this step"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><p><strong>Stream to Audio Output (Browser)</strong></p>
 <p>For real-time playback without waiting for the full render:</p>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { streamScore, StreamPlayer } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { streamScore, StreamPlayer } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-keyword">const</span> player <span class="hljs-punctuation">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">StreamPlayer</span>();
-<span class="hljs-keyword">await</span> player.<span class="hljs-title function_">play</span>(<span class="hljs-title function_">streamScore</span>(score, femaleVoice, <span class="hljs-string">&quot;jp&quot;</span>));
+<span class="hljs-keyword">const</span> player <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">StreamPlayer</span>();
+<span class="hljs-keyword">await</span> player.<span class="hljs-title function_">play</span>(<span class="hljs-title function_">streamScore</span>(score, chitoseChika, <span class="hljs-string">&quot;jp&quot;</span>));
 </code></pre>
 <p>The renderer produces audio chunks while the player schedules them against the Web Audio clock. Pre-buffer threshold defaults to 1 second.</p>
 </li>
 <li class="step-item" id="step-8"><a href="#step-8" class="step-permalink" aria-label="Permalink to this step"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><p><strong>Try a Different Voice</strong></p>
-<p>UTAU.js ships with male and female presets, plus a builder for custom voices:</p>
-<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { maleVoice, buildVoice, scaleVoice } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;utaujs&quot;</span>;
+<p>Ichikara ships with three named voices, plus a builder for custom ones:</p>
+<pre class="hljs"><code class="language-typescript"><span class="hljs-keyword">import</span> { chitoseChika, chitoseSho, buildVoice, scaleVoice } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@audiflo/ichikara&quot;</span>;
 
-<span class="hljs-comment">// Use the built-in male voice</span>
-<span class="hljs-keyword">const</span> chunks1 <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, maleVoice, <span class="hljs-string">&quot;jp&quot;</span>);
+<span class="hljs-comment">// Use a built-in voice</span>
+<span class="hljs-keyword">const</span> chunks1 <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, chitoseSho, <span class="hljs-string">&quot;jp&quot;</span>);
 
 <span class="hljs-comment">// Build a custom voice</span>
-<span class="hljs-keyword">const</span> custom <span class="hljs-punctuation">=</span> <span class="hljs-title function_">buildVoice</span>({ name<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Voice&quot;</span>, sampleRate<span class="hljs-punctuation">:</span> <span class="hljs-number">48000</span> });
+<span class="hljs-keyword">const</span> custom <span class="hljs-operator">=</span> <span class="hljs-title function_">buildVoice</span>({ name<span class="hljs-operator">:</span> <span class="hljs-string">&quot;My Voice&quot;</span>, sampleRate<span class="hljs-operator">:</span> <span class="hljs-number">48000</span> });
 
 <span class="hljs-comment">// Scale along perceptual dimensions</span>
-<span class="hljs-keyword">const</span> breathy <span class="hljs-punctuation">=</span> <span class="hljs-title function_">scaleVoice</span>(femaleVoice, {
-  breathiness<span class="hljs-punctuation">:</span> <span class="hljs-number">0.6</span>,
-  tension<span class="hljs-punctuation">:</span> <span class="hljs-number">0.3</span>,
-  vibratoAmount<span class="hljs-punctuation">:</span> <span class="hljs-number">0.5</span>,
+<span class="hljs-keyword">const</span> breathy <span class="hljs-operator">=</span> <span class="hljs-title function_">scaleVoice</span>(chitoseChika, {
+  breathiness<span class="hljs-operator">:</span> <span class="hljs-number">0.6</span>,
+  tension<span class="hljs-operator">:</span> <span class="hljs-number">0.3</span>,
+  vibratoAmount<span class="hljs-operator">:</span> <span class="hljs-number">0.5</span>,
 });
 
-<span class="hljs-keyword">const</span> chunks2 <span class="hljs-punctuation">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, breathy, <span class="hljs-string">&quot;en&quot;</span>);
+<span class="hljs-keyword">const</span> chunks2 <span class="hljs-operator">=</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderScore</span>(score, breathy, <span class="hljs-string">&quot;jp&quot;</span>);
 </code></pre>
 </li>
 </ol>
@@ -1132,23 +1203,28 @@ Voice Config</a></div>
                 
               </div>
               
+              
               <div class="toc-sidebar">
                 
+                
+                  
 
 
+                
+                
               </div>
               
             </div>
             <div class="page-footer-actions">
               
               
-                <span class="git-last-updated" data-timestamp="1786770748000">
+                <span class="git-last-updated" data-timestamp="1794317025000">
                   <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <span class="git-label">Last updated:</span>
-                  <span class="git-time" data-timestamp="1786770748000"></span>
+                  <span class="git-time" data-timestamp="1794317025000"></span>
                   
                   <div class="git-commit-tooltip" role="tooltip">
                     <div class="git-tooltip-title">Recent commits</div>
@@ -1161,10 +1237,10 @@ Voice Config</a></div>
                             
                           </div>
                           <div class="git-commit-details">
-                            <div class="git-commit-message" title="npm audit fix x2">npm audit fix x2</div>
+                            <div class="git-commit-message" title="Node 24">Node 24</div>
                             <div class="git-commit-meta">
                               <span class="git-commit-author">NellowTCS</span>
-                              <span class="git-commit-date" data-timestamp="1786770748000"></span>
+                              <span class="git-commit-date" data-timestamp="1794317025000"></span>
                             </div>
                           </div>
                         </li>
@@ -1176,7 +1252,7 @@ Voice Config</a></div>
               
               <span class="git-spacer"></span>
               
-                <a href="https://github.com/NellowTCS/UTAU.js/edit/main/Docs/docs/getting-started/quickstart.md" target="_blank" rel="noopener noreferrer" class="edit-link">
+                <a href="https://github.com/Audiflo/Ichikara/edit/main/Docs/docs/getting-started/quickstart.md" target="_blank" rel="noopener noreferrer" class="edit-link">
                   
 <svg class="lucide-icon icon-pencil " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-pencil"
@@ -1206,10 +1282,10 @@ Voice Config</a></div>
   <div class="footer-complete-top">
       <div class="footer-brand">
           
-            <span class="footer-title">UTAU.js</span>
+            <span class="footer-title">Ichikara</span>
           
           
-            <p class="footer-desc">A speech-synthesis library for singing voice synthesis in the browser.</p>
+            <p class="footer-desc">A OneVoice song editor and TypeScript singing-synthesis library.</p>
           
         </div>
         
@@ -1219,11 +1295,11 @@ Voice Config</a></div>
                 <span class="footer-column-title">Resources</span>
                 <ul>
                   
-                    <li><a href="getting-started/quickstart/" >Getting Started</a></li>
+                    <li><a href="../../guide/editor/" >Song Editor</a></li>
                   
-                    <li><a href="api/" >API Reference</a></li>
+                    <li><a href="../../api/" >API Reference</a></li>
                   
-                    <li><a href="api/voice-config/" >Voice Config</a></li>
+                    <li><a href="../../api/voice-config/" >Voice Config</a></li>
                   
                 </ul>
               </div>
@@ -1232,11 +1308,11 @@ Voice Config</a></div>
                 <span class="footer-column-title">Community</span>
                 <ul>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js" >GitHub</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara" >GitHub</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/issues" >Issues</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/issues" >Issues</a></li>
                   
-                    <li><a href="https://github.com/NellowTCS/UTAU.js/discussions" >Discussions</a></li>
+                    <li><a href="https://github.com/Audiflo/Ichikara/discussions" >Discussions</a></li>
                   
                 </ul>
               </div>
@@ -1245,7 +1321,7 @@ Voice Config</a></div>
         
       </div>
       <div class="footer-complete-bottom">
-        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/NellowTCS/UTAU.js">View on GitHub</a>.</div>
+        <div class="user-footer">Built with <a href="https://docmd.io">docmd</a>. <a href="https://github.com/Audiflo/Ichikara">View on GitHub</a>.</div>
         
           <div class="branding-footer">
             Built with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
@@ -1257,16 +1333,21 @@ Voice Config</a></div>
         </div>
       </div>
       
-      <script src="../../assets/js/docmd-main.js?v=mstx7dcj"></script>
       
-      <script src="../../assets/js/docmd-git.js?v=mstx7dcj"></script>
-      <script src="../../assets/js/docmd-image-lightbox.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/vendor/minisearch.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/docmd-search.js?v=mstx7dcj" ></script>
-<script src="../../assets/js/docmd-git.js?v=mstx7dcj" type="module"></script>
+      <script>window.__DOCMD_VARIABLES__ = {"docmd":{"version":"0.9.9","buildTime":"2026-11-10T13:24:45.614Z","buildDate":"2026-11-10","buildYear":"2026","gitCommit":"0a48415","gitBranch":"main"},"DOCMD_VERSION":"0.9.9","BUILD_YEAR":"2026","BUILD_DATE":"2026-11-10","GIT_COMMIT":"0a48415","GIT_BRANCH":"main","git":{"commit":"0a48415","branch":"main"},"site":{"title":"Ichikara","base":"/Ichikara/docs/"},"page":{"title":"Quick Start","slug":"/Ichikara/docs/getting-started/quickstart/","path":"getting-started/quickstart/index.html"},"frontmatter":{"title":"Quick Start","description":"Render a phrase to WAV and play it in the browser.","_git":{"lastUpdated":"2026-11-10T13:23:45.000Z","lastUpdatedTimestamp":1794317025000,"commits":[{"hash":"0a48415cffcf70f254668ccf0cfbb41742d56091","shortHash":"0a48415","author":"NellowTCS","email":"neeljaiswal23@gmail.com","date":"2026-11-10T13:23:45.000Z","timestamp":1794317025000,"message":"Node 24","avatarUrl":"https://www.gravatar.com/avatar/baecf29c7bedbb00a8d5bd5984799c55?d=mp&s=64"}]}}};</script>
+      
+      <script src="../../assets/js/docmd-runtime.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-main.js?v=mwaq2c0s"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mwaq2c0s"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/vendor/minisearch.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-search.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-git.js?v=mwaq2c0s" ></script>
+<script src="../../assets/js/docmd-ai.js?v=mwaq2c0s" ></script>
 
   <!-- Search Modal (Injected by @docmd/plugin-search) -->
-  <div id="docmd-search-modal" data-semantic="true" class="docmd-search-modal" style="display: none;" data-show-confidence="true" data-show-filters="true"
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-semantic="true" data-show-confidence="true" data-show-filters="true"
        data-search-placeholder="Search documentation..."
        data-search-no-results="No results found."
        data-search-error="Failed to load search index."
@@ -1338,7 +1419,8 @@ Voice Config</a></div>
       })();
     </script>
 
-<script>window.__git_config={"repo":"https://github.com/NellowTCS/UTAU.js/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<script>window.__git_config={"repo":"https://github.com/Audiflo/Ichikara/edit/main/","branch":"main","editLink":true,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+<div id="docmd-ai-root"></div><script>window.__docmd_ai_config={"endpoint":"","cloud":{},"captcha":true,"position":"bottom-center","siteTitle":"Ichikara","siteBase":"/Ichikara/docs/","siteUrl":"https://audiflo.github.io/Ichikara/docs","versions":null,"i18n":null,"navigation":[{"title":"Home","path":"/","icon":"home"},{"title":"Getting Started","icon":"rocket","collapsible":false,"children":[{"title":"Quick Start","path":"/getting-started/quickstart/","icon":"play"},{"title":"Installation","path":"/getting-started/installation/","icon":"download"},{"title":"Core Concepts","path":"/getting-started/concepts/","icon":"book"}]},{"title":"Guide","icon":"book-open","collapsible":false,"children":[{"title":"Song Editor","path":"/guide/editor/","icon":"music"},{"title":"Architecture","path":"/guide/architecture/","icon":"box"},{"title":"Renderer","path":"/guide/renderer/","icon":"cpu"},{"title":"Languages","path":"/guide/languages/","icon":"globe"}]},{"title":"API Reference","icon":"code","path":"/api/","collapsible":false,"children":[{"title":"Native Projects","path":"/api/projects/","icon":"folder"},{"title":"VoiceConfig","path":"/api/voice-config/","icon":"sliders"},{"title":"DSP Primitives","path":"/api/dsp/","icon":"audio-waveform"},{"title":"Import / Export","path":"/api/import-export/","icon":"file-up"}]},{"title":"GitHub","path":"https://github.com/Audiflo/Ichikara","icon":"github","external":true}],"searchCapabilities":{"keyword":true,"semantic":true},"isWorkspace":false,"workspaceProjects":[],"messageActions":false,"fetchExternalUrls":false,"contextLimit":5};</script>
       
       
       

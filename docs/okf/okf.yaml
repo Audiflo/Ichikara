@@ -1,23 +1,24 @@
-okf_version: 0.8.17
+okf_version: 0.9.9
 bundle:
-  name: utau-js
-  title: UTAU.js
+  name: ichikara
+  title: Ichikara
   description: ""
-  url: "https://nellowtcs.me/UTAU.js/docs"
+  url: "https://audiflo.github.io/Ichikara/docs"
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-08-15T05:13:33.416Z"
+  generated_at: "2026-11-10T13:24:54.244Z"
   default_type: concept
 stats:
-  concepts: 11
+  concepts: 14
   by_type:
-    api: 4
-    concept: 7
+    api: 5
+    concept: 9
   locales: 
   versions: 
 concepts:
   - id: api-dsp
     type: api
     title: "DSP Primitives"
+    description: "Low-level digital signal processing components"
     path: /api/dsp/
     file: concepts/api-dsp.md
     locale: ""
@@ -26,6 +27,7 @@ concepts:
   - id: api-import-export
     type: api
     title: "Import / Export"
+    description: "Native projects and score conversion through UtaFormatix."
     path: /api/import-export/
     file: concepts/api-import-export.md
     locale: ""
@@ -34,22 +36,43 @@ concepts:
   - id: api
     type: api
     title: "API Reference"
+    description: "Public types and functions for synthesis, projects, playback, and score conversion."
     path: /api/
     file: concepts/api.md
+    locale: ""
+    version: ""
+    tags: 
+  - id: api-projects
+    type: api
+    title: "Native projects"
+    description: "Create, validate, save, and render multi-track Ichikara songs."
+    path: /api/projects/
+    file: concepts/api-projects.md
     locale: ""
     version: ""
     tags: 
   - id: api-voice-config
     type: api
     title: "VoiceConfig Reference"
+    description: "Complete reference for all VoiceConfig parameters and their perceptual effects"
     path: /api/voice-config/
     file: concepts/api-voice-config.md
+    locale: ""
+    version: ""
+    tags: 
+  - id: development
+    type: concept
+    title: "Development checks"
+    description: ""
+    path: /development/
+    file: concepts/development.md
     locale: ""
     version: ""
     tags: 
   - id: getting-started-concepts
     type: concept
     title: "Core Concepts"
+    description: "Understand how Ichikara produces singing voice audio"
     path: /getting-started/concepts/
     file: concepts/getting-started-concepts.md
     locale: ""
@@ -58,6 +81,7 @@ concepts:
   - id: getting-started-installation
     type: concept
     title: Installation
+    description: "Install Ichikara via npm or use it directly in the browser"
     path: /getting-started/installation/
     file: concepts/getting-started-installation.md
     locale: ""
@@ -66,6 +90,7 @@ concepts:
   - id: getting-started-quickstart
     type: concept
     title: "Quick Start"
+    description: "Render a phrase to WAV and play it in the browser."
     path: /getting-started/quickstart/
     file: concepts/getting-started-quickstart.md
     locale: ""
@@ -74,14 +99,25 @@ concepts:
   - id: guide-architecture
     type: concept
     title: Architecture
+    description: "How the Ichikara library is organised"
     path: /guide/architecture/
     file: concepts/guide-architecture.md
+    locale: ""
+    version: ""
+    tags: 
+  - id: guide-editor
+    type: concept
+    title: "Song editor"
+    description: "Arrange vocal tracks, edit notes and expression, and save or render a song."
+    path: /guide/editor/
+    file: concepts/guide-editor.md
     locale: ""
     version: ""
     tags: 
   - id: guide-languages
     type: concept
     title: Languages
+    description: "Built-in language support and how to add custom languages"
     path: /guide/languages/
     file: concepts/guide-languages.md
     locale: ""
@@ -90,6 +126,7 @@ concepts:
   - id: guide-renderer
     type: concept
     title: Renderer
+    description: "How the synthesis engine produces audio from a score"
     path: /guide/renderer/
     file: concepts/guide-renderer.md
     locale: ""
@@ -97,7 +134,8 @@ concepts:
     tags: 
   - id: root
     type: concept
-    title: UTAU.js
+    title: Ichikara
+    description: "A OneVoice song editor and TypeScript singing-synthesis library."
     path: /
     file: concepts/root.md
     locale: ""

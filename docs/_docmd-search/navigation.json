@@ -17,10 +17,18 @@
           "path": "api/index.md"
         },
         {
+          "title": "Projects",
+          "path": "api/projects.md"
+        },
+        {
           "title": "Voice Config",
           "path": "api/voice-config.md"
         }
       ]
+    },
+    {
+      "title": "Development checks",
+      "path": "development.md"
     },
     {
       "title": "Getting Started",
@@ -47,6 +55,10 @@
         {
           "title": "Architecture",
           "path": "guide/architecture.md"
+        },
+        {
+          "title": "Editor",
+          "path": "guide/editor.md"
         },
         {
           "title": "Languages",

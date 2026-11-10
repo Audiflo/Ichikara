@@ -1,71 +1,103 @@
 {
-  "title": "UTAU.js",
+  "title": "Ichikara",
   "description": "",
   "pages": [
     {
       "title": "DSP Primitives",
-      "url": "https://nellowtcs.me/UTAU.js/docs/api/dsp/",
+      "url": "https://audiflo.github.io/Ichikara/docs/api/dsp/",
       "description": "Low-level digital signal processing components",
+      "section": "API",
       "priority": "medium"
     },
     {
       "title": "Import / Export",
-      "url": "https://nellowtcs.me/UTAU.js/docs/api/import-export/",
-      "description": "Score file import and export via utaformatix-3",
+      "url": "https://audiflo.github.io/Ichikara/docs/api/import-export/",
+      "description": "Native projects and score conversion through UtaFormatix.",
+      "section": "API",
       "priority": "medium"
     },
     {
       "title": "API Reference",
-      "url": "https://nellowtcs.me/UTAU.js/docs/api/",
-      "description": "Complete API reference for UTAU.js",
+      "url": "https://audiflo.github.io/Ichikara/docs/api/",
+      "description": "Public types and functions for synthesis, projects, playback, and score conversion.",
+      "section": "API",
+      "priority": "medium"
+    },
+    {
+      "title": "Native projects",
+      "url": "https://audiflo.github.io/Ichikara/docs/api/projects/",
+      "description": "Create, validate, save, and render multi-track Ichikara songs.",
+      "section": "API",
       "priority": "medium"
     },
     {
       "title": "VoiceConfig Reference",
-      "url": "https://nellowtcs.me/UTAU.js/docs/api/voice-config/",
+      "url": "https://audiflo.github.io/Ichikara/docs/api/voice-config/",
       "description": "Complete reference for all VoiceConfig parameters and their perceptual effects",
+      "section": "API",
+      "priority": "medium"
+    },
+    {
+      "title": "Development checks",
+      "url": "https://audiflo.github.io/Ichikara/docs/development/",
+      "description": "",
+      "section": "Development",
       "priority": "medium"
     },
     {
       "title": "Core Concepts",
-      "url": "https://nellowtcs.me/UTAU.js/docs/getting-started/concepts/",
-      "description": "Understand how UTAU.js produces singing voice audio",
+      "url": "https://audiflo.github.io/Ichikara/docs/getting-started/concepts/",
+      "description": "Understand how Ichikara produces singing voice audio",
+      "section": "Getting Started",
       "priority": "medium"
     },
     {
       "title": "Installation",
-      "url": "https://nellowtcs.me/UTAU.js/docs/getting-started/installation/",
-      "description": "Install UTAU.js via npm or use it directly in the browser",
+      "url": "https://audiflo.github.io/Ichikara/docs/getting-started/installation/",
+      "description": "Install Ichikara via npm or use it directly in the browser",
+      "section": "Getting Started",
       "priority": "medium"
     },
     {
       "title": "Quick Start",
-      "url": "https://nellowtcs.me/UTAU.js/docs/getting-started/quickstart/",
-      "description": "Render your first singing voice synthesis in 5 minutes",
+      "url": "https://audiflo.github.io/Ichikara/docs/getting-started/quickstart/",
+      "description": "Render a phrase to WAV and play it in the browser.",
+      "section": "Getting Started",
       "priority": "medium"
     },
     {
       "title": "Architecture",
-      "url": "https://nellowtcs.me/UTAU.js/docs/guide/architecture/",
-      "description": "How the UTAU.js library is organised",
+      "url": "https://audiflo.github.io/Ichikara/docs/guide/architecture/",
+      "description": "How the Ichikara library is organised",
+      "section": "Guide",
+      "priority": "medium"
+    },
+    {
+      "title": "Song editor",
+      "url": "https://audiflo.github.io/Ichikara/docs/guide/editor/",
+      "description": "Arrange vocal tracks, edit notes and expression, and save or render a song.",
+      "section": "Guide",
       "priority": "medium"
     },
     {
       "title": "Languages",
-      "url": "https://nellowtcs.me/UTAU.js/docs/guide/languages/",
+      "url": "https://audiflo.github.io/Ichikara/docs/guide/languages/",
       "description": "Built-in language support and how to add custom languages",
+      "section": "Guide",
       "priority": "medium"
     },
     {
       "title": "Renderer",
-      "url": "https://nellowtcs.me/UTAU.js/docs/guide/renderer/",
+      "url": "https://audiflo.github.io/Ichikara/docs/guide/renderer/",
       "description": "How the synthesis engine produces audio from a score",
+      "section": "Guide",
       "priority": "medium"
     },
     {
-      "title": "UTAU.js",
-      "url": "https://nellowtcs.me/UTAU.js/docs/",
-      "description": "A speech-synthesis library for singing voice synthesis in the browser",
+      "title": "Ichikara",
+      "url": "https://audiflo.github.io/Ichikara/docs/",
+      "description": "A OneVoice song editor and TypeScript singing-synthesis library.",
+      "section": null,
       "priority": "high"
     }
   ]
