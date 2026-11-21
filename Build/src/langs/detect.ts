@@ -30,6 +30,7 @@ const ROMAJI_MARKERS = new Set([
 const PINYIN_SYLLABLE_SOURCE = `
 a ai an ang ao
 ba bai ban bang bao bei ben beng bi bian biao bie bin bing bo bu
+den fiao kei m me ng nou o
 ca cai can cang cao ce cen ceng cha chai chan chang chao che chen cheng chi chong chou
 chu chua chuai chuan chuang chui chun chuo ci cong cou cu cuan cui cun cuo
 da dai dan dang dao de dei deng di dia dian diao die ding diu dong dou
@@ -55,10 +56,11 @@ ta tai tan tang tao te teng ti tian tiao tie ting tong tou tu tuan tui tun tuo
 wa wai wan wang wei wen weng wo wu
 xi xia xian xiang xiao xie xin xing xiong xiu xu xuan xue xun
 ya yan yang yao ye yi yin ying yo yong you yu yuan yue yun
-za ze zei zen zeng zha zhai zhan zhang zhao zhe zhei zhen zheng zhi zhong zhou
+za ze zei zen zeng zai zan zang zao zha zhai zhan zhang zhao zhe zhei zhen zheng zhi zhong zhou
 zhu zhua zhuai zhuan zhuang zhui zhun zhuo zi zong zou zu zuan zui zun zuo
 `;
-const PINYIN_SYLLABLES = new Set(PINYIN_SYLLABLE_SOURCE.trim().split(/\s+/));
+/** All tone-less Mandarin pinyin syllables recognized by the language modules. */
+export const PINYIN_SYLLABLES = new Set(PINYIN_SYLLABLE_SOURCE.trim().split(/\s+/));
 
 const MAX_SYLLABLE_LENGTH = 6;
 

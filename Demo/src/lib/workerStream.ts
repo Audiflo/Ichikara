@@ -1,10 +1,11 @@
-import type { AudioChunk } from "@audiflo/ichikara";
-import type { RenderJob, RenderRequest, RenderResponse } from "./render-protocol";
+import type { AudioChunk, VoiceConfig } from "@audiflo/ichikara";
+import type { RenderJob, RenderRequest, RenderResponse, VoiceParameters } from "./render-protocol";
 
 /** A cancellable audio producer; cancellation terminates the worker and wakes pending reads. */
 export interface WorkerStream {
   stream: AsyncGenerator<AudioChunk>;
   cancel: () => void;
+  updateVoice: (trackId: string, baseVoice: VoiceConfig, parameters: VoiceParameters) => void;
 }
 /** Start a dedicated render job; throw when the browser cannot construct the worker. */
 export function createWorkerStream(payload: RenderJob): WorkerStream {
@@ -47,6 +48,11 @@ export function createWorkerStream(payload: RenderJob): WorkerStream {
           startSample: message.startSample,
           sampleRate: message.sampleRate,
           channels: message.data.length,
+          ...(message.trackId !== undefined ? { trackId: message.trackId } : {}),
+          ...(message.trackVolume !== undefined ? { trackVolume: message.trackVolume } : {}),
+          ...(message.trackPan !== undefined ? { trackPan: message.trackPan } : {}),
+          ...(message.trackMute !== undefined ? { trackMute: message.trackMute } : {}),
+          ...(message.trackSolo !== undefined ? { trackSolo: message.trackSolo } : {}),
         });
         wake();
         break;
@@ -61,6 +67,9 @@ export function createWorkerStream(payload: RenderJob): WorkerStream {
   worker.onerror = (event) => finish({ type: "failed", error: new Error(event.message || "Render worker failed") });
   worker.onmessageerror = () => finish({ type: "failed", error: new Error("Could not deserialize render worker response") });
 
+  const updateVoice = (trackId: string, baseVoice: VoiceConfig, parameters: VoiceParameters): void => {
+    send({ type: "update", trackId, baseVoice, parameters });
+  };
   const cancel = (): void => finish({ type: "cancelled" });
   try {
     send({ type: "start", ...payload });
@@ -91,5 +100,5 @@ export function createWorkerStream(payload: RenderJob): WorkerStream {
       cancel();
     }
   })();
-  return { stream, cancel };
+  return { stream, cancel, updateVoice };
 }

@@ -39,6 +39,7 @@ export interface RenderOptions {
   state?: RenderState | undefined;
   headFadeSamples?: number | undefined;
   tailFadeSamples?: number | undefined;
+  continuation?: boolean | undefined;
 }
 
 /** Rendered audio plus the state needed to continue phase and filter history. */
@@ -383,7 +384,7 @@ export function renderPhonemes(
       pi > 0 ? elementAt(phonemes, pi - 1) : undefined,
       pi < phonemes.length - 1 ? elementAt(phonemes, pi + 1) : undefined,
     );
-    if (pi === 0 && headFadeSamples > 0) envelope.attack = 0;
+    if (pi === 0 && (headFadeSamples > 0 || options.continuation)) envelope.attack = 0;
     if (pi === phonemes.length - 1 && tailFadeSamples > 0) envelope.decay = 0;
     return envelope;
   });
@@ -506,7 +507,13 @@ export function renderPhonemes(
     const cascaded = cascade.processSample(glottalSignal);
     const voicedSignal = cp.type === "silence" ? 0 : cascaded;
     const startFade =
-      headFadeSamples > 0 ? smoothstep01(i / headFadeSamples) : i < boundaryFadeLen ? Math.min(1, i / Math.max(1, boundaryFadeLen)) : 1;
+      headFadeSamples > 0
+        ? smoothstep01(i / headFadeSamples)
+        : options.continuation
+          ? 1
+          : i < boundaryFadeLen
+            ? Math.min(1, i / Math.max(1, boundaryFadeLen))
+            : 1;
     const endFade = tailFadeSamples > 0 ? 1 - smoothstep01((i - tailFadeStart) / tailFadeSamples) : 1;
     const enveloped = (voicedSignal + noiseSignal + breathSignal) * env * startFade * endFade;
     mono[i] = enveloped;

@@ -105,12 +105,20 @@ const fromIpa: Record<string, string | readonly string[]> = {
   "t ʃ": "CH",
 };
 
+const STRESS_DIGITS = new Set(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
+
+function stripStressDigits(token: string): string {
+  let end = token.length;
+  while (end > 0 && STRESS_DIGITS.has(token.charAt(end - 1))) end--;
+  return token.slice(0, end);
+}
+
 /** ARPAbet with optional CMU stress digits, normalized to uppercase symbols. */
 export const arpabet: NotationDefinition = {
   id: ARPABET,
   toIpa,
   fromIpa,
   tokenize(input) {
-    return tokenizeWhitespace(input).map((token) => token.replace(/\d+$/, "").toLowerCase());
+    return tokenizeWhitespace(input).map((token) => stripStressDigits(token).toLowerCase());
   },
 };

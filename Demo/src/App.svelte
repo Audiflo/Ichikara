@@ -17,11 +17,13 @@
     exportProjectToBytes,
     StreamPlayer,
     TempoMap,
+    scaleVoice,
     getLanguage,
     listLanguages,
     type Project,
     type ProjectNote,
     type VocalTrack,
+    type VoiceConfig,
     type AudioChunk,
   } from "@audiflo/ichikara";
   import Arrangement from "./components/Arrangement.svelte";
@@ -40,7 +42,7 @@
   import { defaultPreferences, layoutBounds, readPreferences, writePreferences } from "./lib/editor/preferences";
   import { constrainPane, workspaceSize } from "./lib/editor/layout";
   import { createWorkerStream } from "./lib/workerStream";
-  import { createResilientStream, type CancellableAudio } from "./lib/render/resilient-stream";
+  import { createResilientStream } from "./lib/render/resilient-stream";
 
   const id = (): string => crypto.randomUUID();
   const initial = projectFromScore(createDemoScore("jp"), "First phrase", "jp", id);
@@ -102,7 +104,7 @@
   let bufferAhead = $state(0);
   let playheadTick = $state<number | null>(null);
   let player: StreamPlayer | null = $state(null);
-  let currentStream: CancellableAudio | null = null;
+  let currentStream: ReturnType<typeof createResilientStream> | null = null;
   let frame = 0;
   let playbackTiming: TempoMap | null = null;
   const timing = $derived(new TempoMap(project.tempos, project.resolution));
@@ -224,6 +226,18 @@
     playheadTick = null;
   }
 
+  function liveVoice(track: VocalTrack, sampleRate: number): VoiceConfig {
+    const current = project.tracks.find((candidate) => candidate.id === track.id) ?? track;
+    return { ...scaleVoice(current.voice, current.parameters), sampleRate, channels: 1 as const };
+  }
+
+  function pushVoiceUpdate(trackId: string): void {
+    const target = project.tracks.find((track) => track.id === trackId);
+    const stream = currentStream;
+    if (!target || !stream) return;
+    stream.updateVoice(trackId, $state.snapshot(target.voice), $state.snapshot(target.parameters));
+  }
+
   async function handlePlay(): Promise<void> {
     handleStop();
     errorMessage = "";
@@ -235,8 +249,8 @@
     const { sampleRate, preBufferSeconds } = preferences;
     playbackTiming = new TempoMap(snapshot.tempos, snapshot.resolution);
     const source = createResilientStream(
-      () => createWorkerStream({ project: snapshot, sampleRate }),
-      () => streamProject(snapshot, sampleRate),
+      () => createWorkerStream({ project: snapshot, sampleRate, applyMix: false }),
+      () => streamProject(snapshot, sampleRate, { applyMix: false, voiceForTrack: (track) => liveVoice(track, sampleRate) }),
       () => {
         if (player === p) renderNotice = "Rendering locally. Worker unavailable.";
       },
@@ -266,6 +280,18 @@
 
   $effect(() => {
     player?.setVolume(volume);
+  });
+
+  $effect(() => {
+    const active = player;
+    if (!active || playerState !== "playing") return;
+    for (const track of project.tracks) {
+      active.setTrackVolume(track.id, Math.max(0, Math.min(2, track.gain)));
+      active.setTrackMute(track.id, track.mute);
+      active.setTrackPan(track.id, Math.max(-1, Math.min(1, track.pan)));
+    }
+    const soloId = project.tracks.find((track) => track.solo)?.id ?? null;
+    active.setSolo(soloId);
   });
   onDestroy(handleStop);
 
@@ -568,7 +594,13 @@
                 }}
               />{/if}
             <div class="voice-settings" role="group" aria-label="Voice settings">
-              <VoicePanel bind:params={track.parameters} bind:baseVoice={track.voice} bind:advancedOpen onCommit={saveSnapshot} />
+              <VoicePanel
+                bind:params={track.parameters}
+                bind:baseVoice={track.voice}
+                bind:advancedOpen
+                onCommit={saveSnapshot}
+                onLiveChange={() => pushVoiceUpdate(track.id)}
+              />
             </div>
           {:else}<p class="inspector-empty">Select a track to edit its voice and mix.</p>{/if}
         </aside>

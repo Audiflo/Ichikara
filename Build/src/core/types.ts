@@ -90,6 +90,16 @@ export interface AudioChunk {
   sampleRate: number;
   startSample: number;
   channels: number;
+  /** Source track for raw, unmixed playback streams. */
+  trackId?: string;
+  /** Initial per-track gain in [0, 2], applied by a live mixer. */
+  trackVolume?: number;
+  /** Initial per-track pan in [-1, 1], applied by a live mixer. */
+  trackPan?: number;
+  /** Initial per-track mute state, applied by a live mixer. */
+  trackMute?: boolean;
+  /** Initial per-track solo state, applied by a live mixer. */
+  trackSolo?: boolean;
 }
 
 export interface ReclistEntry {

@@ -20,13 +20,23 @@ export interface PlayOptions {
   preBufferThreshold?: number;
 }
 
+interface TrackMixer {
+  id: string;
+  gain: GainNode;
+  panner: StereoPannerNode | null;
+  volume: number;
+  muted: boolean;
+}
+
 interface Playback {
   controller: AbortController;
   ctx: AudioContext | null;
   gain: GainNode | null;
   closing: Promise<void> | null;
-  batch: AudioChunk[];
+  batch: Map<AudioNode, AudioChunk[]>;
   batchDuration: number;
+  mixers: Map<string, TrackMixer>;
+  soloTrackId: string | null;
   startTime: number;
   endTime: number;
   renderedSamples: number;
@@ -40,9 +50,14 @@ const UNDERRUN_SECONDS = 0.15;
 const END_CHECK_MS = 50;
 const STOP_FADE_SECONDS = 0.05;
 const STOP_CLOSE_MS = 60;
+const MAX_TRACK_GAIN = 2;
 
 function toError(error: unknown): Error {
   return error instanceof Error ? error : new Error(String(error));
+}
+
+function chunkLength(chunk: AudioChunk): number {
+  return elementAt(chunk.data, 0).length;
 }
 
 async function untilAborted<T>(promise: Promise<T>, signal: AbortSignal): Promise<T | undefined> {
@@ -87,6 +102,42 @@ export class StreamPlayer {
   setVolume(volume: number): void {
     finiteInRange(volume, "volume", 0, 1);
     if (this.playback?.gain) this.playback.gain.gain.value = volume;
+  }
+
+  /** Set one track's gain without re-rendering its audio. */
+  setTrackVolume(trackId: string, volume: number): void {
+    finiteInRange(volume, "track volume", 0, MAX_TRACK_GAIN);
+    const playback = this.playback;
+    const mixer = playback?.mixers.get(trackId);
+    if (!playback || !mixer) return;
+    mixer.volume = volume;
+    this.applyMixerGain(playback, mixer);
+  }
+
+  /** Mute or unmute one track while playback continues. */
+  setTrackMute(trackId: string, muted: boolean): void {
+    const playback = this.playback;
+    const mixer = playback?.mixers.get(trackId);
+    if (!playback || !mixer) return;
+    mixer.muted = muted;
+    this.applyMixerGain(playback, mixer);
+  }
+
+  /** Solo one track, or clear solo with null. */
+  setSolo(trackId: string | null): void {
+    const playback = this.playback;
+    if (!playback) return;
+    playback.soloTrackId = trackId;
+    for (const mixer of playback.mixers.values()) this.applyMixerGain(playback, mixer);
+  }
+
+  /** Set one track's stereo position in [-1, 1]. */
+  setTrackPan(trackId: string, pan: number): void {
+    finiteInRange(pan, "track pan", -1, 1);
+    const playback = this.playback;
+    const mixer = playback?.mixers.get(trackId);
+    if (!playback || !mixer) return;
+    if (mixer.panner) mixer.panner.pan.value = pan;
   }
 
   /** Read the current transport state. */
@@ -145,29 +196,77 @@ export class StreamPlayer {
     return playback.closing;
   }
 
+  private ensureTrackMixer(playback: Playback, chunk: AudioChunk): TrackMixer | null {
+    const { ctx, gain: master } = playback;
+    const id = chunk.trackId;
+    if (!ctx || !master || id === undefined) return null;
+    const existing = playback.mixers.get(id);
+    if (existing) return existing;
+    const volume = chunk.trackVolume ?? 1;
+    const pan = chunk.trackPan ?? 0;
+    const muted = chunk.trackMute ?? false;
+    const solo = chunk.trackSolo ?? false;
+    finiteInRange(volume, `track ${id} volume`, 0, MAX_TRACK_GAIN);
+    finiteInRange(pan, `track ${id} pan`, -1, 1);
+    const gain = ctx.createGain();
+    const panner = typeof ctx.createStereoPanner === "function" ? ctx.createStereoPanner() : null;
+    if (panner) {
+      gain.connect(panner);
+      panner.connect(master);
+    } else {
+      gain.connect(master);
+    }
+    if (solo && playback.soloTrackId === null) playback.soloTrackId = id;
+    const mixer: TrackMixer = { id, gain, panner, volume, muted };
+    playback.mixers.set(id, mixer);
+    this.applyMixerGain(playback, mixer);
+    if (panner) panner.pan.value = pan;
+    for (const other of playback.mixers.values()) this.applyMixerGain(playback, other);
+    return mixer;
+  }
+
+  private applyMixerGain(playback: Playback, mixer: TrackMixer): void {
+    const silenced = mixer.muted || (playback.soloTrackId !== null && playback.soloTrackId !== mixer.id);
+    mixer.gain.gain.value = silenced ? 0 : mixer.volume;
+  }
+
+  private targetFor(playback: Playback, chunk: AudioChunk): AudioNode | null {
+    const master = playback.gain;
+    if (!master) return null;
+    const mixer = this.ensureTrackMixer(playback, chunk);
+    return mixer ? mixer.panner ?? mixer.gain : master;
+  }
+
   private flush(playback: Playback): void {
-    const { ctx, gain, batch } = playback;
-    if (!ctx || !gain || !batch.length || playback.controller.signal.aborted) return;
-    const start = Math.min(...batch.map((chunk) => chunk.startSample));
-    const mixed = mixAudioChunks(batch.map((chunk) => ({ ...chunk, startSample: chunk.startSample - start })));
-    const length = elementAt(mixed.data, 0).length;
-    playback.batch = [];
+    const { ctx, batch } = playback;
+    if (!ctx || batch.size === 0 || playback.controller.signal.aborted) return;
+    const groups = [...batch.entries()];
+    const chunks = groups.flatMap(([, group]) => group);
+    const first = elementAt(chunks, 0);
+    const start = Math.min(...chunks.map((chunk) => chunk.startSample));
+    const endSample = Math.max(...chunks.map((chunk) => chunk.startSample + chunkLength(chunk)));
+    playback.batch = new Map();
     playback.batchDuration = 0;
-    if (!length) return;
-    const buffer = ctx.createBuffer(mixed.channels, length, mixed.sampleRate);
-    for (const [channel, data] of mixed.data.entries()) buffer.getChannelData(channel).set(data);
-    const expected = playback.startTime + start / mixed.sampleRate;
+    const expected = playback.startTime + start / first.sampleRate;
     const when = Math.max(ctx.currentTime + MIN_SCHEDULE_LEAD_SECONDS, expected);
     const offset = when - expected;
-    const duration = length / mixed.sampleRate;
-    if (offset < duration) {
-      const source = ctx.createBufferSource();
-      source.buffer = buffer;
-      source.connect(gain);
-      source.start(when, offset, duration - offset);
+    const duration = (endSample - start) / first.sampleRate;
+    for (const [target, group] of groups) {
+      const mixed = mixAudioChunks(group.map((chunk) => ({ ...chunk, startSample: chunk.startSample - start })));
+      const length = elementAt(mixed.data, 0).length;
+      if (!length) continue;
+      const buffer = ctx.createBuffer(mixed.channels, length, mixed.sampleRate);
+      for (const [channel, data] of mixed.data.entries()) buffer.getChannelData(channel).set(data);
+      const groupDuration = length / mixed.sampleRate;
+      if (offset < groupDuration) {
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(target);
+        source.start(when, offset, groupDuration - offset);
+      }
     }
     if (offset > 0) this.emit({ type: "bufferUnderrun", bufferAhead: 0 });
-    playback.renderedSamples = Math.max(playback.renderedSamples, start + length);
+    playback.renderedSamples = Math.max(playback.renderedSamples, endSample);
     playback.endTime = Math.max(playback.endTime, expected + duration);
     const bufferAhead = Math.max(0, playback.endTime - ctx.currentTime);
     if (bufferAhead < UNDERRUN_SECONDS && !playback.underrunEmitted) {
@@ -180,9 +279,16 @@ export class StreamPlayer {
   private schedule(playback: Playback, chunk: AudioChunk): void {
     if (playback.controller.signal.aborted) return;
     const length = validateAudioChunk(chunk);
-    const first = playback.batch[0];
-    if (first && (first.sampleRate !== chunk.sampleRate || first.channels !== chunk.channels)) this.flush(playback);
-    playback.batch.push(chunk);
+    const target = this.targetFor(playback, chunk);
+    if (!target) return;
+    const existing = playback.batch.get(target);
+    if (existing) {
+      const first = elementAt(existing, 0);
+      if (first.sampleRate !== chunk.sampleRate || first.channels !== chunk.channels) this.flush(playback);
+    }
+    const group = playback.batch.get(target) ?? [];
+    group.push(chunk);
+    playback.batch.set(target, group);
     playback.batchDuration += length / chunk.sampleRate;
     if (playback.batchDuration >= BATCH_SECONDS) this.flush(playback);
   }
@@ -197,8 +303,10 @@ export class StreamPlayer {
       ctx: null,
       gain: null,
       closing: null,
-      batch: [],
+      batch: new Map(),
       batchDuration: 0,
+      mixers: new Map(),
+      soloTrackId: null,
       startTime: 0,
       endTime: 0,
       renderedSamples: 0,
@@ -233,6 +341,7 @@ export class StreamPlayer {
         }
         bufferedSeconds += validateAudioChunk(result.value) / result.value.sampleRate;
         buffered.push(result.value);
+        this.ensureTrackMixer(playback, result.value);
         if (bufferedSeconds >= preBufferThreshold) break;
       }
       playback.startTime = ctx.currentTime + START_LEAD_SECONDS;
@@ -258,7 +367,8 @@ export class StreamPlayer {
         await untilAborted(finalized, signal);
       }
       await this.close(playback);
-      playback.batch = [];
+      playback.batch = new Map();
+      playback.mixers.clear();
       if (this.playback === playback) {
         this.playback = null;
         this.setState("idle");

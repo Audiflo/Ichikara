@@ -1,4 +1,5 @@
 import { mandarin } from "../../src/langs/mandarin";
+import g2pData from "../../src/langs/data/zh-g2p.cjs";
 
 describe("mandarin", () => {
   it("has the correct id and name", () => {
@@ -95,6 +96,49 @@ describe("mandarin", () => {
   it("handles empty input", () => {
     const result = mandarin.lyricToPhonemes("");
     expect(result).toEqual([]);
+  });
+
+  it.each([
+    ["回", "hui"],
+    ["年", "nian"],
+    ["任", "ren"],
+    ["自", "zi"],
+    ["诩", "xu"],
+    ["古", "gu"],
+    ["狂", "kuang"],
+    ["你好", "ni hao"],
+    ["中国人", "zhong guo ren"],
+  ])("converts Han lyric %s to its pinyin reading", (han, pinyin) => {
+    expect(mandarin.lyricToPhonemes(han)).toEqual(mandarin.lyricToPhonemes(pinyin));
+  });
+
+  it("normalizes tone marks and per-syllable tone numbers", () => {
+    expect(mandarin.lyricToPhonemes("ni3 hao3")).toEqual(["n", "i", "h", "a", "o"]);
+    expect(mandarin.lyricToPhonemes("ní hǎo")).toEqual(["n", "i", "h", "a", "o"]);
+    expect(mandarin.lyricToPhonemes("lǜ")).toEqual(["l", "v"]);
+  });
+
+  it("prefers phrase readings for polyphonic words", () => {
+    expect(mandarin.lyricToPhonemes("音乐")).toEqual(mandarin.lyricToPhonemes("yin1 yue4"));
+    expect(mandarin.lyricToPhonemes("重庆")).toEqual(mandarin.lyricToPhonemes("chong2 qing4"));
+  });
+
+  it("emits only known phonemes for every generated reading", () => {
+    for (const readings of Object.values(g2pData)) {
+      for (const syllable of readings) {
+        for (const phoneme of mandarin.lyricToPhonemes(syllable)) {
+          expect(mandarin.phonemes.has(phoneme)).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("only emits known phonemes for Han lyrics", () => {
+    for (const lyric of ["回", "年", "你好", "中国人"]) {
+      for (const phoneme of mandarin.lyricToPhonemes(lyric)) {
+        expect(mandarin.phonemes.has(phoneme)).toBe(true);
+      }
+    }
   });
 
   it.each([

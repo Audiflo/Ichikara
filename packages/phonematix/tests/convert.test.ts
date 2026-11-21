@@ -20,6 +20,10 @@ describe("convert", () => {
     expect(convert("hh0 ah1 l ow", { from: "arpabet", to: "arpabet" })).toEqual(["HH", "AH", "L", "OW"]);
   });
 
+  it("strips runs of trailing stress digits", () => {
+    expect(convert("ah12 ow345", { from: "arpabet", to: "arpabet" })).toEqual(["AH", "OW"]);
+  });
+
   it("converts IPA segments to VOCALOID Sampa", () => {
     expect(convert(["k", "ɑ", "aɪ"], { from: "ipa", to: "vocaloid-sampa" })).toEqual(["k", "Q", "aI"]);
   });
