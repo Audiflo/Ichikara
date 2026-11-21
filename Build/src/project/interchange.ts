@@ -40,14 +40,17 @@ export function projectToUfData(project: Project, options: ExportOptions = {}): 
   return empty;
 }
 
-/** Import every interchange track into a native song with host-supplied stable identities. */
-export function ufDataToProject(data: UfData, language: string, id: IdFactory): Project {
+/** Import every interchange track into a native song with host-supplied stable identities.
+ * A language array assigns one code per source track; a single code applies to all tracks.
+ */
+export function ufDataToProject(data: UfData, language: string | string[], id: IdFactory): Project {
   const project = createProject(data.project.name, id);
   project.resolution = FORMAT_RESOLUTION;
   project.tempos = data.project.tempos.map((event) => ({ tick: event.tickPosition, tempo: event.bpm })).sort((a, b) => a.tick - b.tick);
   if (project.tempos[0]?.tick !== 0) project.tempos.unshift({ tick: 0, tempo: 120 });
   for (const [trackIndex, source] of data.project.tracks.entries()) {
-    const imported = projectFromScore(ufDataToScore(data, { trackIndex }), project.name, language, id);
+    const trackLanguage = Array.isArray(language) ? (language[trackIndex] ?? language[0]) : language;
+    const imported = projectFromScore(ufDataToScore(data, { trackIndex }), project.name, trackLanguage ?? "jp", id);
     const track = elementAt(imported.tracks, 0);
     track.name = source.name;
     project.tracks.push(track);
@@ -68,7 +71,7 @@ export function ufDataToProject(data: UfData, language: string, id: IdFactory): 
 }
 
 /** Parse a complete supported singing-project file. Conversion and validation failures propagate. */
-export async function importProjectFromFile(file: File, language: string, id: IdFactory): Promise<Project> {
+export async function importProjectFromFile(file: File, language: string | string[], id: IdFactory): Promise<Project> {
   return ufDataToProject(await parseUfData(file, file.name), language, id);
 }
 

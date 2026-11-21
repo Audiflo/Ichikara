@@ -36,8 +36,10 @@ export { streamScore, renderScore, mixChunks, renderNote, renderPhonemes, create
 export type { NoteTiming, RenderState, RenderOptions, RenderResult } from "./synth/index";
 export { StreamPlayer } from "./player/index";
 export type { PlayerState, PlayerEvent, PlayOptions } from "./player/index";
-export { ufDataToScore, importScoreFromFile, importScoreFromBytes } from "./import/ufdata";
+export { ufDataToScore, importScoreFromFile, importScoreFromBytes, parseUfData } from "./import/ufdata";
 export type { ImportOptions, UfData } from "./import/ufdata";
+export { detectUfDataLanguages, detectUfTrackLanguage } from "./import/language";
+export type { ImportLanguage, LanguageDetection } from "./import/language";
 export { scoreToUfData, exportScoreToBytes, exportScoreToBlob, exportScoreToUrl, downloadScore } from "./export/ufdata";
 export type { ExportOptions } from "./export/ufdata";
 export { buildVoicebank } from "./export/voicebank";

@@ -530,6 +530,11 @@ for (const alias of Object.keys(vocaloidSampa.toIpa)) {
   if (definition !== undefined) englishPhonemes.set(alias, definition);
 }
 
+/** Return true when CMUDict has a pronunciation for the supplied English word. */
+export function hasEnglishPronunciation(word: string): boolean {
+  return g2p.has(word.trim().toLowerCase());
+}
+
 export const english: LanguageModule = {
   id: "en",
   name: "English",

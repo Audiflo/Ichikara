@@ -13,7 +13,7 @@
     mixChunks,
     encodeWav,
     chitoseChika,
-    importProjectFromFile,
+    parseUfData,
     exportProjectToBytes,
     StreamPlayer,
     TempoMap,
@@ -35,6 +35,7 @@
   import { downloadFile } from "./lib/editor/files";
   import { readDraft, writeDraft } from "./lib/editor/draft";
   import { setTrackLanguage } from "./lib/editor/tracks";
+  import { buildImportProject, planImportLanguages, setImportLanguage, type ImportLanguagePlan } from "./lib/editor/import-language";
   import { defaultPreferences, layoutBounds, readPreferences, writePreferences } from "./lib/editor/preferences";
   import { constrainPane, workspaceSize } from "./lib/editor/layout";
   import { createWorkerStream } from "./lib/workerStream";
@@ -57,6 +58,8 @@
   const dirty = $derived(JSON.stringify(project) !== savedSignature);
   let pendingProject: Project | null = $state(null);
   let replaceOpen = $state(false);
+  let pendingImport: ImportLanguagePlan | null = $state(null);
+  let importLanguagesOpen = $state(false);
   let recoveryMessage = $state("");
   let settingsOpen = $state(false);
   let timelineOpen = $state(false);
@@ -329,6 +332,24 @@
     restore(next);
   }
 
+  function cancelImportLanguages(): void {
+    pendingImport = null;
+    importLanguagesOpen = false;
+  }
+
+  function confirmImportLanguages(): void {
+    if (!pendingImport) return;
+    const next = buildImportProject(pendingImport, id);
+    pendingImport = null;
+    importLanguagesOpen = false;
+    requestReplacement(next);
+  }
+
+  function changeImportLanguage(index: number, value: string): void {
+    if (!pendingImport) return;
+    if (value === "jp" || value === "en" || value === "zh") setImportLanguage(pendingImport, index, value);
+  }
+
   function newSong(): void {
     const next = createProject("Untitled", id);
     const added = addTrack(next, "Vocal 1", chitoseChika, "jp", id);
@@ -341,8 +362,15 @@
     const file = input?.files?.[0];
     if (!file) return;
     try {
-      const next = /\.(ichi|ichikara)$/i.test(file.name) ? parseProject(await file.text()) : await importProjectFromFile(file, "jp", id);
-      requestReplacement(next);
+      if (/\.(ichi|ichikara)$/i.test(file.name)) {
+        requestReplacement(parseProject(await file.text()));
+      } else {
+        const plan = planImportLanguages(await parseUfData(file, file.name));
+        if (plan.needsReview) {
+          pendingImport = plan;
+          importLanguagesOpen = true;
+        } else requestReplacement(buildImportProject(plan, id));
+      }
       errorMessage = "";
     } catch (error) {
       errorMessage = `Could not open ${file.name}: ${error instanceof Error ? error.message : String(error)}`;
@@ -506,8 +534,7 @@
                   value={track.language}
                   onchange={(event) => {
                     if (setTrackLanguage(project, track.id, event.currentTarget.value)) saveSnapshot();
-                  }}
-                  ><option value="jp">Japanese</option><option value="en">English</option><option value="zh">Mandarin</option></select
+                  }}><option value="jp">Japanese</option><option value="en">English</option><option value="zh">Mandarin</option></select
                 ></label
               >
               <label
@@ -644,6 +671,40 @@
         timelineOpen = false;
       }}
     />{/if}
+  <Dialog.Root bind:open={importLanguagesOpen}>
+    <Dialog.Portal>
+      <Dialog.Overlay class="dialog-overlay" />
+      <Dialog.Content class="dialog-content">
+        <div class="dialog-header"><Dialog.Title class="dialog-title">Set import languages</Dialog.Title></div>
+        <div class="dialog-body">
+          <Dialog.Description>Choose the language used to pronounce each imported track.</Dialog.Description>
+          <div class="import-language-list">
+            {#each pendingImport?.choices ?? [] as choice, index (index)}
+              <label>
+                <span>{choice.trackName}</span>
+                <select
+                  aria-label={`Language for ${choice.trackName}`}
+                  value={choice.language}
+                  onchange={(event) => changeImportLanguage(index, event.currentTarget.value)}
+                >
+                  <option value="jp">Japanese</option>
+                  <option value="en">English</option>
+                  <option value="zh">Mandarin</option>
+                </select>
+                <span class="import-language-detection"
+                  >{choice.detected.confident ? `Detected ${choice.detected.language.toUpperCase()}` : "Not detected"}</span
+                >
+              </label>
+            {/each}
+          </div>
+          <div class="document-actions">
+            <button onclick={cancelImportLanguages}>Cancel</button>
+            <button onclick={confirmImportLanguages}>Import</button>
+          </div>
+        </div>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
   <Dialog.Root bind:open={replaceOpen}>
     <Dialog.Portal>
       <Dialog.Overlay class="dialog-overlay" />

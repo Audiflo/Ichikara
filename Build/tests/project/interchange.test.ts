@@ -29,4 +29,19 @@ describe("song interchange", () => {
     expect(restored.meters[1]).toEqual({ tick: 1920, numerator: 3, denominator: 4 });
     expect(restored.tempos[1]).toEqual({ tick: 1920, tempo: 90 });
   });
+
+  it("applies a different language to each imported track", () => {
+    let counter = 0;
+    const id = () => `languages-${counter++}`;
+    const project = createProject("Multilingual", id);
+    for (const name of ["Japanese", "English"]) {
+      const track = addTrack(project, name, chitoseChika, "jp", id);
+      const part = addPart(track, "Verse", 0, project.resolution * 4, id);
+      part.notes.push({ id: id(), lyric: "a", noteNum: 60, tick: 0, length: 480 });
+    }
+
+    const restored = ufDataToProject(projectToUfData(project), ["jp", "en"], id);
+
+    expect(restored.tracks.map((track) => track.language)).toEqual(["jp", "en"]);
+  });
 });
