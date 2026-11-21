@@ -53,6 +53,19 @@ describe("renderNote", () => {
     const { chunk } = renderNote({ lyric: "zzz", noteNum: 60, length: 480, tick: 0 }, voice, lang, 120, 480);
     expect(elementAt(chunk.data, 0).length).toBeGreaterThan(0);
   });
+  it("renders lowercase English phoneme overrides", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const { chunk, phonemeStarts } = renderNote(
+      { lyric: "HELLO", noteNum: 72, length: 480, tick: 0, phonemes: ["hh", "ah", "l", "ow"] },
+      voice,
+      english,
+      120,
+      480,
+    );
+    expect(phonemeStarts).toHaveLength(4);
+    expect(Math.max(...elementAt(chunk.data, 0))).toBeGreaterThan(0);
+  });
   it("produces mono output for mono voice", () => {
     const monoVoice = { ...voice, channels: 1 as const };
     const { chunk } = renderNote({ lyric: "a", noteNum: 72, length: 480, tick: 0 }, monoVoice, lang, 120, 480);

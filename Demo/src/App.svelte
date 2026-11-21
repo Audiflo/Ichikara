@@ -34,6 +34,7 @@
   import { EditorHistory } from "./lib/editor/history";
   import { downloadFile } from "./lib/editor/files";
   import { readDraft, writeDraft } from "./lib/editor/draft";
+  import { setTrackLanguage } from "./lib/editor/tracks";
   import { defaultPreferences, layoutBounds, readPreferences, writePreferences } from "./lib/editor/preferences";
   import { constrainPane, workspaceSize } from "./lib/editor/layout";
   import { createWorkerStream } from "./lib/workerStream";
@@ -500,7 +501,12 @@
                 <button class="icon-btn" title="Delete selected track" onclick={deleteTrack}><Trash2 size={14} /></button>
               </div>
               <label
-                >Language<select aria-label="Track language" bind:value={track.language} onchange={saveSnapshot}
+                >Language<select
+                  aria-label="Track language"
+                  value={track.language}
+                  onchange={(event) => {
+                    if (setTrackLanguage(project, track.id, event.currentTarget.value)) saveSnapshot();
+                  }}
                   ><option value="jp">Japanese</option><option value="en">English</option><option value="zh">Mandarin</option></select
                 ></label
               >

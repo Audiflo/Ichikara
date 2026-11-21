@@ -480,10 +480,21 @@ function buildEnVcv(): ReclistEntry[] {
   return out;
 }
 
+const englishPhonemes = new Map<string, PhonemeDef>();
+for (const phoneme of enPhonemes) {
+  englishPhonemes.set(phoneme.symbol, phoneme);
+  englishPhonemes.set(phoneme.symbol.toLowerCase(), phoneme);
+}
+
+const REST_PHONEME_UPPERCASE = "SIL";
+const restPhoneme = enPhonemes.find((phoneme) => phoneme.symbol === REST_PHONEME);
+if (!restPhoneme) throw new Error(`English phoneme table is missing ${REST_PHONEME}`);
+englishPhonemes.set(REST_PHONEME_UPPERCASE, restPhoneme);
+
 export const english: LanguageModule = {
   id: "en",
   name: "English",
-  phonemes: new Map(enPhonemes.map((p) => [p.symbol, p])),
+  phonemes: englishPhonemes,
   lyricToPhonemes(lyric: string): string[] {
     if (isRestLyric(lyric)) return [REST_PHONEME];
     const clean = lyric.trim().toLowerCase();

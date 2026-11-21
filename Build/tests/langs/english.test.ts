@@ -30,10 +30,74 @@ describe("english", () => {
   });
 
   it("all phonemes have a type and a symbol", () => {
-    for (const [key, def] of english.phonemes) {
-      expect(def.symbol).toBe(key);
+    for (const [, def] of english.phonemes) {
+      expect(def.symbol === "sil" || /^[A-Z]+$/.test(def.symbol)).toBe(true);
       expect(def.type).toBeDefined();
       expect(["vowel", "consonant", "diphthong", "silence"]).toContain(def.type);
+    }
+  });
+
+  it("defines lowercase aliases for ARPAbet phonemes", () => {
+    for (const symbol of ["hh", "ah", "l", "ow", "sil"]) {
+      expect(english.phonemes.has(symbol)).toBe(true);
+    }
+    expect(english.phonemes.get("hh")).toBe(english.phonemes.get("HH"));
+    expect(english.phonemes.get("sil")).toBe(english.phonemes.get("SIL"));
+  });
+
+  it("resolves Vocaloid X-SAMPA phonemes used by imported projects", () => {
+    const aliases: Record<string, string> = {
+      "-": "SIL",
+      Sil: "SIL",
+      "@": "AH",
+      "@U": "OW",
+      "@r": "ER",
+      D: "DH",
+      I: "IH",
+      "I@": "IY",
+      N: "NG",
+      "O:": "AO",
+      "O@": "OW",
+      Q: "AA",
+      T: "T",
+      U: "UH",
+      V: "AH",
+      aI: "AY",
+      aU: "AW",
+      b: "B",
+      bh: "B",
+      d: "D",
+      dh: "DH",
+      e: "EH",
+      "e@": "EH",
+      eI: "EY",
+      f: "F",
+      g: "G",
+      gh: "G",
+      h: "HH",
+      "i:": "IY",
+      j: "Y",
+      k: "K",
+      kh: "K",
+      l: "L",
+      l0: "L",
+      m: "M",
+      n: "N",
+      p: "P",
+      ph: "P",
+      r: "R",
+      s: "S",
+      t: "T",
+      tS: "CH",
+      th: "TH",
+      "u:": "UW",
+      v: "V",
+      w: "W",
+      z: "Z",
+      "{": "AE",
+    };
+    for (const [alias, canonical] of Object.entries(aliases)) {
+      expect(english.phonemes.get(alias)).toBe(english.phonemes.get(canonical));
     }
   });
 
