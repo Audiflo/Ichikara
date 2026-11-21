@@ -4,10 +4,10 @@ title: "Import / Export"
 description: "Native projects and score conversion through UtaFormatix."
 source: "https://audiflo.github.io/Ichikara/docs/api/import-export/"
 path: /api/import-export/
-updated: 2026-11-10
+updated: 2026-11-21
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:40:42.164Z"
+  generated_at: "2026-11-21T13:12:57.721Z"
 ---
 ---
 title: "Import / Export"

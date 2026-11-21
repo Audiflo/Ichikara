@@ -4,10 +4,10 @@ title: Languages
 description: "Built-in language support and how to add custom languages"
 source: "https://audiflo.github.io/Ichikara/docs/guide/languages/"
 path: /guide/languages/
-updated: 2026-11-10
+updated: 2026-11-21
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:40:42.168Z"
+  generated_at: "2026-11-21T13:12:57.725Z"
 ---
 ---
 title: "Languages"

@@ -4,10 +4,10 @@ title: Ichikara
 description: "A OneVoice song editor and TypeScript singing-synthesis library."
 source: "https://audiflo.github.io/Ichikara/docs/"
 path: /
-updated: 2026-11-10
+updated: 2026-11-21
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:40:42.169Z"
+  generated_at: "2026-11-21T13:12:57.725Z"
 ---
 ---
 title: "Ichikara"

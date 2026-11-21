@@ -4,10 +4,10 @@ title: Renderer
 description: "How the synthesis engine produces audio from a score"
 source: "https://audiflo.github.io/Ichikara/docs/guide/renderer/"
 path: /guide/renderer/
-updated: 2026-11-10
+updated: 2026-11-21
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:40:42.168Z"
+  generated_at: "2026-11-21T13:12:57.725Z"
 ---
 ---
 title: "Renderer"

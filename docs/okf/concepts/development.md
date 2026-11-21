@@ -3,10 +3,10 @@ type: concept
 title: "Development checks"
 source: "https://audiflo.github.io/Ichikara/docs/development/"
 path: /development/
-updated: 2026-11-10
+updated: 2026-11-21
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:40:42.166Z"
+  generated_at: "2026-11-21T13:12:57.723Z"
 ---
 # Development checks
 

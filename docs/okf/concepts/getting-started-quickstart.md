@@ -4,10 +4,10 @@ title: "Quick Start"
 description: "Render a phrase to WAV and play it in the browser."
 source: "https://audiflo.github.io/Ichikara/docs/getting-started/quickstart/"
 path: /getting-started/quickstart/
-updated: 2026-11-10
+updated: 2026-11-21
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:40:42.167Z"
+  generated_at: "2026-11-21T13:12:57.724Z"
 ---
 ---
 title: "Quick Start"

@@ -4,10 +4,10 @@ title: Installation
 description: "Install Ichikara via npm or use it directly in the browser"
 source: "https://audiflo.github.io/Ichikara/docs/getting-started/installation/"
 path: /getting-started/installation/
-updated: 2026-11-10
+updated: 2026-11-21
 okf:
   generated_by: "@docmd/plugin-okf"
-  generated_at: "2026-11-10T13:40:42.167Z"
+  generated_at: "2026-11-21T13:12:57.724Z"
 ---
 ---
 title: "Installation"
