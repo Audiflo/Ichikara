@@ -477,6 +477,17 @@ textarea {
 .dialog-body {
   padding: var(--sp-4);
 }
+.import-languages {
+  display: grid;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+.import-languages label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
 
 .app {
   display: flex;

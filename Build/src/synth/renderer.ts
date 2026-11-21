@@ -82,13 +82,15 @@ function ticksToDuration(tickLen: number, tempo: number, resolution: number, sam
   return tickLen * (60 / (tempo * resolution)) * sampleRate;
 }
 
+const MIN_VOICED_TARGET_RATIO = 0.25;
+
 function computeAutoGain(peak: number, voicedRatio: number, peakComp: number, volume: number, target: number): number {
   const volGain = volume * 0.01;
   if (peak === 0) return volGain;
-  const voicedTarget = target * Math.max(0, Math.min(1, voicedRatio));
-  if (voicedTarget === 0) return volGain;
+  const levelRatio = Math.max(MIN_VOICED_TARGET_RATIO, Math.max(0, Math.min(1, voicedRatio)));
+  const levelTarget = target * levelRatio;
   const exponent = Math.max(0, Math.min(1, peakComp * 0.01));
-  const ratio = voicedTarget / peak;
+  const ratio = levelTarget / peak;
   const autoGain = Number.isFinite(ratio) ? Math.pow(ratio, exponent) : 1;
   const gain = autoGain * volGain;
   return Number.isFinite(gain) ? gain : volGain;
@@ -502,10 +504,11 @@ export function renderPhonemes(
       env *= t * t * (3 - 2 * t);
     }
     const cascaded = cascade.processSample(glottalSignal);
+    const voicedSignal = cp.type === "silence" ? 0 : cascaded;
     const startFade =
       headFadeSamples > 0 ? smoothstep01(i / headFadeSamples) : i < boundaryFadeLen ? Math.min(1, i / Math.max(1, boundaryFadeLen)) : 1;
     const endFade = tailFadeSamples > 0 ? 1 - smoothstep01((i - tailFadeStart) / tailFadeSamples) : 1;
-    const enveloped = (cascaded + noiseSignal + breathSignal) * env * startFade * endFade;
+    const enveloped = (voicedSignal + noiseSignal + breathSignal) * env * startFade * endFade;
     mono[i] = enveloped;
     if (Math.abs(enveloped) > overallPeak) overallPeak = Math.abs(enveloped);
   }

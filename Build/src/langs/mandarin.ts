@@ -1,5 +1,6 @@
 import type { PhonemeDef, LanguageModule, ReclistEntry, ReclistStyle } from "../core/types";
 import { REST_PHONEME, isRestLyric } from "./alias";
+import { countScripts, romanizationStats, ROMANIZATION_THRESHOLD } from "./detect";
 
 // Mandarin Chinese (Pǔtōnghuà) phoneme data.
 //
@@ -660,6 +661,28 @@ export const mandarin: LanguageModule = {
 
     const syllables = noTone.split(/[\s_-]+/).filter(Boolean);
     return syllables.flatMap((syl) => pinyinToPhonemes(syl));
+  },
+  detectLikelihood(lyrics: readonly string[]): number {
+    const { kana, han, latin, total } = countScripts(lyrics);
+    if (kana > 0) return 0.15;
+    if (han > 0) return Math.min(1, 0.4 + han / Math.max(1, total));
+    const {
+      romajiRatio,
+      pinyinRatio,
+      romajiSegments,
+      pinyinSegments,
+      romajiExclusive,
+      pinyinExclusive,
+      romajiMarkers,
+      latinTokens,
+    } = romanizationStats(lyrics);
+    if (latinTokens > 0 && pinyinRatio >= ROMANIZATION_THRESHOLD) {
+      const exclusive = (0.12 * (pinyinExclusive - romajiExclusive)) / latinTokens;
+      const markers = (0.06 * romajiMarkers) / latinTokens;
+      const segments = romajiRatio >= ROMANIZATION_THRESHOLD ? (0.03 * (romajiSegments - pinyinSegments)) / latinTokens : 0;
+      return Math.min(1, Math.max(0, 0.4 + 0.5 * pinyinRatio + exclusive - markers + segments));
+    }
+    return latin > 0 ? 0.1 : 0;
   },
   reclist(style: ReclistStyle): ReclistEntry[] {
     return style === "vcv" ? buildZhVcv() : buildZhCv();

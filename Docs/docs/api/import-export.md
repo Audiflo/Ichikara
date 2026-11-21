@@ -14,6 +14,31 @@ tracks. `exportProjectToBytes(project, { format: "ustx" })` exports the whole
 song with absolute note placement. Score conversion cannot retain every native
 field; imported tracks become one part each.
 
+## Per-track languages
+
+Every native track stores its own language, and `.ichi` documents retain it
+verbatim across parse and serialize, including alias identifiers such as `ja`
+or `cmn`. `streamProject` routes each track through its stored language.
+
+Import formats do not carry a language, so `importProjectFromFile` applies the
+language you pass to every track. To choose per track, call `detectLanguage`
+on a track's lyrics and assign the result before rendering:
+
+```typescript
+import { detectLanguage, listLanguages } from "@audiflo/ichikara";
+
+const language = detectLanguage(["こんにちは", "世界"]); // "jp"
+const options = listLanguages().map((lang) => ({ id: lang.id, name: lang.name }));
+```
+
+`detectLanguage` scores lyrics through each registered module's
+`detectLikelihood` hook and returns the best match, or a fallback (`jp` by
+default) when no script is recognised. Latin lyrics are checked against romaji
+and pinyin syllable inventories, so `ka ki ku ke ko` resolves to Japanese while
+`ni hao zhong guo` resolves to Mandarin. `listLanguages` returns the distinct
+registered modules for a language picker. Language modules can join detection
+by implementing `detectLikelihood`.
+
 The single-score functions below select one track on import. Use them when your
 app works with `Score` rather than `Project`.
 

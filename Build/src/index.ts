@@ -30,7 +30,7 @@ export { NoiseSource, shapeNoiseWithFormants } from "./core/dsp/noise";
 export { applyAmplitudeEnvelope, mixBuffers } from "./core/dsp/envelope";
 export { encodeWav } from "./core/dsp/wav";
 
-export { getLanguage, registerLanguage, japanese, english, mandarin, toCanonical, sequenceToCanonical } from "./langs/index";
+export { getLanguage, listLanguages, detectLanguage, registerLanguage, japanese, english, mandarin, toCanonical, sequenceToCanonical } from "./langs/index";
 export { getVoice, registerVoice, chitoseChika, chitoseSho, chitoseRen, chitoseVoices, buildVoice, scaleVoice } from "./voices/index";
 export { streamScore, renderScore, mixChunks, renderNote, renderPhonemes, createRenderState } from "./synth/index";
 export type { NoteTiming, RenderState, RenderOptions, RenderResult } from "./synth/index";

@@ -552,4 +552,31 @@ describe("output limiting", () => {
     expect(renderPeak({ normalizeTarget: 0.25 })).toBeLessThanOrEqual(0.25);
     expect(renderPeak({ normalizeTarget: 0.8 })).toBeLessThanOrEqual(0.8);
   });
+  it("keeps an unvoiced-only note below full scale", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const { chunk } = renderNote({ lyric: "s", noteNum: 72, length: 480, tick: 0, phonemes: ["s"] }, voice, english, 120, 480);
+    let peak = 0;
+    for (const ch of chunk.data) for (const s of ch) peak = Math.max(peak, Math.abs(s));
+    expect(peak).toBeLessThanOrEqual(0.5);
+  });
+  it("keeps a rest quiet when a voiced note carried state into it", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const vowel = renderNote({ lyric: "a", noteNum: 72, length: 480, tick: 0 }, voice, lang, 120, 480);
+    const rest = renderNote(
+      { lyric: "-", noteNum: 72, length: 30, tick: 480, phonemes: ["-"] },
+      voice,
+      english,
+      120,
+      480,
+      vowel.finalFormants,
+      0,
+      undefined,
+      { state: vowel.state },
+    );
+    let peak = 0;
+    for (const ch of rest.chunk.data) for (const s of ch) peak = Math.max(peak, Math.abs(s));
+    expect(peak).toBeLessThanOrEqual(0.01);
+  });
 });

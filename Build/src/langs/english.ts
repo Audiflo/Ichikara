@@ -1,6 +1,7 @@
 import { ARPABET, convert, detectNotation, UnknownPhonemeError, VOCALOID_SAMPA, vocaloidSampa } from "@audiflo/phonematix";
 import type { PhonemeDef, LanguageModule, ReclistEntry, ReclistStyle } from "../core/types";
 import { isRestLyric, REST_PHONEME } from "./alias";
+import { countScripts, romanizationStats, ROMANIZATION_THRESHOLD } from "./detect";
 import g2pData from "./data/en-g2p.cjs";
 
 // English (ARPAbet) phoneme data.
@@ -573,6 +574,14 @@ export const english: LanguageModule = {
     // The fallback table maps ASCII letters, not grapheme clusters.
     const mapped = Array.from(clean).flatMap((c) => simple[c]?.split(" ") ?? []);
     return mapped.length > 0 ? mapped : ["AH"];
+  },
+  detectLikelihood(lyrics: readonly string[]): number {
+    const { kana, han, latin, total } = countScripts(lyrics);
+    if (kana > 0 || han > 0) return 0.1;
+    if (latin === 0) return 0;
+    const { romajiRatio, pinyinRatio } = romanizationStats(lyrics);
+    if (romajiRatio >= ROMANIZATION_THRESHOLD || pinyinRatio >= ROMANIZATION_THRESHOLD) return 0.2;
+    return Math.min(1, 0.3 + latin / Math.max(1, total));
   },
   reclist(style: ReclistStyle): ReclistEntry[] {
     return style === "vcv" ? buildEnVcv() : buildEnCv();

@@ -108,6 +108,7 @@ export interface LanguageModule {
   expandPhonemes?(phonemes: readonly string[]): string[];
   resolveAccents?(lyrics: string[]): (number | undefined)[];
   reclist?(style: ReclistStyle): ReclistEntry[];
+  detectLikelihood?(lyrics: readonly string[]): number;
 }
 
 /** Oscillator controls. Aspiration is mixed by the renderer, so it is optional here. */

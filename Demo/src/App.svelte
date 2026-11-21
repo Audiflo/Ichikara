@@ -17,6 +17,8 @@
     exportProjectToBytes,
     StreamPlayer,
     TempoMap,
+    getLanguage,
+    listLanguages,
     type Project,
     type ProjectNote,
     type VocalTrack,
@@ -34,7 +36,7 @@
   import { EditorHistory } from "./lib/editor/history";
   import { downloadFile } from "./lib/editor/files";
   import { readDraft, writeDraft } from "./lib/editor/draft";
-  import { setTrackLanguage } from "./lib/editor/tracks";
+  import { setTrackLanguage, detectProjectLanguages, applyTrackLanguages } from "./lib/editor/tracks";
   import { defaultPreferences, layoutBounds, readPreferences, writePreferences } from "./lib/editor/preferences";
   import { constrainPane, workspaceSize } from "./lib/editor/layout";
   import { createWorkerStream } from "./lib/workerStream";
@@ -57,6 +59,10 @@
   const dirty = $derived(JSON.stringify(project) !== savedSignature);
   let pendingProject: Project | null = $state(null);
   let replaceOpen = $state(false);
+  let pendingImport: Project | null = $state(null);
+  let importLanguages: string[] = $state([]);
+  let importPickerOpen = $state(false);
+  const languageOptions = listLanguages().map((lang) => ({ id: lang.id, name: lang.name }));
   let recoveryMessage = $state("");
   let settingsOpen = $state(false);
   let timelineOpen = $state(false);
@@ -341,14 +347,34 @@
     const file = input?.files?.[0];
     if (!file) return;
     try {
-      const next = /\.(ichi|ichikara)$/i.test(file.name) ? parseProject(await file.text()) : await importProjectFromFile(file, "jp", id);
-      requestReplacement(next);
+      if (/\.(ichi|ichikara)$/i.test(file.name)) {
+        requestReplacement(parseProject(await file.text()));
+      } else {
+        const next = await importProjectFromFile(file, "jp", id);
+        pendingImport = next;
+        importLanguages = detectProjectLanguages(next);
+        importPickerOpen = true;
+      }
       errorMessage = "";
     } catch (error) {
       errorMessage = `Could not open ${file.name}: ${error instanceof Error ? error.message : String(error)}`;
     } finally {
       input.value = "";
     }
+  }
+
+  function confirmImport(): void {
+    const next = pendingImport;
+    if (!next) return;
+    applyTrackLanguages(next, importLanguages);
+    pendingImport = null;
+    importPickerOpen = false;
+    requestReplacement($state.snapshot(next));
+  }
+
+  function cancelImport(): void {
+    pendingImport = null;
+    importPickerOpen = false;
   }
 
   function saveFile(): boolean {
@@ -503,11 +529,11 @@
               <label
                 >Language<select
                   aria-label="Track language"
-                  value={track.language}
+                  value={getLanguage(track.language)?.id ?? track.language}
                   onchange={(event) => {
                     if (setTrackLanguage(project, track.id, event.currentTarget.value)) saveSnapshot();
                   }}
-                  ><option value="jp">Japanese</option><option value="en">English</option><option value="zh">Mandarin</option></select
+                  >{#each languageOptions as option (option.id)}<option value={option.id}>{option.name}</option>{/each}</select
                 ></label
               >
               <label
@@ -655,6 +681,30 @@
             <Dialog.Close>Cancel</Dialog.Close>
             <button onclick={() => confirmReplacement(false)}>Discard changes</button>
             <button onclick={() => confirmReplacement(true)}>Save and continue</button>
+          </div>
+        </div>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
+  <Dialog.Root bind:open={importPickerOpen}>
+    <Dialog.Portal>
+      <Dialog.Overlay class="dialog-overlay" />
+      <Dialog.Content class="dialog-content">
+        <div class="dialog-header"><Dialog.Title class="dialog-title">Import track languages</Dialog.Title></div>
+        <div class="dialog-body">
+          <Dialog.Description>Languages were detected from the lyrics. Choose a language for each imported track.</Dialog.Description>
+          <div class="import-languages">
+            {#each pendingImport?.tracks ?? [] as track, index (track.id)}
+              <label
+                ><span>{track.name}</span><select bind:value={importLanguages[index]} aria-label={`Language for ${track.name}`}>
+                  {#each languageOptions as option (option.id)}<option value={option.id}>{option.name}</option>{/each}
+                </select></label
+              >
+            {/each}
+          </div>
+          <div class="document-actions">
+            <button onclick={cancelImport}>Cancel</button>
+            <button onclick={confirmImport}>Import</button>
           </div>
         </div>
       </Dialog.Content>
