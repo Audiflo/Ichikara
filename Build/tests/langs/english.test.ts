@@ -45,6 +45,14 @@ describe("english", () => {
     }
   });
 
+  it("preserves an explicit ARPAbet phoneme sequence", () => {
+    expect(english.lyricToPhonemes("HH AH L OW")).toEqual(["HH", "AH", "L", "OW"]);
+  });
+
+  it("does not read inherited properties from the g2p lexicon", () => {
+    expect(() => english.lyricToPhonemes("__proto__")).not.toThrow();
+  });
+
   it("handles consonant clusters", () => {
     const result = english.lyricToPhonemes("WORLD");
     expect(result.length).toBeGreaterThan(2);

@@ -1,12 +1,19 @@
 import type { FormantTarget } from "../types";
 import { elementAt } from "../validation";
 
+const COEFF_SMOOTHING = 0.01;
+
 export class FormantFilter {
   private a1 = 0;
   private a2 = 0;
   private b0 = 1;
   private b1 = 0;
   private b2 = 0;
+  private targetA1 = 0;
+  private targetA2 = 0;
+  private targetB0 = 1;
+  private targetB1 = 0;
+  private targetB2 = 0;
   private y1 = 0;
   private y2 = 0;
   private x1 = 0;
@@ -19,11 +26,7 @@ export class FormantFilter {
     const r = Math.exp((-Math.PI * safeBw) / sampleRate);
     const B = 2 * r * Math.cos(theta);
     const C = -(r * r);
-    this.b0 = 1 - B - C;
-    this.b1 = 0;
-    this.b2 = 0;
-    this.a1 = -B;
-    this.a2 = -C;
+    this.setCoefficients(1 - B - C, 0, 0, -B, -C);
   }
 
   setAntiResonator(freq: number, bw: number, sampleRate: number): void {
@@ -31,23 +34,39 @@ export class FormantFilter {
     const safeBw = Math.max(0.01, bw);
     const theta = (2 * Math.PI * safeFreq) / sampleRate;
     const rz = Math.exp((-Math.PI * safeBw) / sampleRate);
-    this.b0 = 1;
-    this.b1 = -2 * rz * Math.cos(theta);
-    this.b2 = rz * rz;
     const rp = Math.exp((-Math.PI * safeBw * 1.5) / sampleRate);
-    this.a1 = -2 * rp * Math.cos(theta);
-    this.a2 = rp * rp;
+    this.setCoefficients(1, -2 * rz * Math.cos(theta), rz * rz, -2 * rp * Math.cos(theta), rp * rp);
   }
 
   setPassthrough(): void {
-    this.b0 = 1;
-    this.b1 = 0;
-    this.b2 = 0;
-    this.a1 = 0;
-    this.a2 = 0;
+    this.setCoefficients(1, 0, 0, 0, 0, true);
+  }
+
+  private setCoefficients(b0: number, b1: number, b2: number, a1: number, a2: number, immediate = false): void {
+    this.targetB0 = b0;
+    this.targetB1 = b1;
+    this.targetB2 = b2;
+    this.targetA1 = a1;
+    this.targetA2 = a2;
+    if (immediate) {
+      this.b0 = b0;
+      this.b1 = b1;
+      this.b2 = b2;
+      this.a1 = a1;
+      this.a2 = a2;
+    }
+  }
+
+  private advanceCoefficients(): void {
+    this.b0 += (this.targetB0 - this.b0) * COEFF_SMOOTHING;
+    this.b1 += (this.targetB1 - this.b1) * COEFF_SMOOTHING;
+    this.b2 += (this.targetB2 - this.b2) * COEFF_SMOOTHING;
+    this.a1 += (this.targetA1 - this.a1) * COEFF_SMOOTHING;
+    this.a2 += (this.targetA2 - this.a2) * COEFF_SMOOTHING;
   }
 
   processSample(x: number): number {
+    this.advanceCoefficients();
     const y = this.b0 * x + this.b1 * this.x1 + this.b2 * this.x2 - this.a1 * this.y1 - this.a2 * this.y2;
     this.x2 = this.x1;
     this.x1 = x;
@@ -63,6 +82,11 @@ export class FormantFilter {
   }
 
   reset(): void {
+    this.b0 = this.targetB0;
+    this.b1 = this.targetB1;
+    this.b2 = this.targetB2;
+    this.a1 = this.targetA1;
+    this.a2 = this.targetA2;
     this.y1 = 0;
     this.y2 = 0;
     this.x1 = 0;

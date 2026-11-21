@@ -32,7 +32,8 @@ export { encodeWav } from "./core/dsp/wav";
 
 export { getLanguage, registerLanguage, japanese, english, mandarin, toCanonical, sequenceToCanonical } from "./langs/index";
 export { getVoice, registerVoice, chitoseChika, chitoseSho, chitoseRen, chitoseVoices, buildVoice, scaleVoice } from "./voices/index";
-export { streamScore, renderScore, mixChunks, renderNote } from "./synth/index";
+export { streamScore, renderScore, mixChunks, renderNote, renderPhonemes, createRenderState } from "./synth/index";
+export type { NoteTiming, RenderState, RenderOptions, RenderResult } from "./synth/index";
 export { StreamPlayer } from "./player/index";
 export type { PlayerState, PlayerEvent, PlayOptions } from "./player/index";
 export { ufDataToScore, importScoreFromFile, importScoreFromBytes } from "./import/ufdata";

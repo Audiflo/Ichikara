@@ -45,7 +45,7 @@ flowchart TD
 
 ## Design Decisions
 
-- **DSP is stateless per-note**: Each note render creates its own `LFGlottalSource` and `FormantCascade` instances. The only cross-note state is the last phoneme's formant targets, passed as `prevFormants` for smooth transitions.
+- **DSP state follows legato phrases**: `createRenderState` owns the `LFGlottalSource`, `FormantCascade`, and noise filters. `streamScore` reuses that state across adjacent notes and small gaps so oscillator phase and filter history stay continuous, then blends overlapping chunks with complementary fades. Non-legato notes start from fresh state.
 - **Lazy G2P loading**: utaformatix-ts is loaded on first import/export call, keeping the initial bundle small.
 - **No Web Audio dependency in the core**: The synth layer produces `AudioChunk` objects with no DOM or AudioContext dependency. Only `StreamPlayer` touches the Web Audio API.
 - **Platform-agnostic types**: `AudioChunk` uses `Float32Array` arrays, compatible with both Node.js and browser environments.

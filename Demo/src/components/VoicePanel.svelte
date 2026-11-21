@@ -121,7 +121,7 @@
         {onCommit}
         value={params.brightness ?? 0.5}
         step={0.01}
-        hint="Shifts the vocal-tract formants upward for a brighter tone."
+        hint="Narrows the vocal-tract formant bandwidths for a more focused tone."
         onChange={(v: number) => (params.brightness = v)}
       />
       <Field
@@ -229,6 +229,11 @@
 </Tabs.Root>
 
 <style>
+  .vp-advanced h3:not(:first-child) {
+    margin-top: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--border-strong);
+  }
   .vp-adv-toggle {
     width: 100%;
     display: flex;

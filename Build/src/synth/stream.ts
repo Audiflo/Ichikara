@@ -4,7 +4,7 @@ import { getVoice, chitoseChika } from "../voices/index";
 import { mixAudioChunks } from "../core/audio";
 import { elementAt, integerInRange } from "../core/validation";
 import { TempoMap } from "../core/timing";
-import { renderNote } from "./renderer";
+import { renderNote, type RenderState } from "./renderer";
 
 /** Render notes in absolute tick order, integrating tempo changes through notes and gaps.
  * Input notes and tempos are not mutated. Unknown voices/languages and invalid timing throw.
@@ -35,28 +35,56 @@ export async function* streamScore(score: Score, voiceInput?: string | VoiceConf
   const overlapSamples = Math.round((OVERLAP_MS / 1000) * sr);
 
   let prevFormants: FormantTarget[] | undefined;
+  let state: RenderState | undefined;
   let previousEndTick = -1;
+  let previousEndSample = -1;
   for (const [ni, originalNote] of notes.entries()) {
     let note = originalNote;
     const noteTick = note.tick;
     const startSample = Math.round(timing.secondsAt(noteTick) * sr);
     const endSample = Math.round(timing.secondsAt(noteTick + note.length) * sr);
     integerInRange(endSample, "note end sample", 0);
-    const legato = previousEndTick === noteTick;
-    if (!legato) {
-      prevFormants = undefined;
+
+    const gapFromPrevious = previousEndSample < 0 ? Infinity : startSample - previousEndSample;
+    const legatoWithPrevious = previousEndTick === noteTick || (gapFromPrevious >= 0 && gapFromPrevious < overlapSamples);
+    const extraSamples = legatoWithPrevious ? Math.min(overlapSamples, startSample) : 0;
+    const headFadeSamples = legatoWithPrevious ? Math.min(extraSamples, Math.max(0, overlapSamples - gapFromPrevious)) : 0;
+
+    const nextNote = notes[ni + 1];
+    let tailFadeSamples = 0;
+    if (nextNote) {
+      const nextStartSample = Math.round(timing.secondsAt(nextNote.tick) * sr);
+      const gapToNext = nextStartSample - endSample;
+      const legatoWithNext = noteTick + note.length === nextNote.tick || (gapToNext >= 0 && gapToNext < overlapSamples);
+      if (legatoWithNext) tailFadeSamples = Math.min(overlapSamples, Math.max(0, overlapSamples - gapToNext));
     }
-    const extraSamples = legato ? Math.min(overlapSamples, startSample) : 0;
+
+    if (!legatoWithPrevious) {
+      prevFormants = undefined;
+      state = undefined;
+    }
 
     const accent = accentOffsets[ni];
     if (accent !== undefined) {
       note = { ...note, pitchAccent: accent };
     }
-    const { chunk, finalFormants } = renderNote(note, voice, lang, timing.tempoAt(noteTick), resolution, prevFormants, extraSamples, {
-      sampleLength: Math.max(1, endSample - startSample),
-      tickAtSample: (sample) => timing.tickAt((startSample + sample) / sr) - noteTick,
-    });
-    prevFormants = finalFormants;
+    const rendered = renderNote(
+      note,
+      voice,
+      lang,
+      timing.tempoAt(noteTick),
+      resolution,
+      prevFormants,
+      extraSamples,
+      {
+        sampleLength: Math.max(1, endSample - startSample),
+        tickAtSample: (sample) => timing.tickAt((startSample + sample) / sr) - noteTick,
+      },
+      { state, headFadeSamples, tailFadeSamples },
+    );
+    prevFormants = rendered.finalFormants;
+    state = rendered.state;
+    const { chunk } = rendered;
     chunk.startSample = startSample - extraSamples;
     const firstChannel = elementAt(chunk.data, 0);
     if (voice.channels === 2 && chunk.data.length === 1) {
@@ -66,6 +94,7 @@ export async function* streamScore(score: Score, voiceInput?: string | VoiceConf
     yield chunk;
     await new Promise((r) => setTimeout(r, 0));
     previousEndTick = noteTick + note.length;
+    previousEndSample = endSample;
   }
 }
 

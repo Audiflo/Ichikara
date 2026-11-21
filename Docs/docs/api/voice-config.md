@@ -68,14 +68,14 @@ Values under 1.22 are therefore clamped to the nearest valid configuration.
 
 ### tenseness
 
-Spectral tilt control. Higher values attenuate the high-frequency content of the glottal source.
+Spectral tilt control. Higher values raise the glottal return-phase corner and add high-frequency content to the source.
 
-| Value | Perceptual Effect                     |
-|-------|---------------------------------------|
-| ~0.2  | Very bright, thin (low spectral tilt) |
-| ~0.5  | Neutral balance                       |
-| ~0.7  | Dark, warm (higher spectral tilt)     |
-| >0.8  | Very dark, muffled                    |
+| Value | Perceptual Effect                      |
+|-------|----------------------------------------|
+| ~0.2  | Dark, rounded (steep spectral tilt)    |
+| ~0.5  | Neutral balance                        |
+| ~0.7  | Bright, clear (shallower spectral tilt)|
+| >0.8  | Very bright, thin                      |
 
 ### aspiration
 

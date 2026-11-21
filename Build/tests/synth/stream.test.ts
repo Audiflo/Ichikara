@@ -188,6 +188,54 @@ describe("cross-note overlap timing", () => {
     }, 60_000);
   }
 
+  it("keeps level through a legato seam between vowel notes", async () => {
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "a", noteNum: 60, length: 480 },
+          { tick: 480, lyric: "a", noteNum: 60, length: 480 },
+        ],
+      },
+      voice,
+      "jp",
+    );
+    const data = elementAt(mixChunks(chunks).data, 0);
+    const seam = SAMPLES_PER_NOTE;
+    const win = Math.round(0.003 * voice.sampleRate);
+    const rms = (from: number, to: number): number => {
+      let sum = 0;
+      for (let i = from; i < to; i++) {
+        const sample = elementAt(data, i);
+        sum += sample * sample;
+      }
+      return Math.sqrt(sum / (to - from));
+    };
+    const around = rms(seam - win, seam + win);
+    const steadyFrom = seam - Math.round(0.15 * voice.sampleRate);
+    const steady = rms(steadyFrom, steadyFrom + 2 * win);
+    expect(around).toBeGreaterThan(steady * 0.5);
+    expect(around).toBeLessThan(steady * 1.4);
+  });
+
+  it("carries legato overlap across a one-tick gap", async () => {
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "a", noteNum: 60, length: 480 },
+          { tick: 481, lyric: "a", noteNum: 60, length: 480 },
+        ],
+      },
+      voice,
+      "jp",
+    );
+    const overlap = elementAt(chunks, 0).startSample + elementAt(elementAt(chunks, 0).data, 0).length - elementAt(chunks, 1).startSample;
+    expect(overlap).toBeGreaterThan(100);
+  });
+
   it("does not grow the overlap tail with tick quantisation", async () => {
     const chunks: AudioChunk[] = [];
     for await (const c of streamScore(legatoScore(2), voice, "jp")) chunks.push(c);

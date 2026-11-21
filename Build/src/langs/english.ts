@@ -449,7 +449,7 @@ const enPhonemes: PhonemeDef[] = [
   },
 ];
 
-const g2p = g2pData;
+const g2p = new Map<string, readonly string[]>(Object.entries(g2pData));
 const EN_VOWELS = enPhonemes.filter((p) => p.type === "vowel" || p.type === "diphthong").map((p) => p.symbol);
 const EN_CONSONANTS = enPhonemes.filter((p) => p.type === "consonant").map((p) => p.symbol);
 
@@ -487,9 +487,10 @@ export const english: LanguageModule = {
   lyricToPhonemes(lyric: string): string[] {
     if (isRestLyric(lyric)) return [REST_PHONEME];
     const clean = lyric.trim().toLowerCase();
-    if (g2p[clean]) return [...g2p[clean]];
+    const entry = g2p.get(clean);
+    if (entry) return [...entry];
     const parts = clean.split(/[\s_-]+/).filter(Boolean);
-    if (parts.every((p) => this.phonemes.has(p))) return parts;
+    if (parts.every((p) => this.phonemes.has(p.toUpperCase()))) return parts.map((p) => p.toUpperCase());
     const simple: Record<string, string> = {
       a: "AA",
       b: "B",

@@ -1,4 +1,4 @@
-import { renderNote, computePhonemeDurations } from "../../src/synth/renderer";
+import { renderNote, renderPhonemes, computePhonemeDurations, robustPeak } from "../../src/synth/renderer";
 import { FormantCascade } from "../../src/core/dsp/filter";
 import { getLanguage } from "../../src/langs/index";
 import { buildVoice } from "../../src/voices/index";
@@ -414,6 +414,50 @@ describe("phoneme duration allocation", () => {
     expect(phonemeStarts[phonemeStarts.length - 1]).toBeLessThan(elementAt(chunk.data, 0).length);
   });
 });
+describe("phoneme boundary continuity", () => {
+  const vowel: PhonemeDef = { symbol: "v", type: "vowel", formants: [{ f: 700, bw: 80 }] };
+  const sr = 44100;
+
+  function rms(data: Float32Array, from: number, to: number): number {
+    let sum = 0;
+    for (let i = from; i < to; i++) {
+      const sample = elementAt(data, i);
+      sum += sample * sample;
+    }
+    return Math.sqrt(sum / (to - from));
+  }
+
+  it("keeps level through a boundary between two voiced vowels", () => {
+    const { chunk, phonemeStarts } = renderPhonemes(
+      [vowel, vowel],
+      { lyric: "vv", noteNum: 60, length: 4800, tick: 0 },
+      buildVoice(),
+      120,
+      480,
+    );
+    const data = elementAt(chunk.data, 0);
+    const boundary = elementAt(phonemeStarts, 1);
+    const win = Math.round(0.002 * sr);
+    const around = rms(data, boundary - win, boundary + win);
+    const steady = rms(data, Math.floor(boundary * 0.3) - win, Math.floor(boundary * 0.3) + win);
+    expect(around).toBeGreaterThan(steady * 0.5);
+  });
+});
+
+describe("robustPeak", () => {
+  const clean = new Float32Array(10000).map((_, i) => 0.2 * Math.sin(i * 0.1));
+
+  it("keeps the measured peak for a clean signal", () => {
+    expect(robustPeak(clean, 0.2)).toBeCloseTo(0.2, 6);
+  });
+
+  it("ignores an isolated transient when measuring note level", () => {
+    const withClick = new Float32Array(clean);
+    withClick[5000] = 1;
+    expect(robustPeak(withClick, 1)).toBeCloseTo(0.2, 2);
+  });
+});
+
 describe("output limiting", () => {
   const lang = getLanguage("jp");
   if (!lang) throw new Error("Japanese must be registered for renderer tests");
