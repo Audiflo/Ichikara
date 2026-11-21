@@ -35,9 +35,10 @@
   },
   "scripts": {
     "build": "npm run build:g2p && tsdown src/index.ts --no-config --format esm,cjs --dts --sourcemap --minify --clean --out-dir dist",
-    "build:g2p": "npm run build:g2p:en && npm run build:g2p:jp",
+    "build:g2p": "npm run build:g2p:en && npm run build:g2p:jp && npm run build:g2p:zh",
     "build:g2p:en": "tsx scripts/build-g2p-en.ts",
     "build:g2p:jp": "tsx scripts/build-g2p-jp.ts",
+    "build:g2p:zh": "tsx scripts/build-g2p-zh.ts",
     "build:voicebank": "tsx scripts/build-voicebank.ts",
     "typecheck": "tsc -p tsconfig.check.json --noEmit",
     "lint": "eslint . --max-warnings 0",

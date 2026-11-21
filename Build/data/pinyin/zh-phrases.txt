@@ -1,0 +1,33 @@
+# Reviewed Mandarin phrase readings used ahead of per-character ICU defaults.
+# Each line is <Han phrase><tab><tone-marked pinyin syllables>.
+你好	nǐ hǎo
+中国	zhōng guó
+中国人	zhōng guó rén
+重庆	chóng qìng
+银行	yín xíng
+音乐	yīn yuè
+快乐	kuài lè
+长大	zhǎng dà
+重复	chóng fù
+重要	zhòng yào
+干净	gān jìng
+着急	zháo jí
+着火	zháo huǒ
+看见	kàn jiàn
+睡觉	shuì jiào
+发现	fā xiàn
+头发	tóu fa
+行李	xíng li
+行动	xíng dòng
+行业	xíng yè
+最多	zuì duō
+重量	zhòng liàng
+数字	shù zì
+教师	jiào shī
+教室	jiào shì
+风俗	fēng sú
+味道	wèi dào
+幸福	xìng fú
+危险	wēi xiǎn
+朋友	péng you
+非常	fēi cháng
