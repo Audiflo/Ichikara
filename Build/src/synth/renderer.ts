@@ -555,7 +555,8 @@ export function renderNote(
   timing?: NoteTiming,
   options: RenderOptions = {},
 ): RenderResult {
-  const phonemeSymbols = note.phonemes ?? lang.lyricToPhonemes(note.lyric);
+  const rawPhonemes = note.phonemes ?? lang.lyricToPhonemes(note.lyric);
+  const phonemeSymbols = note.phonemes !== undefined && lang.expandPhonemes ? lang.expandPhonemes(rawPhonemes) : rawPhonemes;
   const phonemes = phonemeSymbols
     .map((s) => {
       const p = lang.phonemes.get(s);

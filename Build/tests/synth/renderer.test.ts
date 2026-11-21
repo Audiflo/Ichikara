@@ -66,6 +66,26 @@ describe("renderNote", () => {
     expect(phonemeStarts).toHaveLength(4);
     expect(Math.max(...elementAt(chunk.data, 0))).toBeGreaterThan(0);
   });
+
+  it("renders Vocaloid Sampa overrides from imported English projects", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => undefined);
+    try {
+      const { chunk, phonemeStarts } = renderNote(
+        { lyric: "kite", noteNum: 72, length: 480, tick: 0, phonemes: ["kh", "aI"] },
+        voice,
+        english,
+        120,
+        480,
+      );
+      expect(phonemeStarts).toHaveLength(2);
+      expect(Math.max(...elementAt(chunk.data, 0))).toBeGreaterThan(0);
+      expect(warn).not.toHaveBeenCalledWith(expect.stringContaining("missing phoneme"));
+    } finally {
+      warn.mockRestore();
+    }
+  });
   it("produces mono output for mono voice", () => {
     const monoVoice = { ...voice, channels: 1 as const };
     const { chunk } = renderNote({ lyric: "a", noteNum: 72, length: 480, tick: 0 }, monoVoice, lang, 120, 480);

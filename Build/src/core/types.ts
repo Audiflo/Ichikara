@@ -105,6 +105,7 @@ export interface LanguageModule {
   name: string;
   phonemes: Map<string, PhonemeDef>;
   lyricToPhonemes(lyric: string): string[];
+  expandPhonemes?(phonemes: readonly string[]): string[];
   resolveAccents?(lyrics: string[]): (number | undefined)[];
   reclist?(style: ReclistStyle): ReclistEntry[];
 }

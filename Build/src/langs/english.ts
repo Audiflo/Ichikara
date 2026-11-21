@@ -1,3 +1,4 @@
+import { ARPABET, convert, detectNotation, UnknownPhonemeError, VOCALOID_SAMPA, vocaloidSampa } from "@audiflo/phonematix";
 import type { PhonemeDef, LanguageModule, ReclistEntry, ReclistStyle } from "../core/types";
 import { isRestLyric, REST_PHONEME } from "./alias";
 import g2pData from "./data/en-g2p.cjs";
@@ -491,10 +492,49 @@ const restPhoneme = enPhonemes.find((phoneme) => phoneme.symbol === REST_PHONEME
 if (!restPhoneme) throw new Error(`English phoneme table is missing ${REST_PHONEME}`);
 englishPhonemes.set(REST_PHONEME_UPPERCASE, restPhoneme);
 
+function tryConvertToArpabet(phonemes: readonly string[], from: string): string[] | undefined {
+  try {
+    return convert(phonemes, { from, to: ARPABET });
+  } catch (error) {
+    if (error instanceof UnknownPhonemeError) return undefined;
+    throw error;
+  }
+}
+
+function expandPhonemes(phonemes: readonly string[]): string[] {
+  if (detectNotation(phonemes) === VOCALOID_SAMPA) {
+    const converted = tryConvertToArpabet(phonemes, VOCALOID_SAMPA);
+    if (converted !== undefined) return converted.filter((symbol) => englishPhonemes.has(symbol));
+  }
+
+  const output: string[] = [];
+  for (const symbol of phonemes) {
+    const definition = englishPhonemes.get(symbol);
+    if (definition !== undefined) {
+      output.push(definition.symbol);
+      continue;
+    }
+    const converted = tryConvertToArpabet([symbol], ARPABET);
+    if (converted !== undefined) output.push(...converted.filter((candidate) => englishPhonemes.has(candidate)));
+    else output.push(symbol);
+  }
+  return output;
+}
+
+for (const alias of Object.keys(vocaloidSampa.toIpa)) {
+  if (englishPhonemes.has(alias)) continue;
+  const converted = tryConvertToArpabet([alias], VOCALOID_SAMPA);
+  const canonical = converted?.length === 1 ? converted[0] : undefined;
+  if (canonical === undefined) continue;
+  const definition = englishPhonemes.get(canonical);
+  if (definition !== undefined) englishPhonemes.set(alias, definition);
+}
+
 export const english: LanguageModule = {
   id: "en",
   name: "English",
   phonemes: englishPhonemes,
+  expandPhonemes,
   lyricToPhonemes(lyric: string): string[] {
     if (isRestLyric(lyric)) return [REST_PHONEME];
     const clean = lyric.trim().toLowerCase();
