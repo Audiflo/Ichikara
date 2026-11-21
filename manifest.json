@@ -1,16 +1,16 @@
 {
   "app": "Ichikara",
   "mode": "commit",
-  "latest": "386820cf94bb1e4621b6a48dabc6b3a5792191c8",
+  "latest": "7399b1e0c44678eee7bf37334cc3906fde9e1eb8",
   "files": [
     "assets/base-C5o2DXjX.js",
     "assets/index-BCTdULeq.css",
-    "assets/index-zsqF411o.js",
+    "assets/index-Dd7IOUtw.js",
     "assets/render.worker-DR6GOBhB.js",
     "index.html"
   ],
   "modules": [
-    "assets/index-zsqF411o.js"
+    "assets/index-Dd7IOUtw.js"
   ],
-  "timestamp": 1794318044
+  "timestamp": 1795266754
 }
