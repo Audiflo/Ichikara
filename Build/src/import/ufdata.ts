@@ -31,10 +31,31 @@ export interface ImportOptions {
   pitch?: boolean;
 }
 
+interface UfPitchPoint {
+  tick: number;
+  value: number;
+}
+
 function splitPitchPerNote(notes: Note[], trackPitch: UfPitch): void {
   const { ticks, values, isAbsolute } = trackPitch;
   if (ticks.length !== values.length) throw new RangeError("Pitch ticks and values must have equal lengths");
   if (!ticks.length) return;
+
+  const points: UfPitchPoint[] = [];
+  for (const [i, tick] of ticks.entries()) {
+    const value = elementAt(values, i);
+    if (value !== null) points.push({ tick, value });
+  }
+  points.sort((a, b) => a.tick - b.tick);
+
+  const valueAtOrBefore = (tick: number): number | undefined => {
+    let found: number | undefined;
+    for (const point of points) {
+      if (point.tick > tick) break;
+      found = point.value;
+    }
+    return found;
+  };
 
   for (const note of notes) {
     const noteStart = note.tick ?? 0;
@@ -43,34 +64,32 @@ function splitPitchPerNote(notes: Note[], trackPitch: UfPitch): void {
     const relTicks: number[] = [];
     const relValues: number[] = [];
 
-    for (const [i, t] of ticks.entries()) {
-      const v = elementAt(values, i);
-      if (v === null) continue;
-      if (t >= noteStart && t <= noteEnd) {
-        relTicks.push(t - noteStart);
-        relValues.push(isAbsolute ? v - note.noteNum : v);
+    for (const point of points) {
+      if (point.tick < noteStart) continue;
+      if (point.tick >= noteEnd) break;
+      const relTick = point.tick - noteStart;
+      const relValue = isAbsolute ? point.value - note.noteNum : point.value;
+      if (relTicks.length > 0 && elementAt(relTicks, relTicks.length - 1) === relTick) {
+        relValues[relValues.length - 1] = relValue;
+      } else {
+        relTicks.push(relTick);
+        relValues.push(relValue);
       }
     }
 
     if (relTicks.length === 0) continue;
 
     if (elementAt(relTicks, 0) > 0) {
-      let valAtStart = 0;
-      for (let i = ticks.length - 1; i >= 0; i--) {
-        const value = elementAt(values, i);
-        if (elementAt(ticks, i) <= noteStart && value !== null) {
-          valAtStart = isAbsolute ? value - note.noteNum : value;
-          break;
-        }
-      }
+      const preceding = valueAtOrBefore(noteStart);
       relTicks.unshift(0);
-      relValues.unshift(valAtStart);
+      relValues.unshift(preceding === undefined ? 0 : isAbsolute ? preceding - note.noteNum : preceding);
     }
 
     const last = elementAt(relTicks, relTicks.length - 1);
     if (last < note.length) {
+      const boundary = valueAtOrBefore(noteEnd);
       relTicks.push(note.length);
-      relValues.push(elementAt(relValues, relValues.length - 1));
+      relValues.push(boundary === undefined ? elementAt(relValues, relValues.length - 1) : isAbsolute ? boundary - note.noteNum : boundary);
     }
 
     note.pitchBend = { ticks: relTicks, values: relValues };
@@ -104,20 +123,48 @@ export function ufDataToScore(data: UfData, options: ImportOptions = {}): Score 
   return { tempos, resolution, notes, voice: track.name };
 }
 
-type ParseFn = (data: Uint8Array | File, params?: { pitch?: boolean }) => Promise<UfData>;
+type ParseInput = Uint8Array | File;
+type ParseFn = (data: ParseInput, params?: { pitch?: boolean }) => Promise<UfData>;
+type UtfModule = typeof import("@sevenc-nanashi/utaformatix-ts/base");
 
-let parsers: Readonly<Record<string, ParseFn>> | undefined;
+let utfModule: UtfModule | undefined;
 
-async function lazyInit(): Promise<void> {
-  if (parsers) return;
-  const m = await import("@sevenc-nanashi/utaformatix-ts/base");
-  parsers = { ...m.parseFunctions, midi: m.parseStandardMid };
+async function lazyInit(): Promise<UtfModule> {
+  if (!utfModule) utfModule = await import("@sevenc-nanashi/utaformatix-ts/base");
+  return utfModule;
 }
 
 function extFromFile(name: string): string {
   const dot = name.lastIndexOf(".");
   if (dot < 0) return name.toLowerCase();
   return name.slice(dot + 1).toLowerCase();
+}
+
+function isStringArray(value: string | readonly string[]): value is readonly string[] {
+  return Array.isArray(value);
+}
+
+function normalizeInputs(
+  input: ParseInput | readonly ParseInput[],
+  filenames: string | readonly string[],
+): { data: ParseInput | ParseInput[]; ext: string } {
+  if (input instanceof Uint8Array || input instanceof File) {
+    if (typeof filenames !== "string") throw new TypeError("A single file requires a single filename");
+    return { data: input, ext: extFromFile(filenames) };
+  }
+  if (!isStringArray(filenames) || filenames.length !== input.length) {
+    throw new TypeError("Every file in a multi-file import requires a filename");
+  }
+  if (input.length === 0) throw new TypeError("No files supplied for import");
+  const ext = extFromFile(elementAt(filenames, 0));
+  if (filenames.some((name) => extFromFile(name) !== ext)) {
+    throw new Error("Multi-file import requires all files to share one format");
+  }
+  if (ext !== "ust") throw new Error(`Multi-file import does not support .${ext}; convert the files to .ust first`);
+  const files = input.map((value, index) =>
+    value instanceof File ? value : new File([new Uint8Array(value)], elementAt(filenames, index)),
+  );
+  return { data: files, ext };
 }
 
 /** Parse a supported singing-project file; propagate format and conversion errors. */
@@ -130,11 +177,21 @@ export async function importScoreFromBytes(buf: Uint8Array, filename: string, op
   return ufDataToScore(await parseUfData(buf, filename, options.pitch ?? true), options);
 }
 
-/** Parse all tracks using the filename extension; propagate unsupported format and converter errors. */
-export async function parseUfData(input: File | Uint8Array, filename: string, pitch = true): Promise<UfData> {
-  const ext = extFromFile(filename);
-  await lazyInit();
-  const parseFn = parsers?.[ext];
+/** Parse all tracks using the filename extension; propagate unsupported format and converter errors.
+ * Multiple inputs are supported only for `.ust`, where each file becomes one track.
+ */
+export async function parseUfData(input: ParseInput, filename: string, pitch?: boolean): Promise<UfData>;
+export async function parseUfData(input: readonly ParseInput[], filenames: readonly string[], pitch?: boolean): Promise<UfData>;
+export async function parseUfData(
+  input: ParseInput | readonly ParseInput[],
+  filenames: string | readonly string[],
+  pitch = true,
+): Promise<UfData> {
+  const { data, ext } = normalizeInputs(input, filenames);
+  const m = await lazyInit();
+  if (Array.isArray(data)) return m.parseUst(data, { pitch });
+  const parsers: Readonly<Record<string, ParseFn>> = { ...m.parseFunctions, midi: m.parseStandardMid };
+  const parseFn = parsers[ext];
   if (!parseFn) throw new Error(`Unsupported file format: .${ext}`);
-  return parseFn(input, { pitch });
+  return parseFn(data, { pitch });
 }

@@ -17,7 +17,7 @@ The note's lyric string is passed to the language module's `lyricToPhonemes()` f
 // Mandarin: "ni3" -> ["n", "i"]  (tone stripped)
 ```
 
-Each symbol is looked up in the language module's phoneme map to get a `PhonemeDef` with formant targets, noise parameters, duration defaults, and voicing state.
+Each symbol is looked up in the language module's phoneme map to get a `PhonemeDef` with formant targets, noise parameters, duration defaults, and voicing state. English accepts both canonical uppercase ARPAbet symbols and lowercase aliases, so `HH` and `hh` resolve to the same definition.
 
 ### 2. Duration Allocation
 

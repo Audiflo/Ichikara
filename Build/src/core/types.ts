@@ -27,8 +27,11 @@ export interface VoiceConfig {
   vibrato: VibratoConfig;
   sampleRate: number;
   channels: 1 | 2;
+  /** Linear output gain in percent. */
   volume?: number;
+  /** 0 disables per-note peak compensation (the default); higher values blend it in. */
   peakComp?: number;
+  /** Calibrated pitch-referenced peak target before the limiter. */
   normalizeTarget?: number;
 }
 
@@ -90,6 +93,16 @@ export interface AudioChunk {
   sampleRate: number;
   startSample: number;
   channels: number;
+  /** Source track for raw, unmixed playback streams. */
+  trackId?: string;
+  /** Initial per-track gain in [0, 2], applied by a live mixer. */
+  trackVolume?: number;
+  /** Initial per-track pan in [-1, 1], applied by a live mixer. */
+  trackPan?: number;
+  /** Initial per-track mute state, applied by a live mixer. */
+  trackMute?: boolean;
+  /** Initial per-track solo state, applied by a live mixer. */
+  trackSolo?: boolean;
 }
 
 export interface ReclistEntry {
@@ -105,8 +118,10 @@ export interface LanguageModule {
   name: string;
   phonemes: Map<string, PhonemeDef>;
   lyricToPhonemes(lyric: string): string[];
+  expandPhonemes?(phonemes: readonly string[]): string[];
   resolveAccents?(lyrics: string[]): (number | undefined)[];
   reclist?(style: ReclistStyle): ReclistEntry[];
+  detectLikelihood?(lyrics: readonly string[]): number;
 }
 
 /** Oscillator controls. Aspiration is mixed by the renderer, so it is optional here. */

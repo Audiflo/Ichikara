@@ -63,6 +63,21 @@ describe("native projects", () => {
     expect(parseProject(serializeProject(project))).toEqual(project);
   });
 
+  it("preserves distinct track languages and aliases through a document round trip", () => {
+    const id = ids();
+    const project = createProject("Multilingual", id);
+    const first = addTrack(project, "Japanese", chitoseChika, "ja", id);
+    const second = addTrack(project, "English", chitoseChika, "en", id);
+    const third = addTrack(project, "Mandarin", chitoseChika, "cmn", id);
+    addPart(first, "Verse", 0, 480, id);
+    addPart(second, "Verse", 0, 480, id);
+    addPart(third, "Verse", 0, 480, id);
+
+    const restored = parseProject(serializeProject(project));
+    expect(restored.tracks.map((track) => track.language)).toEqual(["ja", "en", "cmn"]);
+    expect(restored).toEqual(project);
+  });
+
   it("materializes implicit note positions without losing score resolution", () => {
     const project = projectFromScore(
       {

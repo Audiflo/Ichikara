@@ -172,10 +172,19 @@ const tables: Record<LangCode, AliasTable> = {
 
 export const REST_LYRIC = "R";
 
+export const CONTINUATION_LYRIC = "-";
+
 export const REST_PHONEME = "sil";
 
 export function isRestLyric(lyric: string): boolean {
   return lyric.trim() === REST_LYRIC;
+}
+
+/** UTAU tail marker. Only a standalone hyphen qualifies; VCV aliases such as
+ *  "- ka" and "a -" are ordinary lyrics and keep their own phoneme resolution.
+ */
+export function isContinuationLyric(lyric: string): boolean {
+  return lyric.trim() === CONTINUATION_LYRIC;
 }
 
 export function toCanonical(lang: LangCode, phoneme: string): string | undefined {

@@ -12,11 +12,13 @@
     advancedOpen = $bindable(false),
     baseVoice = $bindable(chitoseChika),
     onCommit,
+    onLiveChange,
   }: {
     params?: VoiceParameters;
     advancedOpen?: boolean;
     baseVoice?: VoiceConfig;
     onCommit?: () => void;
+    onLiveChange?: () => void;
   } = $props();
 
   let tab = $state("voice");
@@ -44,13 +46,20 @@
     "Chitose Ren": "androgynous",
   };
 
+  function updateParam<K extends keyof VoiceParameters>(key: K, value: VoiceParameters[K]): void {
+    params = { ...params, [key]: value };
+    onLiveChange?.();
+  }
+
   function applyPreset(p: VoiceParameters) {
     params = { ...params, ...p };
+    onLiveChange?.();
     onCommit?.();
   }
 
   function clearOverrides() {
     params = {};
+    onLiveChange?.();
   }
 
   function selectVoice(v: VoiceConfig) {
@@ -98,7 +107,7 @@
         step={0.01}
         format={(v: number) => v.toFixed(2)}
         hint="Negative = masculine, positive = feminine. Zero is the base voice's own register."
-        onChange={(v: number) => (params.gender = v)}
+        onChange={(v: number) => updateParam("gender", v)}
       />
       <Field
         label="Breathiness"
@@ -106,7 +115,7 @@
         value={params.breathiness ?? 0.5}
         step={0.01}
         hint="Breath noise under the voice. Zero removes it entirely."
-        onChange={(v: number) => (params.breathiness = v)}
+        onChange={(v: number) => updateParam("breathiness", v)}
       />
       <Field
         label="Tension"
@@ -114,15 +123,15 @@
         value={params.tension ?? 0.5}
         step={0.01}
         hint="Vocal-fold tension: higher = brighter, thinner, more harmonics."
-        onChange={(v: number) => (params.tension = v)}
+        onChange={(v: number) => updateParam("tension", v)}
       />
       <Field
         label="Brightness"
         {onCommit}
         value={params.brightness ?? 0.5}
         step={0.01}
-        hint="Shifts the vocal-tract formants upward for a brighter tone."
-        onChange={(v: number) => (params.brightness = v)}
+        hint="Narrows the vocal-tract formant bandwidths for a more focused tone."
+        onChange={(v: number) => updateParam("brightness", v)}
       />
       <Field
         label="Vibrato"
@@ -130,7 +139,7 @@
         value={params.vibratoAmount ?? 0.5}
         step={0.01}
         hint="Depth of the pitch-vibrato modulation."
-        onChange={(v: number) => (params.vibratoAmount = v)}
+        onChange={(v: number) => updateParam("vibratoAmount", v)}
       />
     </div>
 
@@ -150,7 +159,7 @@
           max={1}
           step={0.01}
           hint="Fraction of the cycle the glottis is open. Higher = brighter, breathier."
-          onChange={(v: number) => (params.oq = v)}
+          onChange={(v: number) => updateParam("oq", v)}
         />
         <Field
           label="Speed Quotient"
@@ -160,7 +169,7 @@
           max={5}
           step={0.1}
           hint="Asymmetry of the glottal pulse. Higher = more natural, rounded. Minimum 1.3: the LF model has no valid opening phase below that."
-          onChange={(v: number) => (params.sq = v)}
+          onChange={(v: number) => updateParam("sq", v)}
         />
         <Field
           label="Shimmer"
@@ -170,7 +179,7 @@
           max={1}
           step={0.005}
           hint="Amplitude jitter (cycle-to-cycle variation)."
-          onChange={(v: number) => (params.shimmer = v)}
+          onChange={(v: number) => updateParam("shimmer", v)}
         />
         <h3>Timbre</h3>
         <Field
@@ -181,7 +190,7 @@
           max={3}
           step={0.01}
           hint="Global scaling of the vocal-tract resonances."
-          onChange={(v: number) => (params.fScale = v)}
+          onChange={(v: number) => updateParam("fScale", v)}
         />
         <Field
           label="Formant Shift"
@@ -191,7 +200,7 @@
           max={24}
           step={1}
           hint="Semitone shift applied to all formants."
-          onChange={(v: number) => (params.fShift = v)}
+          onChange={(v: number) => updateParam("fShift", v)}
         />
         <Field
           label="Vibrato Rate"
@@ -199,7 +208,7 @@
           min={0}
           max={20}
           step={0.1}
-          onChange={(v: number) => (params.vRate = v)}
+          onChange={(v: number) => updateParam("vRate", v)}
           {onCommit}
         />
         <Field
@@ -209,7 +218,7 @@
           min={0}
           max={2}
           step={0.01}
-          onChange={(v: number) => (params.vAttack = v)}
+          onChange={(v: number) => updateParam("vAttack", v)}
         />
       </div>
     {/if}
@@ -229,6 +238,11 @@
 </Tabs.Root>
 
 <style>
+  .vp-advanced h3:not(:first-child) {
+    margin-top: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--border-strong);
+  }
   .vp-adv-toggle {
     width: 100%;
     display: flex;

@@ -14,12 +14,18 @@
     encodeWav,
     chitoseChika,
     importProjectFromFile,
+    importProjectFromFiles,
+    appendProject,
     exportProjectToBytes,
     StreamPlayer,
     TempoMap,
+    scaleVoice,
+    getLanguage,
+    listLanguages,
     type Project,
     type ProjectNote,
     type VocalTrack,
+    type VoiceConfig,
     type AudioChunk,
   } from "@audiflo/ichikara";
   import Arrangement from "./components/Arrangement.svelte";
@@ -34,10 +40,11 @@
   import { EditorHistory } from "./lib/editor/history";
   import { downloadFile } from "./lib/editor/files";
   import { readDraft, writeDraft } from "./lib/editor/draft";
+  import { setTrackLanguage, detectProjectLanguages, applyTrackLanguages } from "./lib/editor/tracks";
   import { defaultPreferences, layoutBounds, readPreferences, writePreferences } from "./lib/editor/preferences";
   import { constrainPane, workspaceSize } from "./lib/editor/layout";
   import { createWorkerStream } from "./lib/workerStream";
-  import { createResilientStream, type CancellableAudio } from "./lib/render/resilient-stream";
+  import { createResilientStream } from "./lib/render/resilient-stream";
 
   const id = (): string => crypto.randomUUID();
   const initial = projectFromScore(createDemoScore("jp"), "First phrase", "jp", id);
@@ -56,6 +63,11 @@
   const dirty = $derived(JSON.stringify(project) !== savedSignature);
   let pendingProject: Project | null = $state(null);
   let replaceOpen = $state(false);
+  let pendingImport: Project | null = $state(null);
+  let importLanguages: string[] = $state([]);
+  let importMode = $state<"replace" | "append">("replace");
+  let importPickerOpen = $state(false);
+  const languageOptions = listLanguages().map((lang) => ({ id: lang.id, name: lang.name }));
   let recoveryMessage = $state("");
   let settingsOpen = $state(false);
   let timelineOpen = $state(false);
@@ -95,7 +107,7 @@
   let bufferAhead = $state(0);
   let playheadTick = $state<number | null>(null);
   let player: StreamPlayer | null = $state(null);
-  let currentStream: CancellableAudio | null = null;
+  let currentStream: ReturnType<typeof createResilientStream> | null = null;
   let frame = 0;
   let playbackTiming: TempoMap | null = null;
   const timing = $derived(new TempoMap(project.tempos, project.resolution));
@@ -217,6 +229,18 @@
     playheadTick = null;
   }
 
+  function liveVoice(track: VocalTrack, sampleRate: number): VoiceConfig {
+    const current = project.tracks.find((candidate) => candidate.id === track.id) ?? track;
+    return { ...scaleVoice(current.voice, current.parameters), sampleRate, channels: 1 as const };
+  }
+
+  function pushVoiceUpdate(trackId: string): void {
+    const target = project.tracks.find((track) => track.id === trackId);
+    const stream = currentStream;
+    if (!target || !stream) return;
+    stream.updateVoice(trackId, $state.snapshot(target.voice), $state.snapshot(target.parameters));
+  }
+
   async function handlePlay(): Promise<void> {
     handleStop();
     errorMessage = "";
@@ -228,8 +252,8 @@
     const { sampleRate, preBufferSeconds } = preferences;
     playbackTiming = new TempoMap(snapshot.tempos, snapshot.resolution);
     const source = createResilientStream(
-      () => createWorkerStream({ project: snapshot, sampleRate }),
-      () => streamProject(snapshot, sampleRate),
+      () => createWorkerStream({ project: snapshot, sampleRate, applyMix: false }),
+      () => streamProject(snapshot, sampleRate, { applyMix: false, voiceForTrack: (track) => liveVoice(track, sampleRate) }),
       () => {
         if (player === p) renderNotice = "Rendering locally. Worker unavailable.";
       },
@@ -259,6 +283,18 @@
 
   $effect(() => {
     player?.setVolume(volume);
+  });
+
+  $effect(() => {
+    const active = player;
+    if (!active || playerState !== "playing") return;
+    for (const track of project.tracks) {
+      active.setTrackVolume(track.id, Math.max(0, Math.min(2, track.gain)));
+      active.setTrackMute(track.id, track.mute);
+      active.setTrackPan(track.id, Math.max(-1, Math.min(1, track.pan)));
+    }
+    const soloId = project.tracks.find((track) => track.solo)?.id ?? null;
+    active.setSolo(soloId);
   });
   onDestroy(handleStop);
 
@@ -337,17 +373,54 @@
 
   async function openFile(): Promise<void> {
     const input = fileInput;
-    const file = input?.files?.[0];
-    if (!file) return;
+    const files = Array.from(input?.files ?? []);
+    if (files.length === 0) return;
     try {
-      const next = /\.(ichi|ichikara)$/i.test(file.name) ? parseProject(await file.text()) : await importProjectFromFile(file, "jp", id);
-      requestReplacement(next);
+      const native = files.filter((file) => /\.(ichi|ichikara)$/i.test(file.name));
+      if (native.length > 0) {
+        if (files.length > 1) throw new Error("Open .ichi projects one at a time");
+        const nativeFile = native[0];
+        if (!nativeFile) throw new Error("No project file selected");
+        requestReplacement(parseProject(await nativeFile.text()));
+      } else {
+        const single = files.length === 1 ? files[0] : undefined;
+        const next = single ? await importProjectFromFile(single, "jp", id) : await importProjectFromFiles(files, "jp", id);
+        pendingImport = next;
+        importLanguages = detectProjectLanguages(next);
+        importMode = "replace";
+        importPickerOpen = true;
+      }
       errorMessage = "";
     } catch (error) {
-      errorMessage = `Could not open ${file.name}: ${error instanceof Error ? error.message : String(error)}`;
+      const names = files.map((file) => file.name).join(", ");
+      errorMessage = `Could not open ${names}: ${error instanceof Error ? error.message : String(error)}`;
     } finally {
-      input.value = "";
+      if (input) input.value = "";
     }
+  }
+
+  function confirmImport(): void {
+    const next = pendingImport;
+    if (!next) return;
+    applyTrackLanguages(next, importLanguages);
+    pendingImport = null;
+    importPickerOpen = false;
+    if (importMode === "append") {
+      const existing = new Set(project.tracks.map((track) => track.id));
+      history.push($state.snapshot(project));
+      appendProject(project, $state.snapshot(next), id);
+      const added = project.tracks.find((track) => !existing.has(track.id));
+      if (added) select(added.id, added.parts[0]?.id ?? null);
+      synchronizeHistory();
+      persistDraft();
+      return;
+    }
+    requestReplacement($state.snapshot(next));
+  }
+
+  function cancelImport(): void {
+    pendingImport = null;
+    importPickerOpen = false;
   }
 
   function saveFile(): boolean {
@@ -448,6 +521,7 @@
       <input
         type="file"
         hidden
+        multiple
         bind:this={fileInput}
         accept=".ichi,.ichikara,.ust,.ustx,.vsqx,.vpr,.svp,.mid,.midi,.musicxml,.ufdata"
         onchange={openFile}
@@ -500,8 +574,13 @@
                 <button class="icon-btn" title="Delete selected track" onclick={deleteTrack}><Trash2 size={14} /></button>
               </div>
               <label
-                >Language<select aria-label="Track language" bind:value={track.language} onchange={saveSnapshot}
-                  ><option value="jp">Japanese</option><option value="en">English</option><option value="zh">Mandarin</option></select
+                >Language<select
+                  aria-label="Track language"
+                  value={getLanguage(track.language)?.id ?? track.language}
+                  onchange={(event) => {
+                    if (setTrackLanguage(project, track.id, event.currentTarget.value)) saveSnapshot();
+                  }}
+                  >{#each languageOptions as option (option.id)}<option value={option.id}>{option.name}</option>{/each}</select
                 ></label
               >
               <label
@@ -536,7 +615,13 @@
                 }}
               />{/if}
             <div class="voice-settings" role="group" aria-label="Voice settings">
-              <VoicePanel bind:params={track.parameters} bind:baseVoice={track.voice} bind:advancedOpen onCommit={saveSnapshot} />
+              <VoicePanel
+                bind:params={track.parameters}
+                bind:baseVoice={track.voice}
+                bind:advancedOpen
+                onCommit={saveSnapshot}
+                onLiveChange={() => pushVoiceUpdate(track.id)}
+              />
             </div>
           {:else}<p class="inspector-empty">Select a track to edit its voice and mix.</p>{/if}
         </aside>
@@ -649,6 +734,36 @@
             <Dialog.Close>Cancel</Dialog.Close>
             <button onclick={() => confirmReplacement(false)}>Discard changes</button>
             <button onclick={() => confirmReplacement(true)}>Save and continue</button>
+          </div>
+        </div>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
+  <Dialog.Root bind:open={importPickerOpen}>
+    <Dialog.Portal>
+      <Dialog.Overlay class="dialog-overlay" />
+      <Dialog.Content class="dialog-content">
+        <div class="dialog-header"><Dialog.Title class="dialog-title">Import project</Dialog.Title></div>
+        <div class="dialog-body">
+          <Dialog.Description>Choose how to import these tracks, then confirm the detected language for each one.</Dialog.Description>
+          <div class="import-languages">
+            <label
+              ><span>Import mode</span><select bind:value={importMode} aria-label="Import mode">
+                <option value="replace">Replace current project</option>
+                <option value="append">Append as new tracks</option>
+              </select></label
+            >
+            {#each pendingImport?.tracks ?? [] as track, index (track.id)}
+              <label
+                ><span>{track.name}</span><select bind:value={importLanguages[index]} aria-label={`Language for ${track.name}`}>
+                  {#each languageOptions as option (option.id)}<option value={option.id}>{option.name}</option>{/each}
+                </select></label
+              >
+            {/each}
+          </div>
+          <div class="document-actions">
+            <button onclick={cancelImport}>Cancel</button>
+            <button onclick={confirmImport}>Import</button>
           </div>
         </div>
       </Dialog.Content>

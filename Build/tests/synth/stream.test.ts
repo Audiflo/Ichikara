@@ -81,6 +81,112 @@ describe("renderScore", () => {
     }
   });
 
+  it("renders a standalone dash as a continuation of the previous vowel", async () => {
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "ka", noteNum: 60, length: 480 },
+          { tick: 480, lyric: "-", noteNum: 60, length: 480 },
+        ],
+      },
+      voice,
+      "jp",
+    );
+    expect(chunks).toHaveLength(2);
+    const continuation = elementAt(elementAt(chunks, 1).data, 0);
+    expect(Math.max(...continuation)).toBeGreaterThan(0.01);
+  });
+
+  it("keeps consecutive dashes on the same continuation phoneme", async () => {
+    const shortVoice = { ...buildVoice(), sampleRate: 8000 };
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "ka", noteNum: 60, length: 48 },
+          { tick: 48, lyric: "-", noteNum: 60, length: 48 },
+          { tick: 96, lyric: "-", noteNum: 60, length: 48 },
+        ],
+      },
+      shortVoice,
+      "jp",
+    );
+    for (const chunk of chunks.slice(1)) {
+      expect(elementAt(chunk.data, 0).some((sample) => sample !== 0)).toBe(true);
+    }
+  });
+
+  it("renders a dash after a rest as silence", async () => {
+    const shortVoice = { ...buildVoice(), sampleRate: 8000 };
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "ka", noteNum: 60, length: 48 },
+          { tick: 48, lyric: "R", noteNum: 60, length: 48 },
+          { tick: 96, lyric: "-", noteNum: 60, length: 48 },
+        ],
+      },
+      shortVoice,
+      "jp",
+    );
+    expect(elementAt(elementAt(chunks, 2).data, 0).every((sample) => sample === 0)).toBe(true);
+  });
+
+  it("does not continue a dash across a gap in the score", async () => {
+    const shortVoice = { ...buildVoice(), sampleRate: 8000 };
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "ka", noteNum: 60, length: 48 },
+          { tick: 96, lyric: "-", noteNum: 60, length: 48 },
+        ],
+      },
+      shortVoice,
+      "jp",
+    );
+    expect(elementAt(elementAt(chunks, 1).data, 0).every((sample) => sample === 0)).toBe(true);
+  });
+
+  it("keeps explicit phoneme overrides on a dash note", async () => {
+    const shortVoice = { ...buildVoice(), sampleRate: 8000 };
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [{ tick: 0, lyric: "-", phonemes: ["a"], noteNum: 60, length: 48 }],
+      },
+      shortVoice,
+      "jp",
+    );
+    expect(elementAt(elementAt(chunks, 0).data, 0).some((sample) => sample !== 0)).toBe(true);
+  });
+
+  it("uses a per-note voice provider for later notes only", async () => {
+    const shortVoice = { ...buildVoice(), sampleRate: 8000 };
+    const score: Score = {
+      tempos: [{ tick: 0, tempo: 120 }],
+      resolution: 480,
+      notes: [
+        { tick: 0, lyric: "a", noteNum: 60, length: 48 },
+        { tick: 48, lyric: "a", noteNum: 60, length: 48 },
+      ],
+    };
+    const baseline = await renderScore(score, shortVoice, "jp");
+    const brightened = { ...shortVoice, formant: { ...shortVoice.formant, scale: 1.8 } };
+    const updated = await renderScore(score, shortVoice, "jp", {
+      voiceForNote: (note) => (note.tick === 48 ? brightened : undefined),
+    });
+    expect(elementAt(elementAt(updated, 0).data, 0)).toEqual(elementAt(elementAt(baseline, 0).data, 0));
+    expect(elementAt(elementAt(updated, 1).data, 0)).not.toEqual(elementAt(elementAt(baseline, 1).data, 0));
+  });
+
   it("renders multiple notes respecting ticks", async () => {
     const score: Score = {
       tempos: [{ tick: 0, tempo: 120 }],
@@ -187,6 +293,54 @@ describe("cross-note overlap timing", () => {
       expect(elementAt(mixed.data, 0).length).toBe(count * SAMPLES_PER_NOTE);
     }, 60_000);
   }
+
+  it("keeps level through a legato seam between vowel notes", async () => {
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "a", noteNum: 60, length: 480 },
+          { tick: 480, lyric: "a", noteNum: 60, length: 480 },
+        ],
+      },
+      voice,
+      "jp",
+    );
+    const data = elementAt(mixChunks(chunks).data, 0);
+    const seam = SAMPLES_PER_NOTE;
+    const win = Math.round(0.003 * voice.sampleRate);
+    const rms = (from: number, to: number): number => {
+      let sum = 0;
+      for (let i = from; i < to; i++) {
+        const sample = elementAt(data, i);
+        sum += sample * sample;
+      }
+      return Math.sqrt(sum / (to - from));
+    };
+    const around = rms(seam - win, seam + win);
+    const steadyFrom = seam - Math.round(0.15 * voice.sampleRate);
+    const steady = rms(steadyFrom, steadyFrom + 2 * win);
+    expect(around).toBeGreaterThan(steady * 0.5);
+    expect(around).toBeLessThan(steady * 1.4);
+  });
+
+  it("carries legato overlap across a one-tick gap", async () => {
+    const chunks = await renderScore(
+      {
+        tempos: [{ tick: 0, tempo: 120 }],
+        resolution: 480,
+        notes: [
+          { tick: 0, lyric: "a", noteNum: 60, length: 480 },
+          { tick: 481, lyric: "a", noteNum: 60, length: 480 },
+        ],
+      },
+      voice,
+      "jp",
+    );
+    const overlap = elementAt(chunks, 0).startSample + elementAt(elementAt(chunks, 0).data, 0).length - elementAt(chunks, 1).startSample;
+    expect(overlap).toBeGreaterThan(100);
+  });
 
   it("does not grow the overlap tail with tick quantisation", async () => {
     const chunks: AudioChunk[] = [];

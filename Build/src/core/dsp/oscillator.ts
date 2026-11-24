@@ -12,6 +12,9 @@ const LF_ALPHA_BISECT_REL_TOL = 1e-12;
 const SHAPE_EPSILON = 1e-6;
 const SHAPE_F0_TOLERANCE = 0.01;
 
+const FA_BASE_HZ = 350;
+const FA_TENSENESS_SPAN_HZ = 2500;
+
 export class LFGlottalSource {
   private phase = 0;
   private dcX = 0;
@@ -99,7 +102,7 @@ export class LFGlottalSource {
     const sq = Math.max(0.3, Math.min(3.0, speedQuotient));
     let Tp = (Te * sq) / (1 + sq);
 
-    const Fa = 350 + tenseness * 650;
+    const Fa = FA_BASE_HZ + tenseness * FA_TENSENESS_SPAN_HZ;
     const shapeT0 = 1 / Math.max(1, shapeF0);
     const Ta = Math.min(1 / (2 * Math.PI * Fa), shapeT0 * 0.45);
 

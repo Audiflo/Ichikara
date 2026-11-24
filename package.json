@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "workspaces": [
+    "packages/*",
     "Build",
     "Demo"
   ],
@@ -11,9 +12,9 @@
     "postinstall": "node Build/scripts/repair-declarations.mjs",
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces --if-present",
-    "typecheck": "npm run build -w Build && npm run typecheck --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
     "lint": "npm run lint --workspaces",
-    "check": "npm run typecheck && npm run lint && npm test && npm run build -w Demo",
+    "check": "npm run build && npm run typecheck && npm run lint && npm test",
     "make-pretty": "npm run make-pretty --workspaces",
     "build:voicebank": "npm run build:voicebank -w Build"
   },

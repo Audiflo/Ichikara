@@ -30,11 +30,27 @@ interface RecordedSource {
   start: (when: number, offset: number, duration: number) => void;
 }
 
+interface RecordedParam {
+  value: number;
+  setValueAtTime: (value: number, when: number) => void;
+  linearRampToValueAtTime: (value: number, when: number) => void;
+}
+
+interface RecordedGain extends RecordedParam {
+  target: unknown;
+}
+
+interface RecordedPanner extends RecordedParam {
+  target: unknown;
+}
+
 class MockAudioContext {
   state: AudioContextState = "running";
   readonly destination = {};
   readonly createdBuffers: MockAudioBuffer[] = [];
   readonly createdSources: RecordedSource[] = [];
+  readonly createdGains: RecordedGain[] = [];
+  readonly createdPanners: RecordedPanner[] = [];
   private clock = 0;
 
   constructor(readonly options?: { sampleRate?: number }) {
@@ -53,13 +69,42 @@ class MockAudioContext {
   }
 
   createGain() {
-    return {
-      gain: {
-        value: 1,
-        setValueAtTime() {},
-        linearRampToValueAtTime() {},
+    const gain: RecordedGain = {
+      value: 1,
+      setValueAtTime(value: number) {
+        this.value = value;
       },
-      connect() {},
+      linearRampToValueAtTime(value: number) {
+        this.value = value;
+      },
+      target: null,
+    };
+    this.createdGains.push(gain);
+    return {
+      gain,
+      connect(target: unknown) {
+        gain.target = target;
+      },
+    };
+  }
+
+  createStereoPanner() {
+    const pan: RecordedPanner = {
+      value: 0,
+      setValueAtTime(value: number) {
+        this.value = value;
+      },
+      linearRampToValueAtTime(value: number) {
+        this.value = value;
+      },
+      target: null,
+    };
+    this.createdPanners.push(pan);
+    return {
+      pan,
+      connect(target: unknown) {
+        pan.target = target;
+      },
     };
   }
 
@@ -116,9 +161,28 @@ afterEach(() => {
   globalThis.AudioContext = realAudioContext;
 });
 
+interface TaggedChunk extends AudioChunk {
+  trackId?: string;
+}
+
+interface LiveTrackControls {
+  setTrackVolume(trackId: string, volume: number): void;
+  setTrackMute(trackId: string, muted: boolean): void;
+  setSolo(trackId: string | null): void;
+  setTrackPan(trackId: string, pan: number): void;
+}
+
 function chunk(startSample: number, length: number, value: number, channels = 1): AudioChunk {
   const data = Array.from({ length: channels }, () => new Float32Array(length).fill(value));
   return { data, sampleRate: 44100, startSample, channels };
+}
+
+function taggedChunk(trackId: string, startSample: number, length: number, value: number): TaggedChunk {
+  return { ...chunk(startSample, length, value), trackId };
+}
+
+function liveControls(player: StreamPlayer): LiveTrackControls {
+  return player;
 }
 
 function legatoChunks(count: number, nominal: number, overlap: number, value: number, channels = 1): AudioChunk[] {
@@ -262,6 +326,74 @@ describe("StreamPlayer timeline parity with export", () => {
 
     expect(lastProgress(events)).toBe(elementAt(exported.data, 0).length);
   }, 60_000);
+});
+
+describe("StreamPlayer live track mixer", () => {
+  async function* taggedChunks(trackIds: readonly string[]): AsyncGenerator<TaggedChunk> {
+    for (let i = 0; i < 4; i++) {
+      for (const trackId of trackIds) yield taggedChunk(trackId, i * 44100, 44100, 0.25);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    }
+  }
+
+  it("applies live track volume through a dedicated gain node", async () => {
+    installMockAudioContext();
+    const player = new StreamPlayer();
+    const events: PlayerEvent[] = [];
+    player.on((event) => events.push(event));
+    const played = player.play(taggedChunks(["lead"]), 0.8, 44100, { preBufferThreshold: 0.01 });
+    await waitForState(events, "playing");
+    const ctx = installedContext();
+    expect(ctx.createdGains.length).toBeGreaterThan(1);
+    const master = elementAt(ctx.createdGains, 0);
+    const lead = elementAt(ctx.createdGains, 1);
+    liveControls(player).setTrackVolume("lead", 0.25);
+    expect(lead.value).toBeCloseTo(0.25, 6);
+    expect(master.value).toBeCloseTo(0.8, 6);
+    player.stop();
+    await played;
+  });
+
+  it("applies live mute and solo through track gain nodes", async () => {
+    installMockAudioContext();
+    const player = new StreamPlayer();
+    const events: PlayerEvent[] = [];
+    player.on((event) => events.push(event));
+    const played = player.play(taggedChunks(["lead", "pad"]), 0.8, 44100, { preBufferThreshold: 0.01 });
+    await waitForState(events, "playing");
+    const ctx = installedContext();
+    const lead = elementAt(ctx.createdGains, 1);
+    const pad = elementAt(ctx.createdGains, 2);
+
+    liveControls(player).setTrackMute("lead", true);
+    expect(lead.value).toBe(0);
+    liveControls(player).setTrackMute("lead", false);
+    expect(lead.value).toBeCloseTo(1, 6);
+
+    liveControls(player).setSolo("lead");
+    expect(lead.value).toBeCloseTo(1, 6);
+    expect(pad.value).toBe(0);
+    liveControls(player).setSolo(null);
+    expect(pad.value).toBeCloseTo(1, 6);
+
+    player.stop();
+    await played;
+  });
+
+  it("applies live track pan through a dedicated panner node", async () => {
+    installMockAudioContext();
+    const player = new StreamPlayer();
+    const events: PlayerEvent[] = [];
+    player.on((event) => events.push(event));
+    const played = player.play(taggedChunks(["lead"]), 0.8, 44100, { preBufferThreshold: 0.01 });
+    await waitForState(events, "playing");
+    const ctx = installedContext();
+    expect(ctx.createdPanners).toHaveLength(1);
+    liveControls(player).setTrackPan("lead", -1);
+    expect(elementAt(ctx.createdPanners, 0).value).toBeCloseTo(-1, 6);
+    player.stop();
+    await played;
+  });
 });
 
 describe("StreamPlayer resource handling", () => {

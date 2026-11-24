@@ -1,9 +1,11 @@
-import type { AudioChunk } from "@audiflo/ichikara";
+import type { AudioChunk, VoiceConfig } from "@audiflo/ichikara";
+import type { VoiceParameters } from "../render-protocol";
 
 /** An audio producer whose cancellation releases its owned resources. */
 export interface CancellableAudio {
   stream: AsyncIterable<AudioChunk>;
   cancel(): void;
+  updateVoice?(trackId: string, baseVoice: VoiceConfig, parameters: VoiceParameters): void;
 }
 
 /** Prefer the primary renderer, falling back only before it delivers audio.
@@ -14,7 +16,11 @@ export function createResilientStream(
   primary: () => CancellableAudio,
   fallback: () => AsyncIterable<AudioChunk>,
   onFallback: (error: Error) => void,
-): { stream: AsyncGenerator<AudioChunk>; cancel(): void } {
+): {
+  stream: AsyncGenerator<AudioChunk>;
+  cancel(): void;
+  updateVoice(trackId: string, baseVoice: VoiceConfig, parameters: VoiceParameters): void;
+} {
   let active: CancellableAudio | undefined;
   let cancelled = false;
   const isCancelled = (): boolean => cancelled;
@@ -51,5 +57,9 @@ export function createResilientStream(
     }
   })();
 
-  return { stream, cancel };
+  const updateVoice = (trackId: string, baseVoice: VoiceConfig, parameters: VoiceParameters): void => {
+    active?.updateVoice?.(trackId, baseVoice, parameters);
+  };
+
+  return { stream, cancel, updateVoice };
 }

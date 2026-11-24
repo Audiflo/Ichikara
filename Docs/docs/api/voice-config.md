@@ -24,12 +24,12 @@ The glottal source generates the raw pulse train. Its parameters control the sha
 
 ```typescript
 interface GlottalConfig {
-  openQuotient: number;   // 0.2 - 0.9
-  speedQuotient: number;  // 1.3 - 3.0 (see below for why the lower bound exists)
-  tenseness: number;      // 0 - 1
-  aspiration: number;     // 0 - 0.3
-  power: number;          // 0 - 1
-  jitter?: number;        // 0 - 0.05
+  openQuotient: number; // 0.2 - 0.9
+  speedQuotient: number; // 1.3 - 3.0 (see below for why the lower bound exists)
+  tenseness: number; // 0 - 1
+  aspiration: number; // 0 - 0.3
+  power: number; // 0 - 1
+  jitter?: number; // 0 - 0.05
 }
 ```
 
@@ -38,7 +38,7 @@ interface GlottalConfig {
 Fraction of the glottal cycle during which the vocal folds are open.
 
 | Value | Perceptual Effect                       |
-|-------|-----------------------------------------|
+| ----- | --------------------------------------- |
 | ~0.3  | Pressed, tense voice (short open phase) |
 | ~0.5  | Neutral, modal voice                    |
 | ~0.7  | Breathy, soft voice (long open phase)   |
@@ -59,34 +59,34 @@ which means `Tp` must exceed `Te/2`, which means `sq` must exceed 1. At `sq = 0.
 opening completes an extra whole cycle and the continuity equation has no real root.
 Values under 1.22 are therefore clamped to the nearest valid configuration.
 
-| Value | Perceptual Effect                     |
-|-------|---------------------------------------|
-| ~1.4  | Slowest valid closure, dark, rounded  |
-| ~2.0  | Natural, balanced                     |
-| ~2.5  | Brighter, crisper onset               |
-| >3.0  | Very sharp closure, buzzy             |
+| Value | Perceptual Effect                    |
+| ----- | ------------------------------------ |
+| ~1.4  | Slowest valid closure, dark, rounded |
+| ~2.0  | Natural, balanced                    |
+| ~2.5  | Brighter, crisper onset              |
+| >3.0  | Very sharp closure, buzzy            |
 
 ### tenseness
 
-Spectral tilt control. Higher values attenuate the high-frequency content of the glottal source.
+Spectral tilt control. Higher values raise the glottal return-phase corner and add high-frequency content to the source.
 
-| Value | Perceptual Effect                     |
-|-------|---------------------------------------|
-| ~0.2  | Very bright, thin (low spectral tilt) |
-| ~0.5  | Neutral balance                       |
-| ~0.7  | Dark, warm (higher spectral tilt)     |
-| >0.8  | Very dark, muffled                    |
+| Value | Perceptual Effect                       |
+| ----- | --------------------------------------- |
+| ~0.2  | Dark, rounded (steep spectral tilt)     |
+| ~0.5  | Neutral balance                         |
+| ~0.7  | Bright, clear (shallower spectral tilt) |
+| >0.8  | Very bright, thin                       |
 
 ### aspiration
 
 Amount of turbulence noise mixed into the glottal source. Simulates incomplete glottal closure.
 
 | Value | Perceptual Effect                            |
-|-------|----------------------------------------------|
+| ----- | -------------------------------------------- |
 | 0     | Clean, no audible aspiration                 |
-| ~0.02 | Slight breathiness (natural for most voices)  |
-| ~0.05 | Noticeably breathy                            |
-| >0.1  | Very breathy, significant noise floor         |
+| ~0.02 | Slight breathiness (natural for most voices) |
+| ~0.05 | Noticeably breathy                           |
+| >0.1  | Very breathy, significant noise floor        |
 
 The aspiration noise is low-passed at ~4 kHz to stay in the natural band. It is shaped by two resonators whose peak gain is several times the nominal amplitude, so values above ~0.05 add an audible hiss in the 3-4.5 kHz band. Keep named voices low and let `breathiness` scale up from there.
 
@@ -95,19 +95,33 @@ The aspiration noise is low-passed at ~4 kHz to stay in the natural band. It is 
 Overall gain multiplier for the glottal pulse before formant filtering.
 
 | Value | Perceptual Effect |
-|-------|-------------------|
+| ----- | ----------------- |
 | ~0.5  | Quiet, soft       |
 | ~0.7  | Moderate volume   |
 | ~0.9  | Loud, full        |
 
-Power interacts with the post-render normalisation: higher power produces a higher peak, which is then scaled back by the gain limiter.
+Power interacts with the output level calibration: higher power produces a higher peak, which is then scaled back by the gain limiter.
+
+### Output level controls
+
+| Field             | Default | Range   | Purpose                                    |
+| ----------------- | ------- | ------- | ------------------------------------------ |
+| `volume`          | `100`   | >= 0    | Linear output gain in percent.             |
+| `peakComp`        | `0`     | 0 - 100 | Opt-in per-note peak compensation.         |
+| `normalizeTarget` | `0.5`   | 0 - 1   | Calibrated peak target before the limiter. |
+
+By default each note uses a stable, pitch-referenced calibration probe, so note
+loudness does not jump with pitch and a click in one note cannot crush its vowel
+body. Set `peakComp` above zero to blend in per-note compensation; for voiced
+notes the measurement ignores unvoiced noise bursts, so consonants cannot set
+vowel gain.
 
 ### jitter
 
 Random cycle-to-cycle variation in fundamental frequency and amplitude. Adds natural instability.
 
 | Value | Perceptual Effect                                 |
-|-------|---------------------------------------------------|
+| ----- | ------------------------------------------------- |
 | 0     | Perfectly stable (robotic)                        |
 | ~0.01 | Very slight natural variation                     |
 | ~0.02 | Noticeable roughness (typical for natural voices) |
@@ -121,9 +135,9 @@ The formant config applies a global transformation to all phoneme formant target
 
 ```typescript
 interface FormantConfig {
-  scale: number;      // 0.5 - 2.0 (typically 0.8 - 1.2)
-  shift: number;      // -12 - +12 semitones
-  bandwidth: number;  // 0.5 - 2.0
+  scale: number; // 0.5 - 2.0 (typically 0.8 - 1.2)
+  shift: number; // -12 - +12 semitones
+  bandwidth: number; // 0.5 - 2.0
 }
 ```
 
@@ -132,7 +146,7 @@ interface FormantConfig {
 Multiplicative scale factor on all formant centre frequencies. Simulates vocal-tract length scaling.
 
 | Value | Perceptual Effect                              |
-|-------|------------------------------------------------|
+| ----- | ---------------------------------------------- |
 | ~0.8  | Larger vocal tract, darker, "more masculine"   |
 | 1.0   | Neutral (no change)                            |
 | ~1.2  | Smaller vocal tract, brighter, "more feminine" |
@@ -145,7 +159,7 @@ A scale of 1.18 is used by the female voice preset to produce the typical female
 Additive formant shift in semitones, applied after scaling. Finer control than scale.
 
 | Value | Perceptual Effect    |
-|-------|----------------------|
+| ----- | -------------------- |
 | -6    | Darker, more muffled |
 | 0     | Neutral              |
 | +6    | Brighter, more nasal |
@@ -155,7 +169,7 @@ Additive formant shift in semitones, applied after scaling. Finer control than s
 Multiplier on all formant bandwidths. Controls the width of resonant peaks.
 
 | Value | Perceptual Effect                    |
-|-------|--------------------------------------|
+| ----- | ------------------------------------ |
 | ~0.6  | Narrow resonances, ringing, "twangy" |
 | 1.0   | Neutral                              |
 | ~1.5  | Wide resonances, muffled, soft       |
@@ -165,9 +179,9 @@ Multiplier on all formant bandwidths. Controls the width of resonant peaks.
 
 ```typescript
 interface VibratoConfig {
-  rate: number;    // Hz (typically 4 - 7)
-  depth: number;   // cents (typically 10 - 80)
-  attack: number;  // seconds (0 - 2)
+  rate: number; // Hz (typically 4 - 7)
+  depth: number; // cents (typically 10 - 80)
+  attack: number; // seconds (0 - 2)
 }
 ```
 
@@ -176,7 +190,7 @@ interface VibratoConfig {
 Frequency of the vibrato oscillation in Hz (cycles per second).
 
 | Value | Perceptual Effect              |
-|-------|--------------------------------|
+| ----- | ------------------------------ |
 | ~4    | Slow, wide vibrato (classical) |
 | ~5.5  | Moderate vibrato (male pop)    |
 | ~6    | Moderate vibrato (female pop)  |
@@ -187,7 +201,7 @@ Frequency of the vibrato oscillation in Hz (cycles per second).
 Peak-to-peak depth of the pitch modulation in cents (100 cents = 1 semitone).
 
 | Value | Perceptual Effect               |
-|-------|---------------------------------|
+| ----- | ------------------------------- |
 | ~10   | Very subtle, barely perceptible |
 | ~30   | Moderate vibrato                |
 | ~50   | Wide, expressive vibrato        |
@@ -198,7 +212,7 @@ Peak-to-peak depth of the pitch modulation in cents (100 cents = 1 semitone).
 Time in seconds for the vibrato to reach full depth after the note onset.
 
 | Value | Perceptual Effect                  |
-|-------|------------------------------------|
+| ----- | ---------------------------------- |
 | 0     | Vibrato starts instantly           |
 | ~0.1  | Quick onset (pop style)            |
 | ~0.3  | Gradual onset (classical style)    |
@@ -207,8 +221,8 @@ Time in seconds for the vibrato to reach full depth after the note onset.
 ## Output Format
 
 ```typescript
-sampleRate: number;  // 22050 - 96000 (typical: 44100)
-channels: 1 | 2;     // 1 = mono, 2 = stereo
+sampleRate: number; // 22050 - 96000 (typical: 44100)
+channels: 1 | 2; // 1 = mono, 2 = stereo
 ```
 
 ### sampleRate
@@ -258,7 +272,7 @@ The library ships with three named voices, one per register:
 
 ## Perceptual Scaling
 
-The `scaleVoice()` function maps high-level perceptual controls to the underlying parameters. Each control is a shift *away from the voice you pass in*, so the neutral point of every control returns that voice unchanged:
+The `scaleVoice()` function maps high-level perceptual controls to the underlying parameters. Each control is a shift _away from the voice you pass in_, so the neutral point of every control returns that voice unchanged:
 
 | Control         | Neutral | Range                                                              |
 | --------------- | ------- | ------------------------------------------------------------------ |
@@ -270,10 +284,10 @@ The `scaleVoice()` function maps high-level perceptual controls to the underlyin
 
 ```typescript
 const adjusted = scaleVoice(chitoseChika, {
-  gender: 0.3,        // More feminine (formant scale + SQ)
-  breathiness: 0.4,   // Increase OQ + aspiration
-  tension: 0.6,       // Increase tenseness
-  brightness: 0.7,    // Reduce formant bandwidth
+  gender: 0.3, // More feminine (formant scale + SQ)
+  breathiness: 0.4, // Increase OQ + aspiration
+  tension: 0.6, // Increase tenseness
+  brightness: 0.7, // Reduce formant bandwidth
   vibratoAmount: 0.8, // Scale vibrato depth
 });
 ```

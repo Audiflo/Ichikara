@@ -96,6 +96,34 @@ describe("ufDataToScore", () => {
       ]);
     });
 
+    it("sorts out-of-order imported pitch points", () => {
+      const data = makeData();
+      elementAt(data.project.tracks, 0).notes = [{ key: 60, tickOn: 600, tickOff: 1026, lyric: "a", phoneme: null }];
+      elementAt(data.project.tracks, 0).pitch = {
+        ticks: [1021, 600, 1026],
+        values: [60.5, 60, 61],
+        isAbsolute: true,
+      };
+
+      const bend = elementAt(ufDataToScore(data).notes, 0).pitchBend;
+      expect(bend?.ticks).toEqual([0, 421, 426]);
+      expect(bend?.values).toEqual([0, 0.5, 1]);
+    });
+
+    it("deduplicates pitch points that share a tick", () => {
+      const data = makeData();
+      elementAt(data.project.tracks, 0).notes = [{ key: 60, tickOn: 600, tickOff: 1026, lyric: "a", phoneme: null }];
+      elementAt(data.project.tracks, 0).pitch = {
+        ticks: [600, 600, 1021, 1026],
+        values: [60, 60, 60.5, 61],
+        isAbsolute: true,
+      };
+
+      const bend = elementAt(ufDataToScore(data).notes, 0).pitchBend;
+      expect(bend?.ticks).toEqual([0, 421, 426]);
+      expect(bend?.values).toEqual([0, 0.5, 1]);
+    });
+
     it("passes through relative pitch values unchanged", () => {
       const data = makeData();
       elementAt(data.project.tracks, 0).pitch = {

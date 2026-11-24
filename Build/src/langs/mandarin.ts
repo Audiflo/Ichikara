@@ -1,5 +1,7 @@
 import type { PhonemeDef, LanguageModule, ReclistEntry, ReclistStyle } from "../core/types";
 import { REST_PHONEME, isRestLyric } from "./alias";
+import { countScripts, romanizationStats, ROMANIZATION_THRESHOLD } from "./detect";
+import g2pData from "./data/zh-g2p.cjs";
 
 // Mandarin Chinese (Pǔtōnghuà) phoneme data.
 //
@@ -338,8 +340,10 @@ const pinyinG2P: Record<string, string[]> = {
   ci: ["c", "iz"],
   si: ["s", "iz"],
 
-  // Retroflex final:
+  // Retroflex final and syllabic nasals:
   er: ["er"],
+  m: ["m"],
+  ng: ["ng"],
 
   // Diphthong finals:
   ai: ["a", "i"],
@@ -417,11 +421,50 @@ const INITIALS = new Set([
 
 const VOWELS = new Set(["a", "e", "i", "o", "u", "v"]);
 
+const HAN = /^[\u4e00-\u9fff]$/;
+const LYRIC_SEGMENT = /[\u4e00-\u9fff]+|[^\u4e00-\u9fff\s_-]+/g;
+const MAX_G2P_KEY_LENGTH = Object.keys(g2pData).reduce((max, key) => Math.max(max, key.length), 1);
+
+/** Strip tone digits and diacritics so dictionary readings and typed pinyin share one path. */
+function normalizePinyinSyllable(syllable: string): string {
+  const decomposed = syllable.toLowerCase().normalize("NFD").replace(/u\u0308/g, "v");
+  const stripped = decomposed.replace(/[\u0304\u0305\u0301\u030c\u0300]/g, "");
+  return stripped.replace(/[1-5]$/, "").normalize("NFC");
+}
+
+/** Resolve a Han run with whole-phrase keys first, then per-character readings. */
+function hanToPinyin(run: string): string[] {
+  const direct = g2pData[run];
+  if (direct) return [...direct];
+  const readings: string[] = [];
+  let index = 0;
+  while (index < run.length) {
+    const maxLength = Math.min(MAX_G2P_KEY_LENGTH, run.length - index);
+    let matched = false;
+    for (let length = maxLength; length > 1; length--) {
+      const key = run.slice(index, index + length);
+      const phrase = g2pData[key];
+      if (phrase) {
+        readings.push(...phrase);
+        index += length;
+        matched = true;
+        break;
+      }
+    }
+    if (matched) continue;
+    const character = run.charAt(index);
+    const reading = g2pData[character];
+    readings.push(...(reading ?? [REST_PHONEME]));
+    index++;
+  }
+  return readings;
+}
+
 /**
  * Convert a single pinyin syllable (without tone number) to phonemes.
  */
 function pinyinToPhonemes(syllable: string): string[] {
-  const s = syllable.toLowerCase().trim();
+  const s = normalizePinyinSyllable(syllable);
   if (!s) return [];
 
   if (pinyinG2P[s]) return [...pinyinG2P[s]];
@@ -478,8 +521,7 @@ function pinyinToPhonemes(syllable: string): string[] {
 
   if (!finalPhonemes) {
     if (INITIALS.has(s) && s !== "y" && s !== "w") return [s];
-    // Unrecognized pinyin is resolved one phoneme code point at a time.
-    return Array.from(s).filter((ch) => ch !== " ");
+    return [REST_PHONEME];
   }
 
   return initial ? [initial, ...finalPhonemes] : finalPhonemes;
@@ -656,10 +698,33 @@ export const mandarin: LanguageModule = {
     const clean = lyric.trim();
     if (!clean) return [];
 
-    const noTone = clean.replace(/[1-5]$/, "");
-
-    const syllables = noTone.split(/[\s_-]+/).filter(Boolean);
-    return syllables.flatMap((syl) => pinyinToPhonemes(syl));
+    return (clean.match(LYRIC_SEGMENT) ?? []).flatMap((segment) => {
+      const isHanRun = HAN.test(segment.charAt(0));
+      const readings = isHanRun ? hanToPinyin(segment) : [segment];
+      return readings.flatMap((reading) => pinyinToPhonemes(reading));
+    });
+  },
+  detectLikelihood(lyrics: readonly string[]): number {
+    const { kana, han, latin, total } = countScripts(lyrics);
+    if (kana > 0) return 0.15;
+    if (han > 0) return Math.min(1, 0.4 + han / Math.max(1, total));
+    const {
+      romajiRatio,
+      pinyinRatio,
+      romajiSegments,
+      pinyinSegments,
+      romajiExclusive,
+      pinyinExclusive,
+      romajiMarkers,
+      latinTokens,
+    } = romanizationStats(lyrics);
+    if (latinTokens > 0 && pinyinRatio >= ROMANIZATION_THRESHOLD) {
+      const exclusive = (0.12 * (pinyinExclusive - romajiExclusive)) / latinTokens;
+      const markers = (0.06 * romajiMarkers) / latinTokens;
+      const segments = romajiRatio >= ROMANIZATION_THRESHOLD ? (0.03 * (romajiSegments - pinyinSegments)) / latinTokens : 0;
+      return Math.min(1, Math.max(0, 0.4 + 0.5 * pinyinRatio + exclusive - markers + segments));
+    }
+    return latin > 0 ? 0.1 : 0;
   },
   reclist(style: ReclistStyle): ReclistEntry[] {
     return style === "vcv" ? buildZhVcv() : buildZhCv();

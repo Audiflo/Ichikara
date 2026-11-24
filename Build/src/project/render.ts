@@ -1,4 +1,4 @@
-import type { AudioChunk } from "../core/types";
+import type { AudioChunk, Note, VoiceConfig } from "../core/types";
 import { elementAt, integerInRange } from "../core/validation";
 import { streamScore } from "../synth/stream";
 import { scaleVoice } from "../voices";
@@ -6,6 +6,12 @@ import { validateProject } from "./validation";
 import type { Project, VocalTrack } from "./types";
 
 const DEFAULT_SAMPLE_RATE = 44100;
+
+/** Raw streams keep tracks separate and tag chunks with their initial mixer state. */
+export interface StreamProjectOptions {
+  applyMix?: boolean;
+  voiceForTrack?: (track: VocalTrack, note: Note, startSample: number) => VoiceConfig | undefined;
+}
 
 function applyMix(chunk: AudioChunk, track: VocalTrack): AudioChunk {
   const mono = elementAt(chunk.data, 0);
@@ -15,33 +21,57 @@ function applyMix(chunk: AudioChunk, track: VocalTrack): AudioChunk {
   return { ...chunk, channels: 2, data: [mono.map((value) => value * left), mono.map((value) => value * right)] };
 }
 
-/** Stream a whole song in absolute sample order, honoring part placement, solo, mute, gain and pan.
- * Holds one lookahead chunk per part; iterator closure releases every region producer.
- * Invalid documents, unsupported languages, and synthesis failures propagate to the consumer.
+function tagForLiveMix(chunk: AudioChunk, track: VocalTrack): AudioChunk {
+  return {
+    ...chunk,
+    trackId: track.id,
+    trackVolume: track.gain,
+    trackPan: track.pan,
+    trackMute: track.mute,
+    trackSolo: track.solo,
+  };
+}
+
+/** Stream a whole song in absolute sample order. Mixed streams bake solo, mute,
+ *  gain and pan into the audio; raw streams keep tracks separate for live mixing.
+ *  Holds one lookahead chunk per track; iterator closure releases every producer.
+ *  Invalid documents, unsupported languages, and synthesis failures propagate to the consumer.
  */
-export async function* streamProject(project: Project, sampleRate = DEFAULT_SAMPLE_RATE): AsyncGenerator<AudioChunk> {
+export async function* streamProject(
+  project: Project,
+  sampleRate = DEFAULT_SAMPLE_RATE,
+  options: StreamProjectOptions = {},
+): AsyncGenerator<AudioChunk> {
   validateProject(project);
   integerInRange(sampleRate, "sample rate", 8000, 192000);
+  const raw = options.applyMix === false;
+  const voiceForTrack = options.voiceForTrack;
   const solo = project.tracks.some((track) => track.solo);
-  const producers = project.tracks
-    .filter((track) => !track.mute && (!solo || track.solo))
-    .flatMap((track) => {
-      const voice = { ...scaleVoice(track.voice, track.parameters), sampleRate, channels: 1 as const };
-      return track.parts
-        .filter((part) => part.notes.length > 0)
-        .map((part) => ({
-          track,
-          stream: streamScore(
-            {
-              resolution: project.resolution,
-              tempos: project.tempos,
-              notes: part.notes.map((note) => ({ ...note, tick: part.tick + note.tick })),
-            },
-            voice,
-            track.language,
-          ),
-        }));
-    });
+  const activeTracks = raw ? project.tracks : project.tracks.filter((track) => !track.mute && (!solo || track.solo));
+  const producers = activeTracks.flatMap((track) => {
+    const notes = track.parts.flatMap((part) => part.notes.map((note) => ({ ...note, tick: part.tick + note.tick })));
+    if (notes.length === 0) return [];
+    const voice = { ...scaleVoice(track.voice, track.parameters), sampleRate, channels: 1 as const };
+    return [
+      {
+        track,
+        stream: streamScore(
+          {
+            resolution: project.resolution,
+            tempos: project.tempos,
+            notes,
+          },
+          voice,
+          track.language,
+          {
+            ...(voiceForTrack
+              ? { voiceForNote: (note: Note, startSample: number) => voiceForTrack(track, note, startSample) ?? voice }
+              : {}),
+          },
+        ),
+      },
+    ];
+  });
   try {
     const heads: IteratorResult<AudioChunk>[] = [];
     for (const producer of producers) heads.push(await producer.stream.next());
@@ -58,7 +88,7 @@ export async function* streamProject(project: Project, sampleRate = DEFAULT_SAMP
       const head = elementAt(heads, earliest);
       const producer = elementAt(producers, earliest);
       if (head.done) throw new Error("The selected render head must contain audio");
-      yield applyMix(head.value, producer.track);
+      yield raw ? tagForLiveMix(head.value, producer.track) : applyMix(head.value, producer.track);
       heads[earliest] = await producer.stream.next();
     }
   } finally {

@@ -97,6 +97,35 @@ await describe("worker stream lifecycle", async () => {
     assert.equal(worker.terminated, true);
   });
 
+  await it("forwards voice updates and preserves live mix metadata", async () => {
+    const source = createWorkerStream({ ...job, applyMix: false });
+    source.updateVoice("lead", job.voice, { gender: 0.5 });
+    assert.deepEqual(worker.requests[1], {
+      type: "update",
+      trackId: "lead",
+      baseVoice: job.voice,
+      parameters: { gender: 0.5 },
+    });
+    worker.respond({
+      type: "chunk",
+      startSample: 0,
+      sampleRate: 44100,
+      data: [new Float32Array([0.25]).buffer],
+      trackId: "lead",
+      trackVolume: 0.5,
+      trackPan: -1,
+      trackMute: false,
+      trackSolo: true,
+    });
+    const result = await source.stream.next();
+    assert.equal(result.done, false);
+    assert.equal(result.value.trackId, "lead");
+    assert.equal(result.value.trackVolume, 0.5);
+    assert.equal(result.value.trackPan, -1);
+    assert.equal(result.value.trackSolo, true);
+    source.cancel();
+  });
+
   await it("surfaces a render error to the awaiting consumer", async () => {
     const source = createWorkerStream(job);
     const pending = source.stream.next();

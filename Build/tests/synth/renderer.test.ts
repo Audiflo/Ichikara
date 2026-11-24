@@ -1,4 +1,4 @@
-import { renderNote, computePhonemeDurations } from "../../src/synth/renderer";
+import { renderNote, renderPhonemes, computePhonemeDurations, robustPeak } from "../../src/synth/renderer";
 import { FormantCascade } from "../../src/core/dsp/filter";
 import { getLanguage } from "../../src/langs/index";
 import { buildVoice } from "../../src/voices/index";
@@ -52,6 +52,39 @@ describe("renderNote", () => {
   it("handles unknown lyric gracefully", () => {
     const { chunk } = renderNote({ lyric: "zzz", noteNum: 60, length: 480, tick: 0 }, voice, lang, 120, 480);
     expect(elementAt(chunk.data, 0).length).toBeGreaterThan(0);
+  });
+  it("renders lowercase English phoneme overrides", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const { chunk, phonemeStarts } = renderNote(
+      { lyric: "HELLO", noteNum: 72, length: 480, tick: 0, phonemes: ["hh", "ah", "l", "ow"] },
+      voice,
+      english,
+      120,
+      480,
+    );
+    expect(phonemeStarts).toHaveLength(4);
+    expect(Math.max(...elementAt(chunk.data, 0))).toBeGreaterThan(0);
+  });
+
+  it("renders Vocaloid Sampa overrides from imported English projects", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => undefined);
+    try {
+      const { chunk, phonemeStarts } = renderNote(
+        { lyric: "kite", noteNum: 72, length: 480, tick: 0, phonemes: ["kh", "aI"] },
+        voice,
+        english,
+        120,
+        480,
+      );
+      expect(phonemeStarts).toHaveLength(2);
+      expect(Math.max(...elementAt(chunk.data, 0))).toBeGreaterThan(0);
+      expect(warn).not.toHaveBeenCalledWith(expect.stringContaining("missing phoneme"));
+    } finally {
+      warn.mockRestore();
+    }
   });
   it("produces mono output for mono voice", () => {
     const monoVoice = { ...voice, channels: 1 as const };
@@ -414,6 +447,50 @@ describe("phoneme duration allocation", () => {
     expect(phonemeStarts[phonemeStarts.length - 1]).toBeLessThan(elementAt(chunk.data, 0).length);
   });
 });
+describe("phoneme boundary continuity", () => {
+  const vowel: PhonemeDef = { symbol: "v", type: "vowel", formants: [{ f: 700, bw: 80 }] };
+  const sr = 44100;
+
+  function rms(data: Float32Array, from: number, to: number): number {
+    let sum = 0;
+    for (let i = from; i < to; i++) {
+      const sample = elementAt(data, i);
+      sum += sample * sample;
+    }
+    return Math.sqrt(sum / (to - from));
+  }
+
+  it("keeps level through a boundary between two voiced vowels", () => {
+    const { chunk, phonemeStarts } = renderPhonemes(
+      [vowel, vowel],
+      { lyric: "vv", noteNum: 60, length: 4800, tick: 0 },
+      buildVoice(),
+      120,
+      480,
+    );
+    const data = elementAt(chunk.data, 0);
+    const boundary = elementAt(phonemeStarts, 1);
+    const win = Math.round(0.002 * sr);
+    const around = rms(data, boundary - win, boundary + win);
+    const steady = rms(data, Math.floor(boundary * 0.3) - win, Math.floor(boundary * 0.3) + win);
+    expect(around).toBeGreaterThan(steady * 0.5);
+  });
+});
+
+describe("robustPeak", () => {
+  const clean = new Float32Array(10000).map((_, i) => 0.2 * Math.sin(i * 0.1));
+
+  it("keeps the measured peak for a clean signal", () => {
+    expect(robustPeak(clean, 0.2)).toBeCloseTo(0.2, 6);
+  });
+
+  it("ignores an isolated transient when measuring note level", () => {
+    const withClick = new Float32Array(clean);
+    withClick[5000] = 1;
+    expect(robustPeak(withClick, 1)).toBeCloseTo(0.2, 2);
+  });
+});
+
 describe("output limiting", () => {
   const lang = getLanguage("jp");
   if (!lang) throw new Error("Japanese must be registered for renderer tests");
@@ -474,5 +551,86 @@ describe("output limiting", () => {
   it("honours a normalizeTarget within the representable range", () => {
     expect(renderPeak({ normalizeTarget: 0.25 })).toBeLessThanOrEqual(0.25);
     expect(renderPeak({ normalizeTarget: 0.8 })).toBeLessThanOrEqual(0.8);
+  });
+  it("keeps an unvoiced-only note below full scale", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const { chunk } = renderNote({ lyric: "s", noteNum: 72, length: 480, tick: 0, phonemes: ["s"] }, voice, english, 120, 480);
+    let peak = 0;
+    for (const ch of chunk.data) for (const s of ch) peak = Math.max(peak, Math.abs(s));
+    expect(peak).toBeLessThanOrEqual(0.5);
+  });
+  it("keeps a rest quiet when a voiced note carried state into it", () => {
+    const english = getLanguage("en");
+    if (!english) throw new Error("English must be registered for renderer tests");
+    const vowel = renderNote({ lyric: "a", noteNum: 72, length: 480, tick: 0 }, voice, lang, 120, 480);
+    const rest = renderNote(
+      { lyric: "-", noteNum: 72, length: 30, tick: 480, phonemes: ["-"] },
+      voice,
+      english,
+      120,
+      480,
+      vowel.finalFormants,
+      0,
+      undefined,
+      { state: vowel.state },
+    );
+    let peak = 0;
+    for (const ch of rest.chunk.data) for (const s of ch) peak = Math.max(peak, Math.abs(s));
+    expect(peak).toBeLessThanOrEqual(0.01);
+  });
+});
+
+describe("note leveling", () => {
+  const lang = getLanguage("jp");
+  if (!lang) throw new Error("Japanese must be registered for renderer tests");
+  const voice = buildVoice();
+
+  function peakOf(samples: Float32Array): number {
+    let peak = 0;
+    for (const sample of samples) peak = Math.max(peak, Math.abs(sample));
+    return peak;
+  }
+
+  function rmsOf(samples: Float32Array, from: number, to: number): number {
+    let sum = 0;
+    let count = 0;
+    for (let i = from; i < to; i++) {
+      sum += elementAt(samples, i) ** 2;
+      count++;
+    }
+    return count > 0 ? Math.sqrt(sum / count) : 0;
+  }
+
+  it("does not normalize each note against its own peak by default", () => {
+    const note: Note = { lyric: "a", noteNum: 72, length: 480, tick: 0 };
+    const automatic = elementAt(renderNote(note, voice, lang, 120, 480).chunk.data, 0);
+    const disabled = elementAt(renderNote(note, { ...voice, peakComp: 0 }, lang, 120, 480).chunk.data, 0);
+    expect(Array.from(automatic)).toEqual(Array.from(disabled));
+  });
+
+  it("holds a consistent level across a wide pitch range", () => {
+    const low = peakOf(elementAt(renderNote({ lyric: "a", noteNum: 60, length: 480, tick: 0 }, voice, lang, 120, 480).chunk.data, 0));
+    const high = peakOf(elementAt(renderNote({ lyric: "a", noteNum: 84, length: 480, tick: 0 }, voice, lang, 120, 480).chunk.data, 0));
+    expect(Math.abs(low - high)).toBeLessThan(0.08);
+  });
+
+  it("keeps the vowel body level when a loud transient shares the note", () => {
+    const note: Note = { lyric: "a", noteNum: 72, length: 960, tick: 0 };
+    const vowel: PhonemeDef = { symbol: "a", type: "vowel", formants: [{ f: 700, bw: 110 }, { f: 1200, bw: 150 }, { f: 2600, bw: 250 }] };
+    const transient: PhonemeDef = {
+      symbol: "t",
+      type: "consonant",
+      consonantType: "plosive",
+      defaultDuration: 0.004,
+      noise: { amplitude: 80 },
+    };
+    const clean = elementAt(renderPhonemes([vowel], note, voice, 120, 480).chunk.data, 0);
+    const withClick = elementAt(renderPhonemes([transient, vowel], note, voice, 120, 480).chunk.data, 0);
+    const from = Math.floor(clean.length * 0.6);
+    const cleanBody = rmsOf(clean, from, clean.length);
+    const clickBody = rmsOf(withClick, from, withClick.length);
+    expect(clickBody / cleanBody).toBeGreaterThan(0.9);
+    expect(clickBody / cleanBody).toBeLessThan(1.1);
   });
 });

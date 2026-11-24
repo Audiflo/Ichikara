@@ -1,3 +1,4 @@
+import { ARPABET, convert, VOCALOID_SAMPA } from "@audiflo/phonematix";
 import { english } from "../../src/langs/english";
 import g2pData from "../../src/langs/data/en-g2p.cjs";
 
@@ -30,10 +31,76 @@ describe("english", () => {
   });
 
   it("all phonemes have a type and a symbol", () => {
-    for (const [key, def] of english.phonemes) {
-      expect(def.symbol).toBe(key);
+    for (const [, def] of english.phonemes) {
+      expect(def.symbol === "sil" || /^[A-Z]+$/.test(def.symbol)).toBe(true);
       expect(def.type).toBeDefined();
       expect(["vowel", "consonant", "diphthong", "silence"]).toContain(def.type);
+    }
+  });
+
+  it("defines lowercase aliases for ARPAbet phonemes", () => {
+    for (const symbol of ["hh", "ah", "l", "ow", "sil"]) {
+      expect(english.phonemes.has(symbol)).toBe(true);
+    }
+    expect(english.phonemes.get("hh")).toBe(english.phonemes.get("HH"));
+    expect(english.phonemes.get("sil")).toBe(english.phonemes.get("SIL"));
+  });
+
+  it("resolves Vocaloid X-SAMPA phonemes used by imported projects", () => {
+    const aliases: Record<string, string[]> = {
+      "-": ["SIL"],
+      Sil: ["SIL"],
+      "@": ["AH"],
+      "@U": ["OW"],
+      "@r": ["ER"],
+      D: ["DH"],
+      I: ["IH"],
+      "I@": ["IH", "R"],
+      N: ["NG"],
+      "O:": ["AO"],
+      "O@": ["AO", "R"],
+      Q: ["AA"],
+      T: ["TH"],
+      U: ["UH"],
+      V: ["AH"],
+      aI: ["AY"],
+      aU: ["AW"],
+      b: ["B"],
+      bh: ["B"],
+      d: ["D"],
+      dh: ["D"],
+      e: ["EH"],
+      "e@": ["EH", "R"],
+      eI: ["EY"],
+      f: ["F"],
+      g: ["G"],
+      gh: ["G"],
+      h: ["HH"],
+      "i:": ["IY"],
+      j: ["Y"],
+      k: ["K"],
+      kh: ["K"],
+      l: ["L"],
+      l0: ["L"],
+      m: ["M"],
+      n: ["N"],
+      p: ["P"],
+      ph: ["P"],
+      r: ["R"],
+      s: ["S"],
+      t: ["T"],
+      tS: ["CH"],
+      th: ["T"],
+      "u:": ["UW"],
+      v: ["V"],
+      w: ["W"],
+      z: ["Z"],
+      "{": ["AE"],
+    };
+    for (const [alias, expected] of Object.entries(aliases)) {
+      expect(convert([alias], { from: VOCALOID_SAMPA, to: ARPABET })).toEqual(expected);
+      expect(english.expandPhonemes?.([alias])).toEqual(expected);
+      for (const symbol of expected) expect(english.phonemes.has(symbol)).toBe(true);
     }
   });
 
@@ -43,6 +110,14 @@ describe("english", () => {
         expect(def.formants?.length).toBeGreaterThanOrEqual(1);
       }
     }
+  });
+
+  it("preserves an explicit ARPAbet phoneme sequence", () => {
+    expect(english.lyricToPhonemes("HH AH L OW")).toEqual(["HH", "AH", "L", "OW"]);
+  });
+
+  it("does not read inherited properties from the g2p lexicon", () => {
+    expect(() => english.lyricToPhonemes("__proto__")).not.toThrow();
   });
 
   it("handles consonant clusters", () => {

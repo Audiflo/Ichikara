@@ -1,6 +1,7 @@
 import type { PhonemeDef, LanguageModule, ReclistEntry, ReclistStyle } from "../core/types";
 import g2pData from "./data/jp-g2p.cjs";
 import { REST_PHONEME, isRestLyric } from "./alias";
+import { countScripts, romanizationStats, ROMANIZATION_THRESHOLD } from "./detect";
 
 // Japanese phoneme data.
 //
@@ -646,6 +647,26 @@ export const japanese: LanguageModule = {
       .flatMap((token) => romajiToPhonemes(token));
   },
   resolveAccents,
+  detectLikelihood(lyrics: readonly string[]): number {
+    const { kana, han, total } = countScripts(lyrics);
+    if (kana > 0) return Math.min(1, 0.5 + kana / Math.max(1, total));
+    if (han > 0) return 0.3;
+    const {
+      romajiRatio,
+      pinyinRatio,
+      romajiSegments,
+      pinyinSegments,
+      romajiExclusive,
+      pinyinExclusive,
+      romajiMarkers,
+      latinTokens,
+    } = romanizationStats(lyrics);
+    if (latinTokens === 0 || romajiRatio < ROMANIZATION_THRESHOLD) return 0;
+    const exclusive = (0.12 * (romajiExclusive - pinyinExclusive)) / latinTokens;
+    const markers = (0.06 * romajiMarkers) / latinTokens;
+    const segments = pinyinRatio >= ROMANIZATION_THRESHOLD ? (0.03 * (pinyinSegments - romajiSegments)) / latinTokens : 0;
+    return Math.min(1, Math.max(0, 0.4 + 0.5 * romajiRatio + exclusive + markers + segments));
+  },
   reclist(style: ReclistStyle): ReclistEntry[] {
     return style === "vcv" ? buildJpVcv() : buildJpCv();
   },

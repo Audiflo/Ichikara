@@ -1,5 +1,7 @@
+import { ARPABET, convert, detectNotation, UnknownPhonemeError, VOCALOID_SAMPA, vocaloidSampa } from "@audiflo/phonematix";
 import type { PhonemeDef, LanguageModule, ReclistEntry, ReclistStyle } from "../core/types";
 import { isRestLyric, REST_PHONEME } from "./alias";
+import { countScripts, romanizationStats, ROMANIZATION_THRESHOLD } from "./detect";
 import g2pData from "./data/en-g2p.cjs";
 
 // English (ARPAbet) phoneme data.
@@ -449,7 +451,7 @@ const enPhonemes: PhonemeDef[] = [
   },
 ];
 
-const g2p = g2pData;
+const g2p = new Map<string, readonly string[]>(Object.entries(g2pData));
 const EN_VOWELS = enPhonemes.filter((p) => p.type === "vowel" || p.type === "diphthong").map((p) => p.symbol);
 const EN_CONSONANTS = enPhonemes.filter((p) => p.type === "consonant").map((p) => p.symbol);
 
@@ -480,16 +482,67 @@ function buildEnVcv(): ReclistEntry[] {
   return out;
 }
 
+const englishPhonemes = new Map<string, PhonemeDef>();
+for (const phoneme of enPhonemes) {
+  englishPhonemes.set(phoneme.symbol, phoneme);
+  englishPhonemes.set(phoneme.symbol.toLowerCase(), phoneme);
+}
+
+const REST_PHONEME_UPPERCASE = "SIL";
+const restPhoneme = enPhonemes.find((phoneme) => phoneme.symbol === REST_PHONEME);
+if (!restPhoneme) throw new Error(`English phoneme table is missing ${REST_PHONEME}`);
+englishPhonemes.set(REST_PHONEME_UPPERCASE, restPhoneme);
+
+function tryConvertToArpabet(phonemes: readonly string[], from: string): string[] | undefined {
+  try {
+    return convert(phonemes, { from, to: ARPABET });
+  } catch (error) {
+    if (error instanceof UnknownPhonemeError) return undefined;
+    throw error;
+  }
+}
+
+function expandPhonemes(phonemes: readonly string[]): string[] {
+  if (detectNotation(phonemes) === VOCALOID_SAMPA) {
+    const converted = tryConvertToArpabet(phonemes, VOCALOID_SAMPA);
+    if (converted !== undefined) return converted.filter((symbol) => englishPhonemes.has(symbol));
+  }
+
+  const output: string[] = [];
+  for (const symbol of phonemes) {
+    const definition = englishPhonemes.get(symbol);
+    if (definition !== undefined) {
+      output.push(definition.symbol);
+      continue;
+    }
+    const converted = tryConvertToArpabet([symbol], ARPABET);
+    if (converted !== undefined) output.push(...converted.filter((candidate) => englishPhonemes.has(candidate)));
+    else output.push(symbol);
+  }
+  return output;
+}
+
+for (const alias of Object.keys(vocaloidSampa.toIpa)) {
+  if (englishPhonemes.has(alias)) continue;
+  const converted = tryConvertToArpabet([alias], VOCALOID_SAMPA);
+  const canonical = converted?.length === 1 ? converted[0] : undefined;
+  if (canonical === undefined) continue;
+  const definition = englishPhonemes.get(canonical);
+  if (definition !== undefined) englishPhonemes.set(alias, definition);
+}
+
 export const english: LanguageModule = {
   id: "en",
   name: "English",
-  phonemes: new Map(enPhonemes.map((p) => [p.symbol, p])),
+  phonemes: englishPhonemes,
+  expandPhonemes,
   lyricToPhonemes(lyric: string): string[] {
     if (isRestLyric(lyric)) return [REST_PHONEME];
     const clean = lyric.trim().toLowerCase();
-    if (g2p[clean]) return [...g2p[clean]];
+    const entry = g2p.get(clean);
+    if (entry) return [...entry];
     const parts = clean.split(/[\s_-]+/).filter(Boolean);
-    if (parts.every((p) => this.phonemes.has(p))) return parts;
+    if (parts.every((p) => this.phonemes.has(p.toUpperCase()))) return parts.map((p) => p.toUpperCase());
     const simple: Record<string, string> = {
       a: "AA",
       b: "B",
@@ -521,6 +574,14 @@ export const english: LanguageModule = {
     // The fallback table maps ASCII letters, not grapheme clusters.
     const mapped = Array.from(clean).flatMap((c) => simple[c]?.split(" ") ?? []);
     return mapped.length > 0 ? mapped : ["AH"];
+  },
+  detectLikelihood(lyrics: readonly string[]): number {
+    const { kana, han, latin, total } = countScripts(lyrics);
+    if (kana > 0 || han > 0) return 0.1;
+    if (latin === 0) return 0;
+    const { romajiRatio, pinyinRatio } = romanizationStats(lyrics);
+    if (romajiRatio >= ROMANIZATION_THRESHOLD || pinyinRatio >= ROMANIZATION_THRESHOLD) return 0.2;
+    return Math.min(1, 0.3 + latin / Math.max(1, total));
   },
   reclist(style: ReclistStyle): ReclistEntry[] {
     return style === "vcv" ? buildEnVcv() : buildEnCv();

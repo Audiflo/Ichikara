@@ -18,6 +18,35 @@ function renderPulse(f0: number, oq: number, sq: number, tenseness: number) {
   return { positivePeak: pos, negativePeak: neg, peak: Math.max(pos, neg), ratio: pos / neg, buf };
 }
 
+function harmonicLevelDb(tenseness: number, harmonic: number): number {
+  const f0 = 220;
+  const src = new LFGlottalSource();
+  src.seed(7);
+  const n = 8192;
+  const params = {
+    f0,
+    sampleRate: SR,
+    openQuotient: 0.48,
+    speedQuotient: 2.4,
+    tenseness,
+    power: 1,
+    jitter: 0,
+    shimmer: 0,
+  };
+  const buf = src.generate(params, n);
+  const magnitude = (freq: number): number => {
+    let re = 0;
+    let im = 0;
+    for (let i = 0; i < n; i++) {
+      const angle = (2 * Math.PI * freq * i) / SR;
+      re += elementAt(buf, i) * Math.cos(angle);
+      im -= elementAt(buf, i) * Math.sin(angle);
+    }
+    return Math.hypot(re, im);
+  };
+  return 20 * Math.log10(magnitude(f0 * harmonic) / magnitude(f0));
+}
+
 function reachableConfigs() {
   const out: { f0: number; oq: number; sq: number; ten: number }[] = [];
   for (const f0 of [88, 147, 220, 330, 587]) {
@@ -124,6 +153,16 @@ describe("LFGlottalSource", () => {
     const outC = c.generate(params, 2000);
     expect(Array.from(outA)).toEqual(Array.from(outB));
     expect(Array.from(outA)).not.toEqual(Array.from(outC));
+  });
+
+  describe("glottal spectral brightness", () => {
+    it("keeps a 3.5 kHz source harmonic within 26 dB of the fundamental at maximum tenseness", () => {
+      expect(harmonicLevelDb(1, 16)).toBeGreaterThan(-26);
+    });
+
+    it("raises the 3.5 kHz harmonic level as tenseness increases", () => {
+      expect(harmonicLevelDb(1, 16)).toBeGreaterThan(harmonicLevelDb(0.2, 16) + 3);
+    });
   });
 
   describe("LF coefficient solving", () => {

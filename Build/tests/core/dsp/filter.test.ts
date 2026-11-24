@@ -32,6 +32,30 @@ describe("FormantFilter", () => {
     }
   });
 
+  it("smooths an abrupt resonator change instead of stepping the output", () => {
+    const sr = 44100;
+    const f = new FormantFilter();
+    const excitation = (i: number) => Math.sin((2 * Math.PI * 500 * i) / sr);
+    f.setResonator(500, 100, sr);
+    let prev = 0;
+    let steadyPeak = 0;
+    for (let i = 0; i < 4000; i++) {
+      const y = f.processSample(excitation(i));
+      if (i > 3000) steadyPeak = Math.max(steadyPeak, Math.abs(y));
+      prev = y;
+    }
+
+    f.setResonator(4000, 300, sr);
+    let switchJump = 0;
+    for (let i = 4000; i < 4064; i++) {
+      const y = f.processSample(excitation(i));
+      switchJump = Math.max(switchJump, Math.abs(y - prev));
+      prev = y;
+    }
+
+    expect(switchJump).toBeLessThan(steadyPeak * 0.2);
+  });
+
   it("reset clears state", () => {
     const f = new FormantFilter();
     f.setResonator(500, 100, 44100);
