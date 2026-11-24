@@ -7,8 +7,9 @@ const config: Config = {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.[tj]sx?$": ["ts-jest", { tsconfig: { allowJs: true } }],
   },
+  transformIgnorePatterns: ["/node_modules/(?!@sevenc-nanashi/utaformatix-ts/)"],
 };
 
 export default config;

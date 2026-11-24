@@ -24,7 +24,8 @@ export { createProject, addTrack, addPart, projectFromScore, parseProject, seria
 export { streamProject } from "./project/render";
 export { MeterMap } from "./project/meter";
 export type { MusicalPosition, BeatLine } from "./project/meter";
-export { projectToUfData, ufDataToProject, importProjectFromFile, exportProjectToBytes } from "./project/interchange";
+export { projectToUfData, ufDataToProject, importProjectFromFile, importProjectFromFiles, exportProjectToBytes } from "./project/interchange";
+export { appendProject } from "./project/merge";
 export { FormantFilter, FormantCascade, interpolateFormants } from "./core/dsp/filter";
 export { NoiseSource, shapeNoiseWithFormants } from "./core/dsp/noise";
 export { applyAmplitudeEnvelope, mixBuffers } from "./core/dsp/envelope";
@@ -36,7 +37,7 @@ export { streamScore, renderScore, mixChunks, renderNote, renderPhonemes, create
 export type { NoteTiming, RenderState, RenderOptions, RenderResult } from "./synth/index";
 export { StreamPlayer } from "./player/index";
 export type { PlayerState, PlayerEvent, PlayOptions } from "./player/index";
-export { ufDataToScore, importScoreFromFile, importScoreFromBytes } from "./import/ufdata";
+export { ufDataToScore, parseUfData, importScoreFromFile, importScoreFromBytes } from "./import/ufdata";
 export type { ImportOptions, UfData } from "./import/ufdata";
 export { scoreToUfData, exportScoreToBytes, exportScoreToBlob, exportScoreToUrl, downloadScore } from "./export/ufdata";
 export type { ExportOptions } from "./export/ufdata";

@@ -14,6 +14,8 @@
     encodeWav,
     chitoseChika,
     importProjectFromFile,
+    importProjectFromFiles,
+    appendProject,
     exportProjectToBytes,
     StreamPlayer,
     TempoMap,
@@ -63,6 +65,7 @@
   let replaceOpen = $state(false);
   let pendingImport: Project | null = $state(null);
   let importLanguages: string[] = $state([]);
+  let importMode = $state<"replace" | "append">("replace");
   let importPickerOpen = $state(false);
   const languageOptions = listLanguages().map((lang) => ({ id: lang.id, name: lang.name }));
   let recoveryMessage = $state("");
@@ -370,22 +373,29 @@
 
   async function openFile(): Promise<void> {
     const input = fileInput;
-    const file = input?.files?.[0];
-    if (!file) return;
+    const files = Array.from(input?.files ?? []);
+    if (files.length === 0) return;
     try {
-      if (/\.(ichi|ichikara)$/i.test(file.name)) {
-        requestReplacement(parseProject(await file.text()));
+      const native = files.filter((file) => /\.(ichi|ichikara)$/i.test(file.name));
+      if (native.length > 0) {
+        if (files.length > 1) throw new Error("Open .ichi projects one at a time");
+        const nativeFile = native[0];
+        if (!nativeFile) throw new Error("No project file selected");
+        requestReplacement(parseProject(await nativeFile.text()));
       } else {
-        const next = await importProjectFromFile(file, "jp", id);
+        const single = files.length === 1 ? files[0] : undefined;
+        const next = single ? await importProjectFromFile(single, "jp", id) : await importProjectFromFiles(files, "jp", id);
         pendingImport = next;
         importLanguages = detectProjectLanguages(next);
+        importMode = "replace";
         importPickerOpen = true;
       }
       errorMessage = "";
     } catch (error) {
-      errorMessage = `Could not open ${file.name}: ${error instanceof Error ? error.message : String(error)}`;
+      const names = files.map((file) => file.name).join(", ");
+      errorMessage = `Could not open ${names}: ${error instanceof Error ? error.message : String(error)}`;
     } finally {
-      input.value = "";
+      if (input) input.value = "";
     }
   }
 
@@ -395,6 +405,16 @@
     applyTrackLanguages(next, importLanguages);
     pendingImport = null;
     importPickerOpen = false;
+    if (importMode === "append") {
+      const existing = new Set(project.tracks.map((track) => track.id));
+      history.push($state.snapshot(project));
+      appendProject(project, $state.snapshot(next), id);
+      const added = project.tracks.find((track) => !existing.has(track.id));
+      if (added) select(added.id, added.parts[0]?.id ?? null);
+      synchronizeHistory();
+      persistDraft();
+      return;
+    }
     requestReplacement($state.snapshot(next));
   }
 
@@ -501,6 +521,7 @@
       <input
         type="file"
         hidden
+        multiple
         bind:this={fileInput}
         accept=".ichi,.ichikara,.ust,.ustx,.vsqx,.vpr,.svp,.mid,.midi,.musicxml,.ufdata"
         onchange={openFile}
@@ -722,10 +743,16 @@
     <Dialog.Portal>
       <Dialog.Overlay class="dialog-overlay" />
       <Dialog.Content class="dialog-content">
-        <div class="dialog-header"><Dialog.Title class="dialog-title">Import track languages</Dialog.Title></div>
+        <div class="dialog-header"><Dialog.Title class="dialog-title">Import project</Dialog.Title></div>
         <div class="dialog-body">
-          <Dialog.Description>Languages were detected from the lyrics. Choose a language for each imported track.</Dialog.Description>
+          <Dialog.Description>Choose how to import these tracks, then confirm the detected language for each one.</Dialog.Description>
           <div class="import-languages">
+            <label
+              ><span>Import mode</span><select bind:value={importMode} aria-label="Import mode">
+                <option value="replace">Replace current project</option>
+                <option value="append">Append as new tracks</option>
+              </select></label
+            >
             {#each pendingImport?.tracks ?? [] as track, index (track.id)}
               <label
                 ><span>{track.name}</span><select bind:value={importLanguages[index]} aria-label={`Language for ${track.name}`}>

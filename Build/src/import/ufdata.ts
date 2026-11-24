@@ -123,20 +123,48 @@ export function ufDataToScore(data: UfData, options: ImportOptions = {}): Score 
   return { tempos, resolution, notes, voice: track.name };
 }
 
-type ParseFn = (data: Uint8Array | File, params?: { pitch?: boolean }) => Promise<UfData>;
+type ParseInput = Uint8Array | File;
+type ParseFn = (data: ParseInput, params?: { pitch?: boolean }) => Promise<UfData>;
+type UtfModule = typeof import("@sevenc-nanashi/utaformatix-ts/base");
 
-let parsers: Readonly<Record<string, ParseFn>> | undefined;
+let utfModule: UtfModule | undefined;
 
-async function lazyInit(): Promise<void> {
-  if (parsers) return;
-  const m = await import("@sevenc-nanashi/utaformatix-ts/base");
-  parsers = { ...m.parseFunctions, midi: m.parseStandardMid };
+async function lazyInit(): Promise<UtfModule> {
+  if (!utfModule) utfModule = await import("@sevenc-nanashi/utaformatix-ts/base");
+  return utfModule;
 }
 
 function extFromFile(name: string): string {
   const dot = name.lastIndexOf(".");
   if (dot < 0) return name.toLowerCase();
   return name.slice(dot + 1).toLowerCase();
+}
+
+function isStringArray(value: string | readonly string[]): value is readonly string[] {
+  return Array.isArray(value);
+}
+
+function normalizeInputs(
+  input: ParseInput | readonly ParseInput[],
+  filenames: string | readonly string[],
+): { data: ParseInput | ParseInput[]; ext: string } {
+  if (input instanceof Uint8Array || input instanceof File) {
+    if (typeof filenames !== "string") throw new TypeError("A single file requires a single filename");
+    return { data: input, ext: extFromFile(filenames) };
+  }
+  if (!isStringArray(filenames) || filenames.length !== input.length) {
+    throw new TypeError("Every file in a multi-file import requires a filename");
+  }
+  if (input.length === 0) throw new TypeError("No files supplied for import");
+  const ext = extFromFile(elementAt(filenames, 0));
+  if (filenames.some((name) => extFromFile(name) !== ext)) {
+    throw new Error("Multi-file import requires all files to share one format");
+  }
+  if (ext !== "ust") throw new Error(`Multi-file import does not support .${ext}; convert the files to .ust first`);
+  const files = input.map((value, index) =>
+    value instanceof File ? value : new File([new Uint8Array(value)], elementAt(filenames, index)),
+  );
+  return { data: files, ext };
 }
 
 /** Parse a supported singing-project file; propagate format and conversion errors. */
@@ -149,11 +177,21 @@ export async function importScoreFromBytes(buf: Uint8Array, filename: string, op
   return ufDataToScore(await parseUfData(buf, filename, options.pitch ?? true), options);
 }
 
-/** Parse all tracks using the filename extension; propagate unsupported format and converter errors. */
-export async function parseUfData(input: File | Uint8Array, filename: string, pitch = true): Promise<UfData> {
-  const ext = extFromFile(filename);
-  await lazyInit();
-  const parseFn = parsers?.[ext];
+/** Parse all tracks using the filename extension; propagate unsupported format and converter errors.
+ * Multiple inputs are supported only for `.ust`, where each file becomes one track.
+ */
+export async function parseUfData(input: ParseInput, filename: string, pitch?: boolean): Promise<UfData>;
+export async function parseUfData(input: readonly ParseInput[], filenames: readonly string[], pitch?: boolean): Promise<UfData>;
+export async function parseUfData(
+  input: ParseInput | readonly ParseInput[],
+  filenames: string | readonly string[],
+  pitch = true,
+): Promise<UfData> {
+  const { data, ext } = normalizeInputs(input, filenames);
+  const m = await lazyInit();
+  if (Array.isArray(data)) return m.parseUst(data, { pitch });
+  const parsers: Readonly<Record<string, ParseFn>> = { ...m.parseFunctions, midi: m.parseStandardMid };
+  const parseFn = parsers[ext];
   if (!parseFn) throw new Error(`Unsupported file format: .${ext}`);
-  return parseFn(input, { pitch });
+  return parseFn(data, { pitch });
 }

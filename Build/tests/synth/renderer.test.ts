@@ -580,3 +580,57 @@ describe("output limiting", () => {
     expect(peak).toBeLessThanOrEqual(0.01);
   });
 });
+
+describe("note leveling", () => {
+  const lang = getLanguage("jp");
+  if (!lang) throw new Error("Japanese must be registered for renderer tests");
+  const voice = buildVoice();
+
+  function peakOf(samples: Float32Array): number {
+    let peak = 0;
+    for (const sample of samples) peak = Math.max(peak, Math.abs(sample));
+    return peak;
+  }
+
+  function rmsOf(samples: Float32Array, from: number, to: number): number {
+    let sum = 0;
+    let count = 0;
+    for (let i = from; i < to; i++) {
+      sum += elementAt(samples, i) ** 2;
+      count++;
+    }
+    return count > 0 ? Math.sqrt(sum / count) : 0;
+  }
+
+  it("does not normalize each note against its own peak by default", () => {
+    const note: Note = { lyric: "a", noteNum: 72, length: 480, tick: 0 };
+    const automatic = elementAt(renderNote(note, voice, lang, 120, 480).chunk.data, 0);
+    const disabled = elementAt(renderNote(note, { ...voice, peakComp: 0 }, lang, 120, 480).chunk.data, 0);
+    expect(Array.from(automatic)).toEqual(Array.from(disabled));
+  });
+
+  it("holds a consistent level across a wide pitch range", () => {
+    const low = peakOf(elementAt(renderNote({ lyric: "a", noteNum: 60, length: 480, tick: 0 }, voice, lang, 120, 480).chunk.data, 0));
+    const high = peakOf(elementAt(renderNote({ lyric: "a", noteNum: 84, length: 480, tick: 0 }, voice, lang, 120, 480).chunk.data, 0));
+    expect(Math.abs(low - high)).toBeLessThan(0.08);
+  });
+
+  it("keeps the vowel body level when a loud transient shares the note", () => {
+    const note: Note = { lyric: "a", noteNum: 72, length: 960, tick: 0 };
+    const vowel: PhonemeDef = { symbol: "a", type: "vowel", formants: [{ f: 700, bw: 110 }, { f: 1200, bw: 150 }, { f: 2600, bw: 250 }] };
+    const transient: PhonemeDef = {
+      symbol: "t",
+      type: "consonant",
+      consonantType: "plosive",
+      defaultDuration: 0.004,
+      noise: { amplitude: 80 },
+    };
+    const clean = elementAt(renderPhonemes([vowel], note, voice, 120, 480).chunk.data, 0);
+    const withClick = elementAt(renderPhonemes([transient, vowel], note, voice, 120, 480).chunk.data, 0);
+    const from = Math.floor(clean.length * 0.6);
+    const cleanBody = rmsOf(clean, from, clean.length);
+    const clickBody = rmsOf(withClick, from, withClick.length);
+    expect(clickBody / cleanBody).toBeGreaterThan(0.9);
+    expect(clickBody / cleanBody).toBeLessThan(1.1);
+  });
+});

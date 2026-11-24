@@ -27,8 +27,11 @@ export interface VoiceConfig {
   vibrato: VibratoConfig;
   sampleRate: number;
   channels: 1 | 2;
+  /** Linear output gain in percent. */
   volume?: number;
+  /** 0 disables per-note peak compensation (the default); higher values blend it in. */
   peakComp?: number;
+  /** Calibrated pitch-referenced peak target before the limiter. */
   normalizeTarget?: number;
 }
 

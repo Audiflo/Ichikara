@@ -40,6 +40,8 @@ export interface RenderOptions {
   headFadeSamples?: number | undefined;
   tailFadeSamples?: number | undefined;
   continuation?: boolean | undefined;
+  /** Skip gain calibration when rendering the calibration probe itself. */
+  skipLeveling?: boolean | undefined;
 }
 
 /** Rendered audio plus the state needed to continue phase and filter history. */
@@ -85,23 +87,85 @@ function ticksToDuration(tickLen: number, tempo: number, resolution: number, sam
 
 const MIN_VOICED_TARGET_RATIO = 0.25;
 
-function computeAutoGain(peak: number, voicedRatio: number, peakComp: number, volume: number, target: number): number {
-  const volGain = volume * 0.01;
-  if (peak === 0) return volGain;
-  const levelRatio = Math.max(MIN_VOICED_TARGET_RATIO, Math.max(0, Math.min(1, voicedRatio)));
-  const levelTarget = target * levelRatio;
-  const exponent = Math.max(0, Math.min(1, peakComp * 0.01));
-  const ratio = levelTarget / peak;
-  const autoGain = Number.isFinite(ratio) ? Math.pow(ratio, exponent) : 1;
-  const gain = autoGain * volGain;
-  return Number.isFinite(gain) ? gain : volGain;
-}
-
 const OUTPUT_CEILING = 0.99;
 
 const FLOAT32_REL_STEP = 2 ** -23;
 
 const DEFAULT_NORMALIZE_TARGET = 0.5;
+
+const DEFAULT_PEAK_COMP = 0;
+
+const CALIBRATION_TICKS = 120;
+const CALIBRATION_VOLUME = 1;
+// The probe disables jitter/shimmer/aspiration; leave headroom for their crest factor.
+const CALIBRATION_MARGIN = 1.02;
+const CALIBRATION_CACHE_LIMIT = 512;
+
+const CALIBRATION_FORMANTS: ReadonlyArray<FormantTarget> = [
+  { f: 687, bw: 70 },
+  { f: 1283, bw: 90 },
+  { f: 2672, bw: 130 },
+  { f: 3500, bw: 200 },
+  { f: 4500, bw: 300 },
+];
+
+const CALIBRATION_PHONEMES: PhonemeDef[] = [
+  { symbol: "calibration", type: "vowel", formants: [...CALIBRATION_FORMANTS] },
+];
+
+const calibrationCache = new Map<string, number>();
+
+function calibrationKey(voice: VoiceConfig, noteNum: number, sampleRate: number): string {
+  return JSON.stringify([sampleRate, noteNum, voice.glottal, voice.formant, voice.vibrato, voice.channels]);
+}
+
+/** Raw level of a clean sustained vowel at the note's pitch, used as a stable per-voice reference. */
+function calibrationPeak(voice: VoiceConfig, noteNum: number, sampleRate: number): number {
+  const key = calibrationKey(voice, noteNum, sampleRate);
+  const cached = calibrationCache.get(key);
+  if (cached !== undefined) return cached;
+
+  const probeVoice: VoiceConfig = {
+    ...voice,
+    volume: CALIBRATION_VOLUME,
+    peakComp: 0,
+    normalizeTarget: 1,
+    glottal: { ...voice.glottal, jitter: 0, shimmer: 0, aspiration: 0 },
+  };
+  const probe = renderPhonemes(
+    CALIBRATION_PHONEMES,
+    { lyric: "", noteNum, length: CALIBRATION_TICKS, tick: 0 },
+    probeVoice,
+    120,
+    480,
+    undefined,
+    0,
+    undefined,
+    { skipLeveling: true },
+  );
+  let peak = 0;
+  for (const sample of elementAt(probe.chunk.data, 0)) peak = Math.max(peak, Math.abs(sample));
+  const reference = peak > 0 ? peak * (100 / CALIBRATION_VOLUME) * CALIBRATION_MARGIN : 1;
+
+  if (calibrationCache.size >= CALIBRATION_CACHE_LIMIT) calibrationCache.clear();
+  calibrationCache.set(key, reference);
+  return reference;
+}
+
+/** Blend a stable pitch-referenced baseline with optional per-note peak compensation.
+ *
+ *  The baseline never depends on the rendered note, so a transient or a neighbouring
+ *  note cannot move this note's gain. Peak compensation stays available as an opt-in
+ *  and uses the voiced signal only, keeping noise bursts from crushing the vowel.
+ */
+function normalizationGain(levelPeak: number, voicedRatio: number, peakComp: number, target: number, reference: number): number {
+  const baseline = reference > 0 ? target / reference : target;
+  if (peakComp <= 0 || levelPeak <= 0) return baseline;
+  const levelRatio = Math.max(MIN_VOICED_TARGET_RATIO, Math.max(0, Math.min(1, voicedRatio)));
+  const perNote = (target * levelRatio) / levelPeak;
+  const exponent = Math.max(0, Math.min(1, peakComp * 0.01));
+  return baseline * Math.pow(Math.max(0, perNote / baseline), exponent);
+}
 
 const OUTLIER_THRESHOLD_RATIO = 0.5;
 const MAX_OUTLIER_FRACTION = 0.001;
@@ -392,6 +456,7 @@ export function renderPhonemes(
   let prevPi = -1;
   let phSegStart = 0;
   let overallPeak = 1e-10;
+  let voicedPeak = 0;
   let voicedSamples = 0;
   let lastFormantUpdateSample = -formantUpdateInterval(sr);
 
@@ -517,15 +582,22 @@ export function renderPhonemes(
     const endFade = tailFadeSamples > 0 ? 1 - smoothstep01((i - tailFadeStart) / tailFadeSamples) : 1;
     const enveloped = (voicedSignal + noiseSignal + breathSignal) * env * startFade * endFade;
     mono[i] = enveloped;
+    const voicedMagnitude = voiced ? Math.abs((voicedSignal + breathSignal) * env * startFade * endFade) : 0;
+    if (voicedMagnitude > voicedPeak) voicedPeak = voicedMagnitude;
     if (Math.abs(enveloped) > overallPeak) overallPeak = Math.abs(enveloped);
   }
 
   const voicedRatio = noteLen > 0 ? voicedSamples / noteLen : 1;
   const volume = voice.volume ?? 100;
-  const peakComp = voice.peakComp ?? 100;
+  const peakComp = voice.peakComp ?? DEFAULT_PEAK_COMP;
   const target = clampNormalizeTarget(voice.normalizeTarget);
-  const levelPeak = robustPeak(mono, overallPeak);
-  const gain = computeAutoGain(levelPeak, voicedRatio, peakComp, volume, target * (1 - FLOAT32_REL_STEP)) * intensityScale;
+  const levelPeak = voicedPeak > 0 ? voicedPeak : robustPeak(mono, overallPeak);
+  const reference = options.skipLeveling
+    ? 1
+    : calibrationPeak(voice, note.noteNum, sr);
+  const gain = options.skipLeveling
+    ? volume * 0.01
+    : normalizationGain(levelPeak, voicedRatio, peakComp, target * (1 - FLOAT32_REL_STEP), reference) * volume * 0.01 * intensityScale;
   for (let i = 0; i < noteLen; i++) {
     mono[i] = softLimit(elementAt(mono, i) * gain);
   }

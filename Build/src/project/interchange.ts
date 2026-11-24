@@ -72,6 +72,13 @@ export async function importProjectFromFile(file: File, language: string, id: Id
   return ufDataToProject(await parseUfData(file, file.name), language, id);
 }
 
+/** Parse multiple UST files into one project, with each file becoming a track. */
+export async function importProjectFromFiles(files: readonly File[], language: string, id: IdFactory): Promise<Project> {
+  if (files.length === 0) throw new TypeError("At least one file is required for import");
+  const data = await parseUfData(files, files.map((file) => file.name));
+  return ufDataToProject(data, language, id);
+}
+
 /** Generate whole-song interchange bytes; unsupported or lossy timeline structures throw. */
 export async function exportProjectToBytes(project: Project, options: ExportOptions = {}): Promise<Uint8Array> {
   return exportUfDataToBytes(projectToUfData(project, options), options);
